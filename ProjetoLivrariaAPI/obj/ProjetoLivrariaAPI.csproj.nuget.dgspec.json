@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI.csproj": {}
+    "D:\\WDAPROJETO\\ProjetolivrariaAPI\\ProjetolivrariaAPI\\ProjetoLivrariaAPI.csproj": {}
   },
   "projects": {
-    "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI.csproj": {
+    "D:\\WDAPROJETO\\ProjetolivrariaAPI\\ProjetolivrariaAPI\\ProjetoLivrariaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI.csproj",
+        "projectUniqueName": "D:\\WDAPROJETO\\ProjetolivrariaAPI\\ProjetolivrariaAPI\\ProjetoLivrariaAPI.csproj",
         "projectName": "ProjetoLivrariaAPI",
-        "projectPath": "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI.csproj",
+        "projectPath": "D:\\WDAPROJETO\\ProjetolivrariaAPI\\ProjetolivrariaAPI\\ProjetoLivrariaAPI.csproj",
         "packagesPath": "C:\\Users\\AJ\\.nuget\\packages\\",
-        "outputPath": "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\obj\\",
+        "outputPath": "D:\\WDAPROJETO\\ProjetolivrariaAPI\\ProjetolivrariaAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

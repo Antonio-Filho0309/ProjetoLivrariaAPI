@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "42rBEIFYPrxj3Oja5XCzDGgDtAn3cqxNTR002iemjcdOaQWZk/YG6PnL3pP3RgtLooZcBeMT3AqK6x/8nheoQQ==",
+  "dgSpecHash": "7BVaGzvX/8Oz+oDtV3SkHkG9G+5KDslu3eyXS4oFg6HxsCSW6ULbWFoy2T+WhTPt4ewQKuNlOFZe7qDIYziLkA==",
   "success": true,
-  "projectFilePath": "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI.csproj",
+  "projectFilePath": "D:\\WDAPROJETO\\ProjetolivrariaAPI\\ProjetolivrariaAPI\\ProjetoLivrariaAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AJ\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\AJ\\.nuget\\packages\\microsoft.data.sqlite.core\\6.0.22\\microsoft.data.sqlite.core.6.0.22.nupkg.sha512",
