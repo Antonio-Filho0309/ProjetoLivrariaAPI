@@ -1,10 +1,10 @@
 ﻿
 namespace ProjetoLivrariaAPI.Models {
-    public class Books {
+    public class Book {
 
-        public Books() { }
+        public Book() { }
 
-        public Books(int id, string name, string author, int publisherId, int release, int quantity) {
+        public Book(int id, string name, string author, int publisherId, int release, int quantity) {
             this.Id = id;
             this.Name = name;
             this.Author = author;

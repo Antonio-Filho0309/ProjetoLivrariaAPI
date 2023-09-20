@@ -1,9 +1,9 @@
 ﻿namespace ProjetoLivrariaAPI.Models {
-    public class Rentals {
+    public class Rental {
 
-        public Rentals() { }
+        public Rental() { }
 
-        public Rentals(int id, string booksId, string usersId, int rentalDate, int previewDate) {
+        public Rental(int id, string booksId, string usersId, int rentalDate, int previewDate) {
             this.Id = id;
             this.BookId = booksId;
             this.UserId = usersId;
@@ -13,10 +13,10 @@
 
         public int Id { get; set; }
         public string BookId { get; set; }
-        public Books Book { get; set; }
+        public Book Book { get; set; }
 
         public string UserId { get; set; }
-        public Users User { get; set; }
+        public User User { get; set; }
 
         public int RentalDate { get; set; }
 

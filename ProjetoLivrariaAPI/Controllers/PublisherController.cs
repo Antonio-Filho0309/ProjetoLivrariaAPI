@@ -58,11 +58,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             return Ok(publisher);
         }
 
-        [HttpPatch("{id}")]
-        public IActionResult Patch(int id, Publisher publisher) {
-
-            return Ok(publisher);
-        }
+       
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {

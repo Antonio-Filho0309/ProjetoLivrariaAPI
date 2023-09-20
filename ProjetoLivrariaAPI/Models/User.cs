@@ -1,9 +1,9 @@
 ﻿namespace ProjetoLivrariaAPI.Models {
-    public class Users {
+    public class User {
 
-        public Users() { }
+        public User() { }
 
-        public Users(int id, string name, string city, string email, string address) {
+        public User(int id, string name, string city, string email, string address) {
 
             this.Id = id;
             this.Name = name;
