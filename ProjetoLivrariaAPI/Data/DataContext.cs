@@ -1,12 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Data {
+namespace ProjetoLivrariaAPI.Data
+{
 
     //A classe DataContext é a classe responsável em criar nossa conexão e comunicação com o banco de dados. 
-    public class DataContext : DbContext {
+    public class DataContext : DbContext
+    {
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options) {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
 
         }
         public DbSet<User> Users { get; set; }
@@ -17,12 +20,9 @@ namespace ProjetoLivrariaAPI.Data {
 
         public DbSet<Rental> Rentals { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder) {
-            builder.Entity<Rental>()
-                   .HasKey(R => new { R.UserId, R.BookId });
-            builder.Entity<Book>()
-                .HasKey(B => new { B.PublisherId });
-                
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+
             builder.Entity<Publisher>()
                 .HasData(new List<Publisher>(){
                     new Publisher(1, "Lauro" , "Fortaleza"),
@@ -54,29 +54,8 @@ namespace ProjetoLivrariaAPI.Data {
 
             builder.Entity<Rental>()
                 .HasData(new List<Rental>() {
-                    new Rental() {UserId = 1, BookId = 2 },
-                    new Rental() {UserId = 1, BookId = 4 },
-                    new Rental() {UserId = 1, BookId = 5 },
-                    new Rental() {UserId = 2, BookId = 1 },
-                    new Rental() {UserId = 2, BookId = 2 },
-                    new Rental() {UserId = 2, BookId = 5 },
-                    new Rental() {UserId = 3, BookId = 1 },
-                    new Rental() {UserId = 3, BookId = 2 },
-                    new Rental() {UserId = 3, BookId = 3 },
-                    new Rental() {UserId = 4, BookId = 1 },
-                    new Rental() {UserId = 4, BookId = 4 },
-                    new Rental() {UserId = 4, BookId = 5 },
-                    new Rental() {UserId = 5, BookId = 4 },
-                    new Rental() {UserId = 5, BookId = 5 },
-                    new Rental() {UserId = 6, BookId = 1 },
-                    new Rental() {UserId = 6, BookId = 2 },
-                    new Rental() {UserId = 6, BookId = 3 },
-                    new Rental() {UserId = 6, BookId = 4 },
-                    new Rental() {UserId = 7, BookId = 1 },
-                    new Rental() {UserId = 7, BookId = 2 },
-                    new Rental() {UserId = 7, BookId = 3 },
-                    new Rental() {UserId = 7, BookId = 4 },
-                    new Rental() {UserId = 7, BookId = 5 }
+                    new Rental(1,1,2,2003,2004,"pendente")
+
                 });
         }
     }

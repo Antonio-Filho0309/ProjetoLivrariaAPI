@@ -4,11 +4,9 @@ using ProjetoLivrariaAPI.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(
-    context => context.UseSqlite(builder.Configuration.GetConnectionString("Default"))
-    );
+    context => context.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

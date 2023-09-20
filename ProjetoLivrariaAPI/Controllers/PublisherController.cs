@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers {
@@ -7,55 +9,50 @@ namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
     public class PublisherController : ControllerBase {
 
-        //listagem para manipular e preencher melhor o objeto
-        public List<Publisher> Publishers = new List<Publisher>() {
-          new Publisher() {
-              Id = 1,
-              Name = "Test",
-              City ="Fortaleza"
-          },
-           new Publisher() {
-              Id = 2,
-              Name = "Test2",
-              City ="Fortaleza"
-           },
-            new Publisher() {
-              Id = 3,
-              Name = "Test3",
-              City ="Fortaleza"
-          }
-        };
+        private readonly DataContext _context;
 
-        public PublisherController() { }
+        public PublisherController(DataContext context) {
+            _context = context;
+        }
+
 
         [HttpGet]
         public IActionResult Get() {
-            return Ok(Publishers);
+            return Ok(_context.Publishers);
         }
 
         [HttpGet("{id}")] 
         
         public IActionResult GetByid(int id) {
-            var aluno = Publishers.FirstOrDefault(publisher => publisher.Id == id);
-            if (aluno == null) {
+            var editora = _context.Publishers.FirstOrDefault(publisher => publisher.Id == id);
+            if (editora == null) {
                 return BadRequest("Editora não existe");
             }
             else {
-                return Ok(aluno);
+                return Ok(editora);
             }
         }
 
 
         [HttpPost]
         public IActionResult Post(Publisher publisher) {
-
-           return Ok(publisher);
+            _context.Add(publisher);
+            _context.SaveChanges();
+            return Ok(publisher);       
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id ,Publisher publisher) {
 
-            return Ok(publisher);
+            var edit = _context.Publishers.AsNoTracking().FirstOrDefault(publisher => publisher.Id == id);
+            if (edit == null) {
+                return BadRequest("Editora não existe");
+            }
+            else {
+                _context.Update(publisher);
+                _context.SaveChanges();
+                return Ok(publisher);
+            }
         }
 
        
@@ -63,7 +60,15 @@ namespace ProjetoLivrariaAPI.Controllers {
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
 
-            return Ok();
+            var edito = _context.Publishers.AsNoTracking().FirstOrDefault(publisher => publisher.Id == id);
+            if (edito == null) {
+                return BadRequest("Editora não existe");
+            }
+            else {
+                _context.Remove(edito);
+                _context.SaveChanges();
+                return Ok("Editora Removida com Sucesso");
+            }
         }
 
 

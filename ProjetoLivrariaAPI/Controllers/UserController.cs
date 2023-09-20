@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers {
@@ -8,44 +10,23 @@ namespace ProjetoLivrariaAPI.Controllers {
 
     //post e get não precisam de id 
     public class UserController : ControllerBase {
-        public List<User> Users = new List<User>() {
-            new User () {
-                Id = 1,
-                Name = "Batman",
-                City = "Fotal",
-                Email = "batman@gmail.com",
-                Address = "Gotham city"
 
-            },
-             new User () {
-                Id = 2,
-                Name = "Superman",
-                City = "Fotal",
-                Email = "superman@gmail.com",
-                Address = "Metropolis"
+        private readonly DataContext _context;
 
-            },
-              new User () {
-                Id = 3,
-                Name = "Wonder Woman",
-                City = "Fotal",
-                Email = "batman@gmail.com",
-                Address = "New York"
+        public UserController(DataContext context) {
+            _context = context;
+        }
 
-            }
-        };
-
-        public UserController() { }
 
         [HttpGet]
         public IActionResult Get() {
-            return Ok(Users);
+            return Ok(_context.Users);
         }
 
-        [HttpGet("{id:int}")]
+        [HttpGet("byId")]
 
         public IActionResult GetByid(int id) {
-            var user = Users.FirstOrDefault(user => user.Id == id);
+            var user = _context.Users.FirstOrDefault(user => user.Id == id);
             if (user == null) {
                 return BadRequest("Usuario não existe");
             }
@@ -57,17 +38,35 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpPost]
         public IActionResult Post(User user) {
+            _context.Add(user);
+            _context.SaveChanges();
             return Ok(user);
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, User user) {
-            return Ok(user);
+            var usu = _context.Users.AsNoTracking().FirstOrDefault(user => user.Id == id);
+            if (usu == null) {
+                return BadRequest("Usuário não encontrado");
+            }
+            else {
+                _context.Update(user);
+                _context.SaveChanges();
+                return Ok(user);
+            }
         }
-        //não passa nada dentro do OK e só precisa como parametro o id
+        // e só precisa como parametro o id
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
-            return Ok();
+            var user = _context.Users.AsNoTracking().FirstOrDefault(user => user.Id == id);
+            if (user == null) {
+                return BadRequest("Usuário não encontrado");
+            }
+            else {
+                _context.Remove(user);
+                _context.SaveChanges();
+                return Ok("Usuário Removido com Sucesso!");
+            }
         }
     }
 }
