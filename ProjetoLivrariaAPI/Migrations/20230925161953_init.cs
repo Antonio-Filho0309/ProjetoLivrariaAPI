@@ -69,8 +69,9 @@ namespace ProjetoLivrariaAPI.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     BookId = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RentalDate = table.Column<int>(type: "INTEGER", nullable: false),
-                    PreviewDate = table.Column<int>(type: "INTEGER", nullable: false),
+                    RentalDate = table.Column<string>(type: "TEXT", nullable: false),
+                    PreviewDate = table.Column<string>(type: "TEXT", nullable: false),
+                    ReturnDate = table.Column<string>(type: "TEXT", nullable: false),
                     Status = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -174,11 +175,6 @@ namespace ProjetoLivrariaAPI.Migrations
                 table: "Books",
                 columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release" },
                 values: new object[] { 5, "Cão", "Geografia", 3, 1, 1999 });
-
-            migrationBuilder.InsertData(
-                table: "Rentals",
-                columns: new[] { "Id", "BookId", "PreviewDate", "RentalDate", "Status", "UserId" },
-                values: new object[] { 1, 1, 2004, 2003, "pendente", 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherId",

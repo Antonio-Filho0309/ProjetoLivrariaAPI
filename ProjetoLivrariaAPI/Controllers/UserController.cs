@@ -11,13 +11,16 @@ namespace ProjetoLivrariaAPI.Controllers {
     //post e get não precisam de id 
     public class UserController : ControllerBase {
 
+        public readonly IRepository _repo;
         private readonly DataContext _context;
 
-        public UserController(DataContext context) {
+        public UserController(DataContext context, IRepository repo) {
+            _repo = repo;
             _context = context;
         }
 
 
+      
         [HttpGet]
         public IActionResult Get() {
             return Ok(_context.Users);
@@ -38,9 +41,13 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpPost]
         public IActionResult Post(User user) {
-            _context.Add(user);
-            _context.SaveChanges();
-            return Ok(user);
+            _repo.Add(user);
+            if(_repo.SaveChanges()) {
+                return Ok(user);
+            }else {
+                return BadRequest("Usuário não cadastrado");
+            }
+          
         }
 
         [HttpPut("{id}")]
@@ -50,9 +57,14 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return BadRequest("Usuário não encontrado");
             }
             else {
-                _context.Update(user);
-                _context.SaveChanges();
-                return Ok(user);
+                _repo.Update(user);
+                if (_repo.SaveChanges()) {
+                    return Ok(user);
+                }
+                else {
+                    return BadRequest("Usuário não Atualizado");
+                }
+
             }
         }
         // e só precisa como parametro o id
@@ -63,9 +75,14 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return BadRequest("Usuário não encontrado");
             }
             else {
-                _context.Remove(user);
-                _context.SaveChanges();
-                return Ok("Usuário Removido com Sucesso!");
+                _repo.Delete(user);
+                if (_repo.SaveChanges()) {
+                    return Ok("Usuário deletado com sucesso");
+                }
+                else {
+                    return BadRequest("Usuário não deletado");
+                }
+
             }
         }
     }

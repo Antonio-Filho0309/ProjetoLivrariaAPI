@@ -153,11 +153,17 @@ namespace ProjetoLivrariaAPI.Migrations
                     b.Property<int>("BookId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("PreviewDate")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("PreviewDate")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("RentalDate")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("RentalDate")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReturnDate")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -173,17 +179,6 @@ namespace ProjetoLivrariaAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Rentals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookId = 1,
-                            PreviewDate = 2004,
-                            RentalDate = 2003,
-                            Status = "pendente",
-                            UserId = 2
-                        });
                 });
 
             modelBuilder.Entity("ProjetoLivrariaAPI.Models.User", b =>

@@ -9,10 +9,12 @@ namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
     public class PublisherController : ControllerBase {
 
+        private readonly IRepository _repo;
         private readonly DataContext _context;
 
-        public PublisherController(DataContext context) {
+        public PublisherController(DataContext context , IRepository repo) {
             _context = context;
+            _repo = repo;
         }
 
 
@@ -36,9 +38,15 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpPost]
         public IActionResult Post(Publisher publisher) {
-            _context.Add(publisher);
-            _context.SaveChanges();
-            return Ok(publisher);       
+
+            _repo.Add(publisher);
+            if (_repo.SaveChanges()) {
+                return Ok(publisher);
+            }
+            else {
+                return BadRequest("Usuário não cadastrado");
+            }
+
         }
 
         [HttpPut("{id}")]
@@ -49,9 +57,13 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return BadRequest("Editora não existe");
             }
             else {
-                _context.Update(publisher);
-                _context.SaveChanges();
-                return Ok(publisher);
+                _repo.Update(publisher);
+                if (_repo.SaveChanges()) {
+                    return Ok(publisher);
+                }
+                else {
+                    return BadRequest("Usuário não atualizado");
+                }
             }
         }
 
@@ -65,9 +77,13 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return BadRequest("Editora não existe");
             }
             else {
-                _context.Remove(edito);
-                _context.SaveChanges();
-                return Ok("Editora Removida com Sucesso");
+                _repo.Delete(edito);
+                if (_repo.SaveChanges()) {
+                    return Ok("Editora Removida com sucesso");
+                }
+                else {
+                    return BadRequest("Usuário não cadastrado");
+                }
             }
         }
 

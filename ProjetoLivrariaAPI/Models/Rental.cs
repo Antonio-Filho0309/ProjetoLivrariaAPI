@@ -3,12 +3,13 @@
 
         public Rental() { }
 
-        public Rental(int id, int bookId, int userId, int rentalDate, int previewDate, string status) {
+        public Rental(int id, int bookId, int userId, string rentalDate, string previewDate, string returnDate ,  string status) {
             this.Id = id;
             this.BookId = bookId;
             this.UserId = userId;
             this.RentalDate = rentalDate;
             this.PreviewDate = previewDate;
+            this.ReturnDate = returnDate;
             this.Status = status;
         }
 
@@ -19,9 +20,11 @@
         public int UserId { get; set; }
         public User User { get; set; }
 
-        public int RentalDate { get; set; }
+        public string RentalDate { get; set; }
 
-        public int PreviewDate { get; set; }
+        public string PreviewDate { get; set; }
+
+        public string ReturnDate { get; set; }
 
         public string Status   {get; set;}
     }
