@@ -26,7 +26,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             return Ok(_context.Users);
         }
 
-        [HttpGet("byId")]
+        [HttpGet("{id}")]
 
         public IActionResult GetByid(int id) {
             var user = _context.Users.FirstOrDefault(user => user.Id == id);

@@ -9,7 +9,7 @@ namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
     public class PublisherController : ControllerBase {
 
-        private readonly IRepository _repo;
+        public readonly IRepository _repo;
         private readonly DataContext _context;
 
         public PublisherController(DataContext context , IRepository repo) {
@@ -44,7 +44,7 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return Ok(publisher);
             }
             else {
-                return BadRequest("Usuário não cadastrado");
+                return BadRequest("Editora não cadastrado");
             }
 
         }
@@ -62,7 +62,7 @@ namespace ProjetoLivrariaAPI.Controllers {
                     return Ok(publisher);
                 }
                 else {
-                    return BadRequest("Usuário não atualizado");
+                    return BadRequest("Editora não atualizado");
                 }
             }
         }
@@ -82,7 +82,7 @@ namespace ProjetoLivrariaAPI.Controllers {
                     return Ok("Editora Removida com sucesso");
                 }
                 else {
-                    return BadRequest("Usuário não cadastrado");
+                    return BadRequest("Editora não cadastrado");
                 }
             }
         }
