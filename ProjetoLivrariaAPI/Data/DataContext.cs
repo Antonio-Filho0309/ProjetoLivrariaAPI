@@ -51,8 +51,6 @@ namespace ProjetoLivrariaAPI.Data
                     new User(6, "Pedro", "Alvares", "456454545", "Bairro ellery"),
                     new User(7, "Paulo", "José", "9874512", "Bairro ellery")
                 });
-
-          
         }
     }
 }

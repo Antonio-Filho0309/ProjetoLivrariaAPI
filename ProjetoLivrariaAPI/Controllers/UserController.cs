@@ -2,19 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
+using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Controllers {
+namespace ProjetoLivrariaAPI.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
 
     //post e get não precisam de id 
     public class UserController : ControllerBase {
 
-        public readonly IRepository _repo;
+        public readonly IUserRepository _repo;
         private readonly DataContext _context;
 
-        public UserController(DataContext context, IRepository repo) {
+        public UserController(DataContext context, IUserRepository repo) {
             _repo = repo;
             _context = context;
         }

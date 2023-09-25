@@ -2,17 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
+using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Controllers {
+namespace ProjetoLivrariaAPI.Controllers
+{
     [ApiController]
     [Route("api/[controller]")]
     public class PublisherController : ControllerBase {
 
-        public readonly IRepository _repo;
+        public readonly IUserRepository _repo;
         private readonly DataContext _context;
 
-        public PublisherController(DataContext context , IRepository repo) {
+        public PublisherController(DataContext context , IUserRepository repo) {
             _context = context;
             _repo = repo;
         }
