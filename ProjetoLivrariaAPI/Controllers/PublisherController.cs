@@ -11,10 +11,10 @@ namespace ProjetoLivrariaAPI.Controllers
     [Route("api/[controller]")]
     public class PublisherController : ControllerBase {
 
-        public readonly IUserRepository _repo;
+        public readonly IPublisherRepository _repo;
         private readonly DataContext _context;
 
-        public PublisherController(DataContext context , IUserRepository repo) {
+        public PublisherController(DataContext context , IPublisherRepository repo) {
             _context = context;
             _repo = repo;
         }

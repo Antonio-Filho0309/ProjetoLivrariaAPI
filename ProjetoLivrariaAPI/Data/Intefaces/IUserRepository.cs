@@ -12,6 +12,8 @@ namespace ProjetoLivrariaAPI.Data.Intefaces
         User[] GetAllUsers();
         User GetlUserById(int userId);
 
+        User GetlUserByName(string userName);
+
 
     }
 }

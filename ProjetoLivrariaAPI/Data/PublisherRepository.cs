@@ -3,12 +3,13 @@ using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Data {
-    public class UserRepository : IUserRepository {
+    public class PublisherRepository : IPublisherRepository {
         private readonly DataContext _context;
 
-        public UserRepository(DataContext context) {
+        public PublisherRepository(DataContext context) {
             _context = context;
         }
+
         public void Add<T>(T entity) where T : class {
             _context.Add(entity);
         }
@@ -22,34 +23,37 @@ namespace ProjetoLivrariaAPI.Data {
         }
 
         public bool SaveChanges() {
-
             return (_context.SaveChanges() > 0);
         }
 
-        public User[] GetAllUsers() {
-            IQueryable<User> query = _context.Users;
+        public Publisher[] GetAllPublishers() {
+            IQueryable<Publisher> query = _context.Publishers;
 
-            query = query.AsNoTracking().OrderBy(u => u.Id);
-
+            query = query.AsNoTracking().OrderBy(p => p.Id);
+            
             return query.ToArray();
+
         }
 
-        public User GetlUserById(int userId) {
-            IQueryable<User> query = _context.Users;
+        public Publisher GetlPublisherById(int publisherId) {
 
-            query = query.AsNoTracking().OrderBy(u => u.Id)
-                .Where(user => user.Id == userId);
+            IQueryable<Publisher> query = _context.Publishers;
+
+            query = query.AsNoTracking().OrderBy(p => p.Id)
+                .Where (p => p.Id == publisherId);
 
             return query.FirstOrDefault();
         }
 
-        public User GetlUserByName(string userName) {
-            IQueryable<User> query = _context.Users;
+        public Publisher GetlPublisherByName(string publisherName) {
+           IQueryable<Publisher> query = _context.Publishers;
 
-            query = query.AsNoTracking().OrderBy(u => u.Id)
-                .Where(user => user.Name == userName);
+            query = query.AsNoTracking().OrderBy(p => p.Name)
+                .Where(p=> p.Name == publisherName);
 
             return query.FirstOrDefault();
+
+            
         }
     }
 }
