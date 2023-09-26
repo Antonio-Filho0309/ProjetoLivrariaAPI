@@ -9,8 +9,11 @@ builder.Services.AddDbContext<DataContext>(
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = 
+    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

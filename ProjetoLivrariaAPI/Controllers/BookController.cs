@@ -1,59 +1,76 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class BookController : ControllerBase {
+        private readonly IBookRepository _repo;
 
-        public List<Book> Books = new List<Book>() {
-            new Book() {
-                 Id = 2,
-              Name = "Test3",
-            },
-             new Book() {
-                 Id = 4,
-              Name = "Test4",
-            },
-              new Book() {
-                 Id = 3,
-              Name = "Test5",
-            },
-
-
-        };
-
-        public BookController() { }
+         public BookController(IBookRepository repo) {
+            _repo = repo;
+        }
 
         [HttpGet]
         public IActionResult Get() {
-            return Ok(Books);
+            var result = _repo.GetAllBooks(true);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
-            var book = Books.FirstOrDefault(b => b.Id == id);
+            var book = _repo.GetBookById(id);
             if (book == null) {
                 return BadRequest("Livro não encontrado");
-            }else {
+            }
+            else {
                 return Ok(book);
             }
         }
 
         [HttpPost]
         public IActionResult Post(Book book) {
-            return Ok(book);
+            _repo.Add(book);
+            if (_repo.SaveChanges()) {
+                return Ok(book);
+            }
+            else {
+                return BadRequest("Livro não cadastrado");
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put( int id ,Book book) {
-            return Ok(book);
+        public IActionResult Put(int id, Book book) {
+            var b = _repo.GetBookById(id);
+            if (b == null) {
+                return BadRequest("Livro não existe");
+            }
+            else {
+                _repo.Update(book);
+                if (_repo.SaveChanges()) {
+                    return Ok(book);
+                }
+                else {
+                    return BadRequest("Livro não atualizado");
+                }
+            }
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
-            return Ok();
+            var b = _repo.GetBookById(id);
+            if (b == null) {
+                return BadRequest("Livro não existe");
+            }else {
+                _repo.Delete(b);
+                if(_repo.SaveChanges()) {
+                    return Ok("Livro Deletado com sucesso");
+                }else {
+                    return BadRequest("Livro não excluido");
+                }
+            }
         }
     }
 }

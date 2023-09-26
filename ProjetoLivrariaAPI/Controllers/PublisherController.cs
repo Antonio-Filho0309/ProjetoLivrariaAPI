@@ -12,28 +12,27 @@ namespace ProjetoLivrariaAPI.Controllers
     public class PublisherController : ControllerBase {
 
         public readonly IPublisherRepository _repo;
-        private readonly DataContext _context;
 
-        public PublisherController(DataContext context , IPublisherRepository repo) {
-            _context = context;
+        public PublisherController(IPublisherRepository repo) {
             _repo = repo;
         }
 
 
         [HttpGet]
         public IActionResult Get() {
-            return Ok(_context.Publishers);
+            var result= _repo.GetAllPublishers();
+            return Ok(result);
         }
 
         [HttpGet("{id}")] 
         
         public IActionResult GetByid(int id) {
-            var editora = _context.Publishers.FirstOrDefault(publisher => publisher.Id == id);
-            if (editora == null) {
+            var publisher = _repo.GetlPublisherById(id);
+            if (publisher == null) {
                 return BadRequest("Editora não existe");
             }
             else {
-                return Ok(editora);
+                return Ok(publisher);
             }
         }
 
@@ -54,8 +53,8 @@ namespace ProjetoLivrariaAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id ,Publisher publisher) {
 
-            var edit = _context.Publishers.AsNoTracking().FirstOrDefault(publisher => publisher.Id == id);
-            if (edit == null) {
+            var pub = _repo.GetlPublisherById(id);
+            if (pub == null) {
                 return BadRequest("Editora não existe");
             }
             else {
@@ -74,12 +73,12 @@ namespace ProjetoLivrariaAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
 
-            var edito = _context.Publishers.AsNoTracking().FirstOrDefault(publisher => publisher.Id == id);
-            if (edito == null) {
+            var publi = _repo.GetlPublisherById(id);
+            if (publi == null) {
                 return BadRequest("Editora não existe");
             }
             else {
-                _repo.Delete(edito);
+                _repo.Delete(publi);
                 if (_repo.SaveChanges()) {
                     return Ok("Editora Removida com sucesso");
                 }

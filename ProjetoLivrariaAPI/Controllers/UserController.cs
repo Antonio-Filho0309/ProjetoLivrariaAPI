@@ -14,24 +14,22 @@ namespace ProjetoLivrariaAPI.Controllers
     public class UserController : ControllerBase {
 
         public readonly IUserRepository _repo;
-        private readonly DataContext _context;
-
-        public UserController(DataContext context, IUserRepository repo) {
+        public UserController(IUserRepository repo) {
             _repo = repo;
-            _context = context;
         }
 
 
       
         [HttpGet]
         public IActionResult Get() {
-            return Ok(_context.Users);
+            var result = _repo.GetAllUsers();
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
 
         public IActionResult GetByid(int id) {
-            var user = _context.Users.FirstOrDefault(user => user.Id == id);
+            var user = _repo.GetlUserById(id);
             if (user == null) {
                 return BadRequest("Usuario não existe");
             }
@@ -54,7 +52,7 @@ namespace ProjetoLivrariaAPI.Controllers
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, User user) {
-            var usu = _context.Users.AsNoTracking().FirstOrDefault(user => user.Id == id);
+            var usu = _repo.GetlUserById(id);
             if (usu == null) {
                 return BadRequest("Usuário não encontrado");
             }
@@ -72,7 +70,7 @@ namespace ProjetoLivrariaAPI.Controllers
         // e só precisa como parametro o id
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
-            var user = _context.Users.AsNoTracking().FirstOrDefault(user => user.Id == id);
+            var user = _repo.GetlUserById(id);
             if (user == null) {
                 return BadRequest("Usuário não encontrado");
             }
