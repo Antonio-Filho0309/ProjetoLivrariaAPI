@@ -10,6 +10,8 @@ namespace ProjetoLivrariaAPI.Data.Intefaces
         bool SaveChanges();
 
         User[] GetAllUsers();
+
+        //toin esteve aqui
         User GetlUserById(int userId);
 
         User GetlUserByName(string userName);
