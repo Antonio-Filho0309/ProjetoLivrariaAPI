@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Data.Intefaces;
@@ -7,15 +8,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<DataContext>(
     context => context.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
-builder.Services.AddScoped<IBookRepository, BookRepository>();
-
 builder.Services.AddControllers()
     .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = 
     Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 
 var app = builder.Build();
 

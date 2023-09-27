@@ -1,65 +1,81 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Controllers
-{
+namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
 
-    //post e get não precisam de id 
+    
     public class UserController : ControllerBase {
 
         public readonly IUserRepository _repo;
-        public UserController(IUserRepository repo) {
+        private readonly IMapper _mapper;
+
+        public UserController(IUserRepository repo, IMapper mapper) {
             _repo = repo;
+            _mapper = mapper;
         }
 
 
-      
+
         [HttpGet]
         public IActionResult Get() {
-            var result = _repo.GetAllUsers();
-            return Ok(result);
+
+            var users = _repo.GetAllUsers();
+
+          
+            return Ok(_mapper.Map<IEnumerable<UserDto>>(users));
+
         }
 
         [HttpGet("{id}")]
 
         public IActionResult GetByid(int id) {
             var user = _repo.GetlUserById(id);
+            var userDto = _mapper.Map<UserDto>(user);
+
             if (user == null) {
                 return BadRequest("Usuario não existe");
             }
             else {
-                return Ok(user);
+                return Ok(userDto);
             }
 
         }
 
         [HttpPost]
-        public IActionResult Post(User user) {
+        public IActionResult Post(UserDto model) {
+
+            var user = _mapper.Map<User>(model);
+
             _repo.Add(user);
-            if(_repo.SaveChanges()) {
-                return Ok(user);
-            }else {
+            if (_repo.SaveChanges()) {
+                return Created($"/api/user/{model.Id}" , _mapper.Map<UserDto>(user));
+            }
+            else {
                 return BadRequest("Usuário não cadastrado");
             }
-          
+
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, User user) {
-            var usu = _repo.GetlUserById(id);
-            if (usu == null) {
+        public IActionResult Put(int id, UserDto model) {
+            var user = _repo.GetlUserById(id);
+            if (user == null) {
                 return BadRequest("Usuário não encontrado");
             }
             else {
+                _mapper.Map(model, user);
+
                 _repo.Update(user);
                 if (_repo.SaveChanges()) {
-                    return Ok(user);
+                    return Created($"/api/user/{model.Id}", _mapper.Map<UserDto>(user));
                 }
                 else {
                     return BadRequest("Usuário não Atualizado");
@@ -67,7 +83,7 @@ namespace ProjetoLivrariaAPI.Controllers
 
             }
         }
-        // e só precisa como parametro o id
+        
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
             var user = _repo.GetlUserById(id);

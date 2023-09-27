@@ -70,3 +70,5 @@ D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\Microsoft.A
 D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\Newtonsoft.Json.dll
 D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\AutoMapper.dll
+D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

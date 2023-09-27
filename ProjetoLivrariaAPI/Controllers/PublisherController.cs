@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers
@@ -12,58 +15,66 @@ namespace ProjetoLivrariaAPI.Controllers
     public class PublisherController : ControllerBase {
 
         public readonly IPublisherRepository _repo;
+        private readonly IMapper _mapper;
 
-        public PublisherController(IPublisherRepository repo) {
+        public PublisherController(IPublisherRepository repo, IMapper mapper) {
             _repo = repo;
+            _mapper = mapper;
         }
 
 
         [HttpGet]
         public IActionResult Get() {
-            var result= _repo.GetAllPublishers();
-            return Ok(result);
+            var publishers= _repo.GetAllPublishers();
+            return Ok(_mapper.Map<IEnumerable<PublisherDto>>(publishers));
         }
 
         [HttpGet("{id}")] 
         
         public IActionResult GetByid(int id) {
             var publisher = _repo.GetlPublisherById(id);
+            var publisherDto = _mapper.Map<PublisherDto>(publisher);
+
             if (publisher == null) {
                 return BadRequest("Editora não existe");
             }
             else {
-                return Ok(publisher);
+                return Ok(publisherDto);
             }
         }
 
 
         [HttpPost]
-        public IActionResult Post(Publisher publisher) {
+        public IActionResult Post(PublisherDto model) {
+
+            var publisher = _mapper.Map<Publisher>(model);
 
             _repo.Add(publisher);
             if (_repo.SaveChanges()) {
-                return Ok(publisher);
+                return Created($"/api/publisher/{model.Id}", _mapper.Map<PublisherDto>(publisher));
             }
             else {
-                return BadRequest("Editora não cadastrado");
+                return BadRequest("Editora não cadastrada");
             }
 
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id ,Publisher publisher) {
+        public IActionResult Put(int id ,PublisherDto model) {
 
-            var pub = _repo.GetlPublisherById(id);
-            if (pub == null) {
+            var publisher = _repo.GetlPublisherById(id);
+            if (publisher == null) {
                 return BadRequest("Editora não existe");
             }
             else {
+                _mapper.Map(model, publisher);
+
                 _repo.Update(publisher);
                 if (_repo.SaveChanges()) {
-                    return Ok(publisher);
+                    return Created($"/api/publisher/{model.Id}", _mapper.Map<PublisherDto>(publisher));
                 }
                 else {
-                    return BadRequest("Editora não atualizado");
+                    return BadRequest("Editora não atualizada");
                 }
             }
         }
