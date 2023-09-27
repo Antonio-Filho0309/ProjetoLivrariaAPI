@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers {
@@ -7,49 +8,61 @@ namespace ProjetoLivrariaAPI.Controllers {
     [ApiController]
     public class RentalController : ControllerBase {
 
-        public List<Rental> Rentals = new List<Rental>() {
-            new Rental() {
-                Id = 1,
-                
-            },
-             new Rental() {
-                Id = 2,
+        private readonly IRentalRepository _repo;
 
-            },
-              new Rental() {
-                Id = 3,
-
-            }
-        };
+        public RentalController(IRentalRepository repo) {
+           _repo = repo;
+        }
 
         [HttpGet]
         public IActionResult Get() {
-            return Ok(Rentals);
+            var result = _repo.GetAllRentals(true , true);
+
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
 
         public IActionResult GetByid(int id) {
-            var aluno = Rentals.FirstOrDefault(rental => rental.Id == id);
-            if (aluno == null) {
-                return BadRequest("Editora não existe");
+                var rental = _repo.GetRentalById(id);
+                if (rental == null) {
+                    return BadRequest("Aluguel não encontrado");
+                }
+                else {
+                    return Ok(rental);
+                }
             }
-            else {
-                return Ok(aluno);
-            }
-        }
 
 
         [HttpPost]
         public IActionResult Post(Rental rental) {
 
-            return Ok(rental);
+            _repo.Add(rental);
+            if (_repo.SaveChanges()) {
+                return Ok(rental);
+            }
+            else {
+                return BadRequest("Aluguel não cadastrado");
+            };
         }
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, Rental rental) {
 
-            return Ok(rental);
+            var rent = _repo.GetRentalById(id);
+
+            if (rent == null) {
+                return BadRequest("Aluguel não existe");
+            }
+            else {
+                _repo.Update(rental);
+                if (_repo.SaveChanges()) {
+                    return Ok(rental);
+                }
+                else {
+                    return BadRequest("Aluguel não atualizado");
+                }
+            }
         }
 
 
@@ -57,7 +70,19 @@ namespace ProjetoLivrariaAPI.Controllers {
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
 
-            return Ok();
+            var rental = _repo.GetRentalById(id);
+            if (rental == null) {
+                return BadRequest("Aluguel não existe");
+            }
+            else {
+                _repo.Delete(rental);
+                if (_repo.SaveChanges()) {
+                    return Ok("Aluguel Deletado com sucesso");
+                }
+                else {
+                    return BadRequest("Aluguel não excluido");
+                }
+            }
         }
     }
 }

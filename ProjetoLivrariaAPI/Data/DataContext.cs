@@ -1,15 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Data
-{
+namespace ProjetoLivrariaAPI.Data {
 
     //A classe DataContext é a classe responsável em criar nossa conexão e comunicação com o banco de dados. 
-    public class DataContext : DbContext
-    {
+    public class DataContext : DbContext {
 
-        public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
+        public DataContext(DbContextOptions<DataContext> options) : base(options) {
 
         }
         public DbSet<User> Users { get; set; }
@@ -20,8 +17,7 @@ namespace ProjetoLivrariaAPI.Data
 
         public DbSet<Rental> Rentals { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
+        protected override void OnModelCreating(ModelBuilder builder) {
 
             builder.Entity<Publisher>()
                 .HasData(new List<Publisher>(){
@@ -51,6 +47,11 @@ namespace ProjetoLivrariaAPI.Data
                     new User(6, "Pedro", "Alvares", "456454545", "Bairro ellery"),
                     new User(7, "Paulo", "José", "9874512", "Bairro ellery")
                 });
+
+            builder.Entity<Rental>()
+               .HasData(new List<Rental>(){
+                    new Rental(1, 1, 1, "33225555" , "Bairro ellery" , "Bairro ellery" , "Bairro ellery")
+               });
         }
     }
 }
