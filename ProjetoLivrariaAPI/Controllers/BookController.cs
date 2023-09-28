@@ -22,7 +22,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = _repo.GetAllBooks(true);
             return Ok(result);
         }
-
+         
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
             var book = _repo.GetBookById(id , true);
