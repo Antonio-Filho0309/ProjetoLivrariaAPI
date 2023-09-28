@@ -11,6 +11,7 @@ namespace ProjetoLivrariaAPI.Models {
             this.PublisherId = publisherId;
             this.Release = release;
             this.Quantity = quantity;
+            
         }
 
         public int Id { get; set; }

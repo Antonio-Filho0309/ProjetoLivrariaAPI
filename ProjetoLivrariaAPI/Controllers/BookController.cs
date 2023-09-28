@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers {
@@ -8,9 +10,11 @@ namespace ProjetoLivrariaAPI.Controllers {
     [ApiController]
     public class BookController : ControllerBase {
         private readonly IBookRepository _repo;
+        private readonly IMapper _mapper;
 
-         public BookController(IBookRepository repo) {
+        public BookController(IBookRepository repo, IMapper mapper) {
             _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -21,7 +25,7 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
-            var book = _repo.GetBookById(id);
+            var book = _repo.GetBookById(id , true);
             if (book == null) {
                 return BadRequest("Livro não encontrado");
             }
@@ -31,10 +35,16 @@ namespace ProjetoLivrariaAPI.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Post(Book book) {
+        public IActionResult Post(CreateBookDto model) {
+
+            var book = _mapper.Map<Book>(model);
+
             _repo.Add(book);
+
             if (_repo.SaveChanges()) {
-                return Ok(book);
+
+                return Created($"/api/book/{book.Id}", _mapper.Map<Book>(book));
+
             }
             else {
                 return BadRequest("Livro não cadastrado");
