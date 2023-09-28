@@ -8,18 +8,14 @@ namespace ProjetoLivrariaAPI.Helpers {
         public ProjetoLivrariaProfile()
         {
             //Usuário
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<User, UserDto>().ReverseMap();
 
             //Editora
-            CreateMap<Publisher, PublisherDto>();
-            CreateMap<PublisherDto, Publisher>();
+            CreateMap<Publisher, PublisherDto>().ReverseMap();
 
             //Livro  
-            CreateMap<Book , CreateBookDto>();
-            CreateMap<CreateBookDto, Book>();
-            CreateMap<Book, BookDto>();
-            CreateMap<BookDto, Book>();
+            CreateMap<Book , CreateBookDto>().ReverseMap();
+            CreateMap<Book, UpdateBookDto>().ReverseMap();
         }
     }
 }

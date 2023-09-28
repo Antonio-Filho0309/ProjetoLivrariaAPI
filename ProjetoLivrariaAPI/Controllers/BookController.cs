@@ -52,15 +52,17 @@ namespace ProjetoLivrariaAPI.Controllers {
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Book book) {
-            var b = _repo.GetBookById(id);
-            if (b == null) {
+        public IActionResult Put(int id, UpdateBookDto model) {
+            var book = _repo.GetBookById(id , true);
+            if (book == null) {
                 return BadRequest("Livro não existe");
             }
             else {
+                _mapper.Map(model, book);
+
                 _repo.Update(book);
                 if (_repo.SaveChanges()) {
-                    return Ok(book);
+                    return Created($"/api/book/{model.Id}", book);
                 }
                 else {
                     return BadRequest("Livro não atualizado");

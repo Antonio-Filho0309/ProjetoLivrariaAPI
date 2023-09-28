@@ -50,13 +50,13 @@ namespace ProjetoLivrariaAPI.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Post(UserDto model) {
+        public IActionResult Post(CreateUserDto model) {
 
             var user = _mapper.Map<User>(model);
 
             _repo.Add(user);
             if (_repo.SaveChanges()) {
-                return Created($"/api/user/{model.Id}" , _mapper.Map<UserDto>(user));
+                return Created($"/api/user/{user.Id}" , _mapper.Map<User>(user));
             }
             else {
                 return BadRequest("Usuário não cadastrado");
