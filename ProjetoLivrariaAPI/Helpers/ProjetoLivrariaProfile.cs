@@ -13,11 +13,16 @@ namespace ProjetoLivrariaAPI.Helpers {
             //Editora
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             CreateMap<Publisher, PublisherDto>().ReverseMap();
 
             //Livro  
             CreateMap<Book , CreateBookDto>().ReverseMap();
             CreateMap<Book, UpdateBookDto>().ReverseMap();
+=======
+            CreateMap<Publisher, PublisherDto>();
+            CreateMap<PublisherDto, Publisher>();
+>>>>>>> parent of fa3b0b8 (muda tudo)
 =======
             CreateMap<Publisher, PublisherDto>();
             CreateMap<PublisherDto, Publisher>();
