@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Data.Intefaces;
-using ProjetoLivrariaAPI.Dtos;
+using ProjetoLivrariaAPI.Dtos.Publisher;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers
@@ -45,13 +45,13 @@ namespace ProjetoLivrariaAPI.Controllers
 
 
         [HttpPost]
-        public IActionResult Post(PublisherDto model) {
+        public IActionResult Post(CreatePublisherDto model) {
 
             var publisher = _mapper.Map<Publisher>(model);
 
             _repo.Add(publisher);
             if (_repo.SaveChanges()) {
-                return Created($"/api/publisher/{model.Id}", _mapper.Map<PublisherDto>(publisher));
+                return Created($"/api/publisher/{publisher.Id}", _mapper.Map<Publisher>(publisher));
             }
             else {
                 return BadRequest("Editora não cadastrada");
@@ -60,7 +60,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id ,PublisherDto model) {
+        public IActionResult Put(int id ,UpdatePublisherDto model) {
 
             var publisher = _repo.GetlPublisherById(id);
             if (publisher == null) {
@@ -71,7 +71,7 @@ namespace ProjetoLivrariaAPI.Controllers
 
                 _repo.Update(publisher);
                 if (_repo.SaveChanges()) {
-                    return Created($"/api/publisher/{model.Id}", _mapper.Map<PublisherDto>(publisher));
+                    return Created($"/api/publisher/{model.Id}", _mapper.Map<Publisher>(publisher));
                 }
                 else {
                     return BadRequest("Editora não atualizada");
@@ -84,12 +84,12 @@ namespace ProjetoLivrariaAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
 
-            var publi = _repo.GetlPublisherById(id);
-            if (publi == null) {
+            var publisher = _repo.GetlPublisherById(id);
+            if (publisher == null) {
                 return BadRequest("Editora não existe");
             }
             else {
-                _repo.Delete(publi);
+                _repo.Delete(publisher);
                 if (_repo.SaveChanges()) {
                     return Ok("Editora Removida com sucesso");
                 }

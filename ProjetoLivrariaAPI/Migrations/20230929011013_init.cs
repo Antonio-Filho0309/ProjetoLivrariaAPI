@@ -48,7 +48,8 @@ namespace ProjetoLivrariaAPI.Migrations
                     Author = table.Column<string>(type: "TEXT", nullable: false),
                     PublisherId = table.Column<int>(type: "INTEGER", nullable: false),
                     Release = table.Column<int>(type: "INTEGER", nullable: false),
-                    Quantity = table.Column<int>(type: "INTEGER", nullable: false)
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Rented = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,28 +154,28 @@ namespace ProjetoLivrariaAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release" },
-                values: new object[] { 1, "Pitágoras", "Matemática", 1, 13, 2005 });
+                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release", "Rented" },
+                values: new object[] { 1, "Pitágoras", "Matemática", 1, 13, 2005, 2 });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release" },
-                values: new object[] { 2, "Cristovão Comlombo", "Português", 2, 10, 2003 });
+                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release", "Rented" },
+                values: new object[] { 2, "Cristovão Comlombo", "Português", 2, 10, 2003, 2 });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release" },
-                values: new object[] { 3, "Jesus Cristo", "História", 3, 1, 1999 });
+                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release", "Rented" },
+                values: new object[] { 3, "Jesus Cristo", "História", 3, 1, 1999, 2 });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release" },
-                values: new object[] { 4, "Jesus Cristo", "História", 3, 1, 1999 });
+                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release", "Rented" },
+                values: new object[] { 4, "Jesus Cristo", "História", 3, 1, 1999, 2 });
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release" },
-                values: new object[] { 5, "Cão", "Geografia", 3, 1, 1999 });
+                columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release", "Rented" },
+                values: new object[] { 5, "Cão", "Geografia", 3, 1, 1999, 2 });
 
             migrationBuilder.InsertData(
                 table: "Rentals",

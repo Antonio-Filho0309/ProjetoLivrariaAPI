@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Data.Intefaces;
-using ProjetoLivrariaAPI.Dtos;
+using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Controllers {
+namespace ProjetoLivrariaAPI.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
 
@@ -50,13 +51,13 @@ namespace ProjetoLivrariaAPI.Controllers {
         }
 
         [HttpPost]
-        public IActionResult Post(UserDto model) {
+        public IActionResult Post(CreateUserDto model) {
 
             var user = _mapper.Map<User>(model);
 
             _repo.Add(user);
             if (_repo.SaveChanges()) {
-                return Created($"/api/user/{model.Id}" , _mapper.Map<UserDto>(user));
+                return Created($"/api/user/{user.Id}" , _mapper.Map<UserDto>(user));
             }
             else {
                 return BadRequest("Usuário não cadastrado");
@@ -65,7 +66,7 @@ namespace ProjetoLivrariaAPI.Controllers {
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, UserDto model) {
+        public IActionResult Put(int id, UpdateUserDto model) {
             var user = _repo.GetlUserById(id);
             if (user == null) {
                 return BadRequest("Usuário não encontrado");

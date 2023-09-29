@@ -39,6 +39,9 @@ namespace ProjetoLivrariaAPI.Migrations
                     b.Property<int>("Release")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Rented")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PublisherId");
@@ -53,7 +56,8 @@ namespace ProjetoLivrariaAPI.Migrations
                             Name = "Matemática",
                             PublisherId = 1,
                             Quantity = 13,
-                            Release = 2005
+                            Release = 2005,
+                            Rented = 2
                         },
                         new
                         {
@@ -62,7 +66,8 @@ namespace ProjetoLivrariaAPI.Migrations
                             Name = "Português",
                             PublisherId = 2,
                             Quantity = 10,
-                            Release = 2003
+                            Release = 2003,
+                            Rented = 2
                         },
                         new
                         {
@@ -71,7 +76,8 @@ namespace ProjetoLivrariaAPI.Migrations
                             Name = "História",
                             PublisherId = 3,
                             Quantity = 1,
-                            Release = 1999
+                            Release = 1999,
+                            Rented = 2
                         },
                         new
                         {
@@ -80,7 +86,8 @@ namespace ProjetoLivrariaAPI.Migrations
                             Name = "História",
                             PublisherId = 3,
                             Quantity = 1,
-                            Release = 1999
+                            Release = 1999,
+                            Rented = 2
                         },
                         new
                         {
@@ -89,7 +96,8 @@ namespace ProjetoLivrariaAPI.Migrations
                             Name = "Geografia",
                             PublisherId = 3,
                             Quantity = 1,
-                            Release = 1999
+                            Release = 1999,
+                            Rented = 2
                         });
                 });
 

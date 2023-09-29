@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Controllers {
@@ -8,33 +10,38 @@ namespace ProjetoLivrariaAPI.Controllers {
     [ApiController]
     public class BookController : ControllerBase {
         private readonly IBookRepository _repo;
+        private readonly IMapper _mapper;
 
-         public BookController(IBookRepository repo) {
+        public BookController(IBookRepository repo , IMapper mapper) {
             _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Get() {
-            var result = _repo.GetAllBooks(true);
-            return Ok(result);
+            var books = _repo.GetAllBooks(true);
+            return Ok(_mapper.Map<IEnumerable<BookDto>>(books));
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id) {
-            var book = _repo.GetBookById(id);
+
+            var book = _repo.GetBookById(id , true);
+            var bookDto = _mapper.Map<BookDto>(book);
             if (book == null) {
                 return BadRequest("Livro não encontrado");
             }
             else {
-                return Ok(book);
+                return Ok(bookDto);
             }
         }
 
         [HttpPost]
-        public IActionResult Post(Book book) {
+        public IActionResult Post(CreateBookDto model) {
+            var book = _mapper.Map<Book>(model);
             _repo.Add(book);
             if (_repo.SaveChanges()) {
-                return Ok(book);
+                return Created($"/api/book/{book.Id}", _mapper.Map<Book>(book));
             }
             else {
                 return BadRequest("Livro não cadastrado");
@@ -42,15 +49,18 @@ namespace ProjetoLivrariaAPI.Controllers {
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, Book book) {
-            var b = _repo.GetBookById(id);
-            if (b == null) {
+        public IActionResult Put(int id, UpdateBookDto model) {
+            var book = _repo.GetBookById(id , true);
+            if (book == null) {
                 return BadRequest("Livro não existe");
             }
             else {
+
+                _mapper.Map(model ,book);
+
                 _repo.Update(book);
                 if (_repo.SaveChanges()) {
-                    return Ok(book);
+                    return Created($"/api/book/{model.Id}", _mapper.Map<Book>(book));
                 }
                 else {
                     return BadRequest("Livro não atualizado");
@@ -60,11 +70,11 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
-            var b = _repo.GetBookById(id);
-            if (b == null) {
+            var book = _repo.GetBookById(id);
+            if (book == null) {
                 return BadRequest("Livro não existe");
             }else {
-                _repo.Delete(b);
+                _repo.Delete(book);
                 if(_repo.SaveChanges()) {
                     return Ok("Livro Deletado com sucesso");
                 }else {

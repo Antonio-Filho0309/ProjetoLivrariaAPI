@@ -30,11 +30,11 @@ namespace ProjetoLivrariaAPI.Data {
 
             builder.Entity<Book>()
                 .HasData(new List<Book>{
-                    new Book(1, "Matemática", "Pitágoras" , 1 , 2005 ,13),
-                    new Book(2,"Português", "Cristovão Comlombo" , 2 , 2003 ,10),
-                    new Book(3,"História", "Jesus Cristo" , 3 , 1999 ,1),
-                    new Book(4,"História", "Jesus Cristo" , 3 , 1999 ,1),
-                    new Book(5,"Geografia", "Cão" , 3 , 1999 ,1),
+                    new Book(1, "Matemática", "Pitágoras" , 1 , 2005 ,13,2),
+                    new Book(2,"Português", "Cristovão Comlombo" , 2 , 2003 ,10, 2),
+                    new Book(3,"História", "Jesus Cristo" , 3 , 1999 ,1, 2),
+                    new Book(4,"História", "Jesus Cristo" , 3 , 1999 ,1, 2),
+                    new Book(5,"Geografia", "Cão" , 3 , 1999 ,1,2),
                 });
 
             builder.Entity<User>()

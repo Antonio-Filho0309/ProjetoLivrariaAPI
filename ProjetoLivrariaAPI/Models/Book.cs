@@ -4,13 +4,14 @@ namespace ProjetoLivrariaAPI.Models {
 
         public Book() { }
 
-        public Book(int id, string name, string author, int publisherId, int release, int quantity) {
+        public Book(int id, string name, string author, int publisherId, int release, int quantity, int rented) {
             this.Id = id;
             this.Name = name;
             this.Author = author;
             this.PublisherId = publisherId;
             this.Release = release;
             this.Quantity = quantity;
+            this.Rented = rented;
         }
 
         public int Id { get; set; }
@@ -25,6 +26,8 @@ namespace ProjetoLivrariaAPI.Models {
         public int Release { get; set; }
 
         public int Quantity { get; set; }
+
+        public int Rented { get; set; }
 
     }
 }
