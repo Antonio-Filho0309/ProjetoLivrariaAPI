@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Dtos.Book;
+using ProjetoLivrariaAPI.Dtos.Rental;
 using ProjetoLivrariaAPI.Models;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
@@ -9,37 +13,42 @@ namespace ProjetoLivrariaAPI.Controllers {
     public class RentalController : ControllerBase {
 
         private readonly IRentalRepository _repo;
+        private readonly IMapper _mapper;
 
-        public RentalController(IRentalRepository repo) {
-           _repo = repo;
+        public RentalController(IRentalRepository repo, IMapper mapper) {
+            _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult Get() {
-            var result = _repo.GetAllRentals(true , true);
+            var rentals = _repo.GetAllRentals(true, true);
 
-            return Ok(result);
+            return Ok(_mapper.Map<IEnumerable<RentalDto>>(rentals));
         }
 
         [HttpGet("{id}")]
 
         public IActionResult GetByid(int id) {
-                var rental = _repo.GetRentalById(id);
-                if (rental == null) {
-                    return BadRequest("Aluguel não encontrado");
-                }
-                else {
-                    return Ok(rental);
-                }
+            var rental = _repo.GetRentalById(id, true , true);
+            var rentalDto = _mapper.Map<RentalDto>(rental);
+            if (rental == null) {
+                return BadRequest("Aluguel não encontrado");
             }
+            else {
+                return Ok(rentalDto);
+            }
+        }
 
 
         [HttpPost]
-        public IActionResult Post(Rental rental) {
+        public IActionResult Post(CreateRentalDto model) {
+
+            var rental = _mapper.Map<Rental>(model);
 
             _repo.Add(rental);
             if (_repo.SaveChanges()) {
-                return Ok(rental);
+                return Created($"/api/rental/{rental.Id}", _mapper.Map<Rental>(rental));
             }
             else {
                 return BadRequest("Aluguel não cadastrado");

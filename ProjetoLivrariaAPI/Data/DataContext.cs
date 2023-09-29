@@ -48,10 +48,7 @@ namespace ProjetoLivrariaAPI.Data {
                     new User(7, "Paulo", "José", "9874512", "Bairro ellery")
                 });
 
-            builder.Entity<Rental>()
-               .HasData(new List<Rental>(){
-                    new Rental(1, 1, 1, "33225555" , "Bairro ellery" , "Bairro ellery" , "Bairro ellery")
-               });
+          
         }
     }
 }

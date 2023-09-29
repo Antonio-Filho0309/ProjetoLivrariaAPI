@@ -38,6 +38,7 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpPost]
         public IActionResult Post(CreateBookDto model) {
+
             var book = _mapper.Map<Book>(model);
             _repo.Add(book);
             if (_repo.SaveChanges()) {

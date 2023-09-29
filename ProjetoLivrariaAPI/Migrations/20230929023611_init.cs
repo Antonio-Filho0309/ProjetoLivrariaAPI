@@ -177,11 +177,6 @@ namespace ProjetoLivrariaAPI.Migrations
                 columns: new[] { "Id", "Author", "Name", "PublisherId", "Quantity", "Release", "Rented" },
                 values: new object[] { 5, "Cão", "Geografia", 3, 1, 1999, 2 });
 
-            migrationBuilder.InsertData(
-                table: "Rentals",
-                columns: new[] { "Id", "BookId", "PreviewDate", "RentalDate", "ReturnDate", "Status", "UserId" },
-                values: new object[] { 1, 1, "Bairro ellery", "33225555", "Bairro ellery", "Bairro ellery", 1 });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherId",
                 table: "Books",

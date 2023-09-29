@@ -10,7 +10,7 @@ using ProjetoLivrariaAPI.Data;
 namespace ProjetoLivrariaAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230929011013_init")]
+    [Migration("20230929023611_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -189,18 +189,6 @@ namespace ProjetoLivrariaAPI.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Rentals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BookId = 1,
-                            PreviewDate = "Bairro ellery",
-                            RentalDate = "33225555",
-                            ReturnDate = "Bairro ellery",
-                            Status = "Bairro ellery",
-                            UserId = 1
-                        });
                 });
 
             modelBuilder.Entity("ProjetoLivrariaAPI.Models.User", b =>
