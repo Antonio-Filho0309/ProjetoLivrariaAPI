@@ -10,7 +10,7 @@ using ProjetoLivrariaAPI.Data;
 namespace ProjetoLivrariaAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230929023611_init")]
+    [Migration("20230930164141_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,19 +164,15 @@ namespace ProjetoLivrariaAPI.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("PreviewDate")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("RentalDate")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ReturnDate")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("UserId")

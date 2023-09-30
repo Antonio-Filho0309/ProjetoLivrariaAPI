@@ -70,10 +70,10 @@ namespace ProjetoLivrariaAPI.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     BookId = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RentalDate = table.Column<string>(type: "TEXT", nullable: false),
-                    PreviewDate = table.Column<string>(type: "TEXT", nullable: false),
-                    ReturnDate = table.Column<string>(type: "TEXT", nullable: false),
-                    Status = table.Column<string>(type: "TEXT", nullable: false)
+                    RentalDate = table.Column<string>(type: "TEXT", nullable: true),
+                    PreviewDate = table.Column<string>(type: "TEXT", nullable: true),
+                    ReturnDate = table.Column<string>(type: "TEXT", nullable: true),
+                    Status = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

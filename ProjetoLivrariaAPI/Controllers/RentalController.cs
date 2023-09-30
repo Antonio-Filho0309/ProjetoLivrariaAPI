@@ -45,6 +45,7 @@ namespace ProjetoLivrariaAPI.Controllers {
         public IActionResult Post(CreateRentalDto model) {
 
             var rental = _mapper.Map<Rental>(model);
+            rental.Status = "Pendente";
 
             _repo.Add(rental);
             if (_repo.SaveChanges()) {
