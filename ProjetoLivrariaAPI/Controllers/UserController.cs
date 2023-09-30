@@ -11,9 +11,13 @@ namespace ProjetoLivrariaAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     
     public class UserController : ControllerBase {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="mapper"></param>
 
         public readonly IUserRepository _repo;
         private readonly IMapper _mapper;
@@ -23,7 +27,10 @@ namespace ProjetoLivrariaAPI.Controllers
             _mapper = mapper;
         }
 
-
+        /// <summary>
+        /// Método Responsável para listar todos os usuários
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         public IActionResult Get() {
@@ -34,6 +41,12 @@ namespace ProjetoLivrariaAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<UserDto>>(users));
 
         }
+
+        /// <summary>
+        /// Método Responsável para buscar o usuário pelo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet("{id}")]
 
@@ -50,6 +63,12 @@ namespace ProjetoLivrariaAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Método Responsável para Cadastrar os usuários 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+
         [HttpPost]
         public IActionResult Post(CreateUserDto model) {
 
@@ -64,6 +83,13 @@ namespace ProjetoLivrariaAPI.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Método Responsável para atualizar os cadastros do usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, UpdateUserDto model) {
@@ -85,6 +111,11 @@ namespace ProjetoLivrariaAPI.Controllers
             }
         }
         
+        /// <summary>
+        /// Método Resposável para Deletar o cadastro do usuário
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) {
             var user = _repo.GetlUserById(id);
