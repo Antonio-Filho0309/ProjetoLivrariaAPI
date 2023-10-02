@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Data.Intefaces;
 using System.Reflection;
@@ -23,6 +24,21 @@ builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IRentalRepository, RentalRepository>();
 
 builder.Services.AddSwaggerGen(options => {
+    options.SwaggerDoc("v1", new OpenApiInfo {
+        Version = "1.0",
+        Title = "ProjetoLivrariaAPI",
+        Description = "Projeto de uma livraria em C#",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact {
+            Name = "Antonio José dos Santos Filho",
+            Email = "antoniodollmichael@gmail.com",
+            Url = new Uri("https://scintillating-biscotti-bbc86f.netlify.app")
+        },
+        License = new OpenApiLicense {
+            Name = "Projeto livraria License",
+            Url = new Uri("https://mit.edu")
+        },
+    });
     var xmlCommentsFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
     options.IncludeXmlComments(xmlCommentsFullPath);
