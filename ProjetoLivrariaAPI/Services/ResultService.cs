@@ -4,14 +4,14 @@ namespace ProjetoLivrariaAPI.Services {
         public bool IsSucess { get; set; }
         public string Message { get; set; }
 
-        public ICollection<ErroValidation> Errors { get; set; }
+        public ICollection<ErrorValidation> Errors { get; set; }
 
         public static ResultService RequestError(string message , ValidationResult validationResult) {
 
             return new ResultService {
                 IsSucess = true,
                 Message = message,
-                Errors = validationResult.Errors.Select(x => new ErroValidation { Field = x.PropertyName, Message = x.ErrorMessage }).ToList()
+                Errors = validationResult.Errors.Select(x => new ErrorValidation { Field = x.PropertyName, Message = x.ErrorMessage }).ToList()
             };
 
         }
@@ -22,7 +22,7 @@ namespace ProjetoLivrariaAPI.Services {
 
                 IsSucess = true,
                 Message = message,
-                Errors = validationResult.Errors.Select(x => new ErroValidation { Field = x.PropertyName, Message = x.ErrorMessage }).ToList()
+                Errors = validationResult.Errors.Select(x => new ErrorValidation { Field = x.PropertyName, Message = x.ErrorMessage }).ToList()
             };
 
         }
