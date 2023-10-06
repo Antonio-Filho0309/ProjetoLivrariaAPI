@@ -2,7 +2,8 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ProjetoLivrariaAPI.Data;
-using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Repositories;
+using ProjetoLivrariaAPI.Repositories.Intefaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

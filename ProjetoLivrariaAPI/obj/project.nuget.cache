@@ -1,12 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "fB0SwDk/+OZWgRQYS/BX9BmgCiPtPmLv4rVCc1i4KWnUYXhTOOOpfLbP+Ilt47EsyLGB9AbRWQIWfMXUEv4HQg==",
+  "dgSpecHash": "+aYxYZ4D53D6SB5a9bbEYbeItIhi0pOE/3/8Dff9vxvBSxo/x8GFYjGMTUgAphqs2JBR/xn5DGMa1Q3iUr2b7A==",
   "success": true,
   "projectFilePath": "D:\\WDAPROJETO\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI\\ProjetoLivrariaAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AJ\\.nuget\\packages\\automapper\\9.0.0\\automapper.9.0.0.nupkg.sha512",
     "C:\\Users\\AJ\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\7.0.0\\automapper.extensions.microsoft.dependencyinjection.7.0.0.nupkg.sha512",
-    "C:\\Users\\AJ\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
     "C:\\Users\\AJ\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\AJ\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.22\\microsoft.aspnetcore.jsonpatch.6.0.22.nupkg.sha512",
     "C:\\Users\\AJ\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.22\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.22.nupkg.sha512",

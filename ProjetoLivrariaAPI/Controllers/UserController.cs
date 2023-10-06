@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
-using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Repositories.Intefaces;
 
 namespace ProjetoLivrariaAPI.Controllers
 {

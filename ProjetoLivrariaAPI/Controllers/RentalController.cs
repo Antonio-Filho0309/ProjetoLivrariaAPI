@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoLivrariaAPI.Data.Intefaces;
 using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Dtos.Rental;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Repositories.Intefaces;
 using static System.Reflection.Metadata.BlobBuilder;
 
-namespace ProjetoLivrariaAPI.Controllers {
+namespace ProjetoLivrariaAPI.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
     public class RentalController : ControllerBase {

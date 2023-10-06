@@ -1,7 +1,9 @@
 ﻿using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Data.Intefaces {
-    public interface IPublisherRepository {
+namespace ProjetoLivrariaAPI.Repositories.Intefaces
+{
+    public interface IPublisherRepository
+    {
 
         void Add<T>(T entity) where T : class;
         void Update<T>(T entity) where T : class;

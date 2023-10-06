@@ -1,36 +1,46 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProjetoLivrariaAPI.Data.Intefaces;
+using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Repositories.Intefaces;
 using System.Net;
 
-namespace ProjetoLivrariaAPI.Data {
-    public class BookRepository : IBookRepository {
+namespace ProjetoLivrariaAPI.Repositories
+{
+    public class BookRepository : IBookRepository
+    {
         private readonly DataContext _context;
 
-        public BookRepository(DataContext context) {
+        public BookRepository(DataContext context)
+        {
             _context = context;
         }
 
-        public void Add<T>(T entity) where T : class {
+        public void Add<T>(T entity) where T : class
+        {
             _context.Add(entity);
         }
 
-        public void Update<T>(T entity) where T : class {
+        public void Update<T>(T entity) where T : class
+        {
             _context.Update(entity);
         }
 
-        public void Delete<T>(T entity) where T : class {
+        public void Delete<T>(T entity) where T : class
+        {
             _context.Remove(entity);
         }
 
-        public bool SaveChanges() {
-            return (_context.SaveChanges() > 0);
+        public bool SaveChanges()
+        {
+            return _context.SaveChanges() > 0;
         }
 
-        public Book[] GetAllBooks(bool includePublisher = false) {
+        public Book[] GetAllBooks(bool includePublisher = false)
+        {
             IQueryable<Book> query = _context.Books;
 
-            if (includePublisher) {
+            if (includePublisher)
+            {
 
                 query = query.Include(b => b.Publisher);
             }
@@ -40,10 +50,12 @@ namespace ProjetoLivrariaAPI.Data {
             return query.ToArray();
         }
 
-        public Book GetBookById(int bookId, bool includePublisher = false) {
+        public Book GetBookById(int bookId, bool includePublisher = false)
+        {
             IQueryable<Book> query = _context.Books;
 
-            if (includePublisher) {
+            if (includePublisher)
+            {
 
                 query = query.Include(b => b.Publisher);
             }
@@ -55,10 +67,12 @@ namespace ProjetoLivrariaAPI.Data {
 
         }
 
-        public Book GetBookByName(string bookName , bool includePublisher = false) {
+        public Book GetBookByName(string bookName, bool includePublisher = false)
+        {
             IQueryable<Book> query = _context.Books;
 
-            if (includePublisher) {
+            if (includePublisher)
+            {
 
                 query = query.Include(b => b.Publisher);
             }
