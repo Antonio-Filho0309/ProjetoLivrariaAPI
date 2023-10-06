@@ -33,11 +33,11 @@ namespace ProjetoLivrariaAPI.Repositories {
 
         public async Task<User> GetUserById(int userId) {
 
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task<User> GetUserByName(string userName) {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Name == userName);
+            return await _context.Users.FirstOrDefaultAsync(u => u.Name == userName);
         }
 
         //public void Add<T>(T entity) where T : class
