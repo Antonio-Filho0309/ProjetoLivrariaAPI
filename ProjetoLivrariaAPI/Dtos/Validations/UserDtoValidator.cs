@@ -2,7 +2,9 @@
 using ProjetoLivrariaAPI.Dtos.User;
 
 namespace ProjetoLivrariaAPI.Dtos.Validations {
-    public class UserDtoValidator : AbstractValidator<UserDto> {
+    //usar a create e a update 
+    //criar outra classe dentro do namespace
+    public class UserDtoValidator : AbstractValidator<CreateUserDto> {
         public UserDtoValidator()
         {
             RuleFor(u => u.Name)

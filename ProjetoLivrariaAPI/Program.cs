@@ -4,6 +4,8 @@ using Microsoft.OpenApi.Models;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Repositories;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
+using ProjetoLivrariaAPI.Services;
+using ProjetoLivrariaAPI.Services.Interfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +25,10 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPublisherRepository, PublisherRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPublisherService, PublisherService>();
+
 
 builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v1", new OpenApiInfo {
