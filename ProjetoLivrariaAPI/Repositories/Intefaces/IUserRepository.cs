@@ -6,7 +6,7 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces
     {
         Task<User> Add (User user);
         Task Update (User user);
-        void Delete(User user);
+        Task Delete(User user);
 
         Task <ICollection<User>> GetAllUsers();
 

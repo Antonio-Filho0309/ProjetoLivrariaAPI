@@ -3,64 +3,91 @@ using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 
-namespace ProjetoLivrariaAPI.Repositories
-{
-    public class UserRepository : IUserRepository
-    {
+namespace ProjetoLivrariaAPI.Repositories {
+    public class UserRepository : IUserRepository {
         private readonly DataContext _context;
 
-        public UserRepository(DataContext context)
-        {
+        public UserRepository(DataContext context) {
             _context = context;
         }
-        public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
+
+        public async Task<User> Add(User user) {
+            _context.Add(user);
+            await _context.SaveChangesAsync();
+            return user;
+        }
+        public async Task Update(User user) {
+            _context.Update(user);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update<T>(T entity) where T : class
-        {
-            _context.Update(entity);
+        public async Task Delete(User user) {
+            _context.Remove(user);
+            await _context.SaveChangesAsync();
+
         }
 
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
+        public async Task<ICollection<User>> GetAllUsers() {
+            return await _context.Users.ToListAsync();
         }
 
-        public bool SaveChanges()
-        {
+        public async Task<User> GetUserById(int userId) {
 
-            return _context.SaveChanges() > 0;
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
         }
 
-        public User[] GetAllUsers()
-        {
-            IQueryable<User> query = _context.Users;
-
-            query = query.AsNoTracking().OrderBy(u => u.Id);
-
-            return query.ToArray();
+        public async Task<User> GetUserByName(string userName) {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Name == userName);
         }
 
-        public User GetlUserById(int userId)
-        {
-            IQueryable<User> query = _context.Users;
+        //public void Add<T>(T entity) where T : class
+        //{
+        //    _context.Add(entity);
+        //}
 
-            query = query.AsNoTracking().OrderBy(u => u.Id)
-                .Where(user => user.Id == userId);
+        //public void Update<T>(T entity) where T : class
+        //{
+        //    _context.Update(entity);
+        //}
 
-            return query.FirstOrDefault();
-        }
+        //public void Delete<T>(T entity) where T : class
+        //{
+        //    _context.Remove(entity);
+        //}
 
-        public User GetlUserByName(string userName)
-        {
-            IQueryable<User> query = _context.Users;
+        //public bool SaveChanges()
+        //{
 
-            query = query.AsNoTracking().OrderBy(u => u.Id)
-                .Where(user => user.Name == userName);
+        //    return _context.SaveChanges() > 0;
+        //}
 
-            return query.FirstOrDefault();
-        }
+        //public User[] GetAllUsers()
+        //{
+        //    IQueryable<User> query = _context.Users;
+
+        //    query = query.AsNoTracking().OrderBy(u => u.Id);
+
+        //    return query.ToArray();
+        //}
+
+        //public User GetlUserById(int userId)
+        //{
+        //    IQueryable<User> query = _context.Users;
+
+        //    query = query.AsNoTracking().OrderBy(u => u.Id)
+        //        .Where(user => user.Id == userId);
+
+        //    return query.FirstOrDefault();
+        //}
+
+        //public User GetlUserByName(string userName)
+        //{
+        //    IQueryable<User> query = _context.Users;
+
+        //    query = query.AsNoTracking().OrderBy(u => u.Id)
+        //        .Where(user => user.Name == userName);
+
+        //    return query.FirstOrDefault();
+        //}
     }
 }
