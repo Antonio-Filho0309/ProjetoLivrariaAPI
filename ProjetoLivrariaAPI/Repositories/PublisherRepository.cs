@@ -14,57 +14,89 @@ namespace ProjetoLivrariaAPI.Repositories
             _context = context;
         }
 
-        public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
+        public async Task<Publisher> Add(Publisher publisher) {
+            _context.Add(publisher);
+           await _context.SaveChangesAsync();
+            return publisher;
         }
 
-        public void Update<T>(T entity) where T : class
-        {
-            _context.Update(entity);
+
+        public async Task Update(Publisher publisher) {
+           _context.Update(publisher);
+            await _context.SaveChangesAsync();
+           
         }
 
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
+        public async Task Delete(Publisher publisher) {
+           _context.Remove(publisher);
+            await _context.SaveChangesAsync();
         }
 
-        public bool SaveChanges()
-        {
-            return _context.SaveChanges() > 0;
+        public async Task<ICollection<Publisher>> GetAllPublishers() {
+            return await _context.Publishers.ToListAsync();
         }
 
-        public Publisher[] GetAllPublishers()
-        {
-            IQueryable<Publisher> query = _context.Publishers;
+        public async Task<Publisher> GetlPublisherById(int publisherId) {
 
-            query = query.AsNoTracking().OrderBy(p => p.Id);
-
-            return query.ToArray();
-
+            return await _context.Publishers.FirstOrDefaultAsync(p => p.Id == publisherId);
         }
 
-        public Publisher GetlPublisherById(int publisherId)
-        {
-
-            IQueryable<Publisher> query = _context.Publishers;
-
-            query = query.AsNoTracking().OrderBy(p => p.Id)
-                .Where(p => p.Id == publisherId);
-
-            return query.FirstOrDefault();
+        public async Task<Publisher> GetlPublisherByName(string publisherName) {
+            return await _context.Publishers.FirstOrDefaultAsync(p => p.Name == publisherName);
         }
 
-        public Publisher GetlPublisherByName(string publisherName)
-        {
-            IQueryable<Publisher> query = _context.Publishers;
 
-            query = query.AsNoTracking().OrderBy(p => p.Name)
-                .Where(p => p.Name == publisherName);
+        //public void Add<T>(T entity) where T : class
+        //{
+        //    _context.Add(entity);
+        //}
 
-            return query.FirstOrDefault();
+        //public void Update<T>(T entity) where T : class
+        //{
+        //    _context.Update(entity);
+        //}
+
+        //public void Delete<T>(T entity) where T : class
+        //{
+        //    _context.Remove(entity);
+        //}
+
+        //public bool SaveChanges()
+        //{
+        //    return _context.SaveChanges() > 0;
+        //}
+
+        //public Publisher[] GetAllPublishers()
+        //{
+        //    IQueryable<Publisher> query = _context.Publishers;
+
+        //    query = query.AsNoTracking().OrderBy(p => p.Id);
+
+        //    return query.ToArray();
+
+        //}
+
+        //public Publisher GetlPublisherById(int publisherId)
+        //{
+
+        //    IQueryable<Publisher> query = _context.Publishers;
+
+        //    query = query.AsNoTracking().OrderBy(p => p.Id)
+        //        .Where(p => p.Id == publisherId);
+
+        //    return query.FirstOrDefault();
+        //}
+
+        //public Publisher GetlPublisherByName(string publisherName)
+        //{
+        //    IQueryable<Publisher> query = _context.Publishers;
+
+        //    query = query.AsNoTracking().OrderBy(p => p.Name)
+        //        .Where(p => p.Name == publisherName);
+
+        //    return query.FirstOrDefault();
 
 
-        }
+        //}
     }
 }

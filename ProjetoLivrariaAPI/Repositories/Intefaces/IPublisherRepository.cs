@@ -5,15 +5,15 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces
     public interface IPublisherRepository
     {
 
-        void Add<T>(T entity) where T : class;
-        void Update<T>(T entity) where T : class;
-        void Delete<T>(T entity) where T : class;
-        bool SaveChanges();
+        Task<Publisher> Add (Publisher publisher);
+        Task Update (Publisher publisher);
+        Task Delete (Publisher publisher);
 
-        Publisher[] GetAllPublishers();
-        Publisher GetlPublisherById(int publisherId);
+        Task<ICollection<Publisher>> GetAllPublishers();
 
-        Publisher GetlPublisherByName(string publisherName);
+       Task<Publisher>  GetlPublisherById(int publisherId);
+
+        Task<Publisher> GetlPublisherByName(string publisherName);
 
 
     }
