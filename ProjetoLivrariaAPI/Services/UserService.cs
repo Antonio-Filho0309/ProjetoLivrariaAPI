@@ -15,6 +15,18 @@ namespace ProjetoLivrariaAPI.Services {
             _userRepository = userRepository;
         }
 
+        public async Task<ResultService<ICollection<UserDto>>> Get() {
+            var users = await _userRepository.GetAllUsers();
+            return ResultService.ok(_mapper.Map<ICollection<UserDto>>(users));
+        }
+
+        public async  Task<ResultService<UserDto>> GetById(int id) {
+            var user = await _userRepository.GetUserById(id);
+            if (user == null)
+                return ResultService.Fail<UserDto>("Usuário não encontrado !");
+            return ResultService.ok(_mapper.Map<UserDto>(user));
+        }
+
         public async Task<ResultService> Create(CreateUserDto createUserDto) {
             if (createUserDto == null)
                 return ResultService.Fail<CreateUserDto>("Objeto deve ser informado");
@@ -28,5 +40,7 @@ namespace ProjetoLivrariaAPI.Services {
             await _userRepository.Add(user);
             return ResultService.ok(user);
         }
+
+       
     }
 }
