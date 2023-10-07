@@ -27,7 +27,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [HttpPost]
 
         public async Task<ActionResult> Post([FromBody] CreatePublisherDto createPublisherDto) {
-            var result = await _publisherService.Create(createPposublisherDto);
+            var result = await _publisherService.Create(createPublisherDto);
             if (result.IsSucess) 
                 return Ok(result);
             return BadRequest(result);

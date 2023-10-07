@@ -151,3 +151,4 @@ C:\Users\User\Documents\Trabalho2\ProjetoLivrariaAPI\ProjetoLivrariaAPI\obj\Debu
 C:\Users\User\Documents\Trabalho2\ProjetoLivrariaAPI\ProjetoLivrariaAPI\obj\Debug\net6.0\ProjetoLivrariaAPI.xml
 C:\Users\User\Documents\Trabalho2\ProjetoLivrariaAPI\ProjetoLivrariaAPI\obj\Debug\net6.0\ProjetoLivrariaAPI.genruntimeconfig.cache
 C:\Users\User\Documents\Trabalho2\ProjetoLivrariaAPI\ProjetoLivrariaAPI\obj\Debug\net6.0\ref\ProjetoLivrariaAPI.dll
+D:\WDAPROJETO\ProjetoLivrariaAPI\ProjetoLivrariaAPI\bin\Debug\net6.0\FluentValidation.dll

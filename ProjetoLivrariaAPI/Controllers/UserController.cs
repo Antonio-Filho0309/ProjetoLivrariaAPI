@@ -14,38 +14,13 @@ namespace ProjetoLivrariaAPI.Controllers
     [ApiController]
     
     public class UserController : ControllerBase {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="repo"></param>
-        /// <param name="mapper"></param>
+   
 
         private readonly IUserService _userService;
 
         public UserController(IUserService userService) {
             _userService = userService;
         }
-
-        /// <summary>
-        /// Método Responsável para listar todos os usuários
-        /// </summary>
-        /// <returns></returns>
-
-       
-
-        /// <summary>
-        /// Método Responsável para buscar o usuário pelo id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-
-       
-
-        /// <summary>
-        /// Método Responsável para Cadastrar os usuários 
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
 
         [HttpPost]
          public async Task<ActionResult> Post([FromBody] CreateUserDto createUserDto) {
@@ -57,22 +32,5 @@ namespace ProjetoLivrariaAPI.Controllers
 
         }
 
-        /// <summary>
-        /// Método Responsável para atualizar os cadastros do usuário
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-
-        
        
-        
-        /// <summary>
-        /// Método Resposável para Deletar o cadastro do usuário
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        
-       
-    
 }
