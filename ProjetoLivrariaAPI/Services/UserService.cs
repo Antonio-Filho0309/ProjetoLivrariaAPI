@@ -41,6 +41,30 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.ok(user);
         }
 
-       
+        public async Task<ResultService> Update(UpdateUserDto updateUserDto) {
+            if (updateUserDto == null)
+                return ResultService.Fail("Usuário deve ser informado");
+
+            var validation =   new UpdateUserDtoValidator().Validate(updateUserDto);
+            if (!validation.IsValid)
+                return ResultService.RequestError("Problema com a validação dos campos" , validation);
+            var user = await _userRepository.GetUserById(updateUserDto.Id);
+            if (user == null)
+                return ResultService.Fail("Pessoa não encontrada");
+            user = _mapper.Map(updateUserDto, user);
+
+            await _userRepository.Update(user);
+
+            return ResultService.ok("Usuário Atualizado com sucesso");
+           
+        }
+
+        public async Task<ResultService> Delete(int id) {
+            var user = await _userRepository.GetUserById(id);
+            if (user == null)
+                return ResultService.Fail("Usuário não encontrado");
+            await _userRepository.Delete(user);
+            return ResultService.ok("Usuário Deletado com sucesso");
+        }
     }
 }

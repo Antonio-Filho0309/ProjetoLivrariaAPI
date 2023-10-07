@@ -61,8 +61,34 @@ namespace ProjetoLivrariaAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
-        
 
+        /// <summary>
+        /// Método para editar e atualizar os dados de uma editora 
+        /// </summary>
+        /// <param name="updatePublisherDto"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<ActionResult> Put([FromBody] UpdatePublisherDto updatePublisherDto) {
+            var result = await _publisherService.Update(updatePublisherDto);
+            if(result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
+        /// Método para deletar a editora
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<ActionResult> Delete(int id) {
+            var result = await _publisherService.Delete(id);
+            if(result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
        
     
 

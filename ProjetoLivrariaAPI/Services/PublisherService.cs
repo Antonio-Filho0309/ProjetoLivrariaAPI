@@ -12,7 +12,7 @@ namespace ProjetoLivrariaAPI.Services {
         private readonly IMapper _mapper;
         private readonly IPublisherRepository _publisherRepository;
 
-        public PublisherService(IMapper mapper , IPublisherRepository publisherRepository) {
+        public PublisherService(IMapper mapper, IPublisherRepository publisherRepository) {
             _mapper = mapper;
             _publisherRepository = publisherRepository;
         }
@@ -21,13 +21,13 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.ok(_mapper.Map<ICollection<PublisherDto>>(publishers));
         }
 
-        public  async Task<ResultService<PublisherDto>> GetById(int id) {
+        public async Task<ResultService<PublisherDto>> GetById(int id) {
             var publisher = await _publisherRepository.GetlPublisherById(id);
             if (publisher == null)
                 return ResultService.Fail<PublisherDto>("Editora não encontrada");
             return ResultService.ok(_mapper.Map<PublisherDto>(publisher));
-            
-           
+
+
         }
 
         public async Task<ResultService> Create(CreatePublisherDto createPublisherDto) {
@@ -44,6 +44,26 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.ok(publisher);
         }
 
-      
+        public async Task<ResultService> Update(UpdatePublisherDto updatePublisherDto) {
+            if (updatePublisherDto == null)
+                return ResultService.Fail("Editora não encontrada");
+            var validation = new UpdatePublisherDtoValidator().Validate(updatePublisherDto);
+            if (!validation.IsValid)
+                return ResultService.RequestError("Problemas com validação de campos", validation);
+            var publisher = await _publisherRepository.GetlPublisherById(updatePublisherDto.Id);
+            if (publisher == null)
+                return ResultService.Fail("Editora não encontrada");
+            publisher = _mapper.Map(updatePublisherDto, publisher);
+            await _publisherRepository.Update(publisher);
+            return ResultService.ok("Editora atualizada com sucesso");
+        }
+
+        public async Task<ResultService> Delete(int id) {
+            var publisher = await _publisherRepository.GetlPublisherById(id);
+            if (publisher == null)
+                return ResultService.Fail("Editora não encontrada");
+            await _publisherRepository.Delete(publisher);
+            return ResultService.ok("Editora deletada com sucesso");
+        }
     }
 }
