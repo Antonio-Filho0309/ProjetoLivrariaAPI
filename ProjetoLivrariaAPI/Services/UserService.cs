@@ -33,7 +33,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             var result = new UserDtoValidator().Validate(createUserDto);
             if (!result.IsValid)
-                return ResultService.RequestError<CreateUserDto>("Problemas de Validade", result);
+                return ResultService.RequestError<CreateUserDto>("Problemas de Validação", result);
 
             var user = _mapper.Map<User>(createUserDto);
 

@@ -16,6 +16,19 @@ namespace ProjetoLivrariaAPI.Services {
             _mapper = mapper;
             _publisherRepository = publisherRepository;
         }
+        public async Task<ResultService<ICollection<PublisherDto>>> Get() {
+            var publishers = await _publisherRepository.GetAllPublishers();
+            return ResultService.ok(_mapper.Map<ICollection<PublisherDto>>(publishers));
+        }
+
+        public  async Task<ResultService<PublisherDto>> GetById(int id) {
+            var publisher = await _publisherRepository.GetlPublisherById(id);
+            if (publisher == null)
+                return ResultService.Fail<PublisherDto>("Editora não encontrada");
+            return ResultService.ok(_mapper.Map<PublisherDto>(publisher));
+            
+           
+        }
 
         public async Task<ResultService> Create(CreatePublisherDto createPublisherDto) {
             if (createPublisherDto == null)
@@ -23,12 +36,14 @@ namespace ProjetoLivrariaAPI.Services {
 
             var result = new PublisherDtoValidator().Validate(createPublisherDto);
             if (!result.IsValid)
-                return ResultService.RequestError<CreatePublisherDto>("Problemas de Validade", result);
+                return ResultService.RequestError<CreatePublisherDto>("Problemas de Validação", result);
 
             var publisher = _mapper.Map<Publisher>(createPublisherDto);
 
             await _publisherRepository.Add(publisher);
             return ResultService.ok(publisher);
         }
+
+      
     }
 }

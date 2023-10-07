@@ -2,6 +2,9 @@
 
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IPublisherService {
-       Task<ResultService> Create(CreatePublisherDto createPublisherDto);
+
+        Task<ResultService<ICollection<PublisherDto>>> Get();
+        Task<ResultService<PublisherDto>> GetById(int id);
+        Task<ResultService> Create(CreatePublisherDto createPublisherDto);
     }
 }
