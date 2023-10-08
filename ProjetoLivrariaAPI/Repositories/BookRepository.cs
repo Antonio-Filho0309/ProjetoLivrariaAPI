@@ -1,92 +1,44 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
+using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using System.Net;
 
-namespace ProjetoLivrariaAPI.Repositories
-{
-    public class BookRepository : IBookRepository
-    {
+namespace ProjetoLivrariaAPI.Repositories {
+    public class BookRepository : IBookRepository {
         private readonly DataContext _context;
 
-        public BookRepository(DataContext context)
-        {
+        public BookRepository(DataContext context) {
             _context = context;
         }
 
-        public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
+        public async Task<Book> Add(Book book) {
+            _context.Add(book);
+            await _context.SaveChangesAsync();
+            return book;
         }
 
-        public void Update<T>(T entity) where T : class
-        {
-            _context.Update(entity);
+        public async Task Update(Book book) {
+            _context.Update(book);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
+        public async Task Delete(Book book) {
+            _context.Remove(book);
+            await _context.SaveChangesAsync();
         }
 
-        public bool SaveChanges()
-        {
-            return _context.SaveChanges() > 0;
+        public async Task<ICollection<Book>> GetAllBooks(bool includePublisher = false) {
+            return await _context.Books.ToListAsync();
         }
 
-        public Book[] GetAllBooks(bool includePublisher = false)
-        {
-            IQueryable<Book> query = _context.Books;
-
-            if (includePublisher)
-            {
-
-                query = query.Include(b => b.Publisher);
-            }
-
-            query = query.AsNoTracking().OrderBy(b => b.Id);
-
-            return query.ToArray();
+        public async Task<Book> GetBookById(int bookId, bool includePublisher = false) {
+            return await _context.Books.FirstOrDefaultAsync(b => b.Id == bookId);
         }
 
-        public Book GetBookById(int bookId, bool includePublisher = false)
-        {
-            IQueryable<Book> query = _context.Books;
-
-            if (includePublisher)
-            {
-
-                query = query.Include(b => b.Publisher);
-            }
-
-            query = query.AsNoTracking().OrderBy(b => b.Id)
-                .Where(book => book.Id == bookId);
-
-            return query.FirstOrDefault();
-
+        public async Task<Book> GetBookByName(string bookName, bool includePublisher) {
+            return await _context.Books.FirstOrDefaultAsync(b => b.Name == bookName);
         }
-
-        public Book GetBookByName(string bookName, bool includePublisher = false)
-        {
-            IQueryable<Book> query = _context.Books;
-
-            if (includePublisher)
-            {
-
-                query = query.Include(b => b.Publisher);
-            }
-
-            query = query.AsNoTracking().OrderBy(b => b.Id)
-                .Where(book => book.Name == bookName);
-
-            return query.FirstOrDefault();
-        }
-
-
-
-
-
-
     }
 }
