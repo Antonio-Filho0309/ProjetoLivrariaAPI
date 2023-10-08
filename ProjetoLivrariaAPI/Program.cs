@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Repositories;
@@ -7,20 +8,18 @@ using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 using System.Reflection;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers().AddJsonOptions(options => {
+    options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+});
 builder.Services.AddDbContext<DataContext>(
     context => context.UseSqlite(builder.Configuration.GetConnectionString("Default")));
-
-builder.Services.AddControllers().AddJsonOptions(options => {
-    options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
-})
-    .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling =
-    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
