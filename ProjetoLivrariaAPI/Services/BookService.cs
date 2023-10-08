@@ -31,11 +31,14 @@ namespace ProjetoLivrariaAPI.Services {
         public async Task<ResultService> Create(CreateBookDto createBookDto) {
             if (createBookDto == null)
                 return ResultService.Fail<CreateBookDto>("Objeto deve ser informado !");
+
             var result = new BookDtoValidator().Validate(createBookDto);
             if (!result.IsValid)
                 return ResultService.RequestError<CreateBookDto>("Problemas de validação: ", result);
-
+            
             var book = _mapper.Map<Book>(createBookDto);
+
+            await _bookRepository.Add(book);
             return ResultService.ok(book);
         }
 

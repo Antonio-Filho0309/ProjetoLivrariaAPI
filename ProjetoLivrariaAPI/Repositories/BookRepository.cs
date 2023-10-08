@@ -29,16 +29,18 @@ namespace ProjetoLivrariaAPI.Repositories {
             await _context.SaveChangesAsync();
         }
 
-        public async Task<ICollection<Book>> GetAllBooks(bool includePublisher = false) {
-            return await _context.Books.ToListAsync();
+        public async Task<ICollection<Book>> GetAllBooks() {
+            return await _context.Books.Include(b=> b.Publisher).ToListAsync();
         }
 
-        public async Task<Book> GetBookById(int bookId, bool includePublisher = false) {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Id == bookId);
+        public async Task<Book> GetBookById(int bookId) {
+            return await _context.Books.Include(b=> b.Publisher).FirstOrDefaultAsync(b => b.Id == bookId);
         }
 
-        public async Task<Book> GetBookByName(string bookName, bool includePublisher) {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Name == bookName);
+        public async Task<Book> GetBookByName(string bookName) {
+            return await _context.Books.Include(b => b.Publisher).FirstOrDefaultAsync(b => b.Name == bookName);
         }
+
+       
     }
 }
