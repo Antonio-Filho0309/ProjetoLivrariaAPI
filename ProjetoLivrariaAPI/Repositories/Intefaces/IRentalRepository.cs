@@ -9,6 +9,10 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces {
         Task<ICollection<Rental>> GetAllRentals();
         Task<Rental> GetRentalById(int rentalId);
 
+        Task<Rental> GetRentalByUserId(int UserId);
+
+        Task<Rental> GetRentalByBookId(int BookId);
+
 
     }
 }

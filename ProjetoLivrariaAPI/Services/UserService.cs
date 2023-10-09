@@ -8,11 +8,13 @@ using ProjetoLivrariaAPI.Services.Interfaces;
 namespace ProjetoLivrariaAPI.Services {
     public class UserService : IUserService {
         private readonly IUserRepository _userRepository;
+        private readonly IRentalRepository _rentalRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IMapper mapper, IUserRepository userRepository) {
+        public UserService(IMapper mapper, IUserRepository userRepository , IRentalRepository rentalRepository) {
             _mapper = mapper;
             _userRepository = userRepository;
+            _rentalRepository = rentalRepository;
         }
 
         public async Task<ResultService<ICollection<UserDto>>> Get() {
@@ -67,6 +69,9 @@ namespace ProjetoLivrariaAPI.Services {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
                 return ResultService.Fail("Usuário não encontrado");
+            var RentalAssociation = await _rentalRepository.GetRentalByUserId(id);
+            if (RentalAssociation != null)
+                return ResultService.Fail<User>("Erro ao excluir usuário: Possui relação com alugueis");
             await _userRepository.Delete(user);
             return ResultService.ok("Usuário Deletado com sucesso");
         }
