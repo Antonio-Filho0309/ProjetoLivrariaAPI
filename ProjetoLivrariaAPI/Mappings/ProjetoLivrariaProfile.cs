@@ -32,6 +32,7 @@ namespace ProjetoLivrariaAPI.Helpers
             //Aluguel
             CreateMap<Rental, CreateRentalDto>().ReverseMap();
             CreateMap<Rental , RentalDto>().ReverseMap();
+            CreateMap<Rental, UpdateRentalDto>().ReverseMap();
             
         }
     }

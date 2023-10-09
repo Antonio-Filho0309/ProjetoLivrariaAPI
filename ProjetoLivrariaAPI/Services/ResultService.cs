@@ -1,11 +1,14 @@
 ﻿using FluentValidation.Results;
 using System.Globalization;
+using System.Text.Json.Serialization;
 
 namespace ProjetoLivrariaAPI.Services {
     public class ResultService {
 
         public bool IsSucess { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Message { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] 
         public ICollection<ErrorValidation> Errors { get; set; }
 
         public static ResultService RequestError(string message, ValidationResult validationResult) {

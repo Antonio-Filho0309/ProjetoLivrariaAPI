@@ -35,6 +35,10 @@ namespace ProjetoLivrariaAPI.Services {
             if (!result.IsValid)
                 return ResultService.RequestError<CreateUserDto>("Problemas de Validação", result);
 
+            var emailExist = await _userRepository.GetUserByEmail(createUserDto.Email);
+            if (emailExist != null)
+                return ResultService.Fail<User>("Email já cadastrado");
+
             var user = _mapper.Map<User>(createUserDto);
 
             await _userRepository.Add(user);

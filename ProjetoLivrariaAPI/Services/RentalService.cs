@@ -8,11 +8,11 @@ using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
 namespace ProjetoLivrariaAPI.Services {
-    public class RentalServices : IRentalService {
+    public class RentalService : IRentalService {
         private readonly IMapper _mapper;
         private readonly IRentalRepository _rentalRepository;
 
-        public RentalServices(IMapper mapper, IRentalRepository rentalRepository) {
+        public RentalService(IMapper mapper, IRentalRepository rentalRepository) {
             _mapper = mapper;
             _rentalRepository = rentalRepository;
         }
@@ -37,7 +37,7 @@ namespace ProjetoLivrariaAPI.Services {
             if (!result.IsValid)
                 return ResultService.RequestError<CreateRentalDto>("Problemas de validação: ", result);
             var rental = _mapper.Map<Rental>(createRentalDto);
-
+            
             await _rentalRepository.Add(rental);
             return ResultService.ok(rental);
         }

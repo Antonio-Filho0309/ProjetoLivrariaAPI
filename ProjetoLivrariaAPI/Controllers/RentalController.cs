@@ -5,95 +5,67 @@ using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Dtos.Rental;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
+using ProjetoLivrariaAPI.Services.Interfaces;
 using static System.Reflection.Metadata.BlobBuilder;
 
-namespace ProjetoLivrariaAPI.Controllers
-{
+namespace ProjetoLivrariaAPI.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class RentalController : ControllerBase {
+        private readonly IRentalService _rentalService;
 
-        private readonly IRentalRepository _repo;
-        private readonly IMapper _mapper;
-
-        public RentalController(IRentalRepository repo, IMapper mapper) {
-            _repo = repo;
-            _mapper = mapper;
+        public RentalController(IRentalService rentalService) {
+            _rentalService = rentalService;
         }
 
         [HttpGet]
-        public IActionResult Get() {
-            var rentals = _repo.GetAllRentals(true, true);
-
-            return Ok(_mapper.Map<IEnumerable<RentalDto>>(rentals));
+        public async Task<ActionResult> Get() {
+            var result = await _rentalService.Get();
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("{id}")]
 
-        public IActionResult GetByid(int id) {
-            var rental = _repo.GetRentalById(id, true , true);
-            var rentalDto = _mapper.Map<RentalDto>(rental);
-            if (rental == null) {
-                return BadRequest("Aluguel não encontrado");
-            }
-            else {
-                return Ok(rentalDto);
-            }
+        public async Task<IActionResult> Get(int id) {
+            var result = await _rentalService.GetById(id);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
         }
 
 
         [HttpPost]
-        public IActionResult Post(CreateRentalDto model) {
+        public async Task<IActionResult> Post([FromBody] CreateRentalDto createRentalDto) {
+            var result = await _rentalService.Create(createRentalDto);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
 
-            var rental = _mapper.Map<Rental>(model);
-            rental.Status = "Pendente";
-
-            _repo.Add(rental);
-            if (_repo.SaveChanges()) {
-                return Created($"/api/rental/{rental.Id}", _mapper.Map<Rental>(rental));
-            }
-            else {
-                return BadRequest("Aluguel não cadastrado");
-            };
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, Rental rental) {
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Put([FromBody] UpdateRentalDto updateRentalDto) {
+            var result = await _rentalService.Update(updateRentalDto);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
 
-            var rent = _repo.GetRentalById(id);
-
-            if (rent == null) {
-                return BadRequest("Aluguel não existe");
-            }
-            else {
-                _repo.Update(rental);
-                if (_repo.SaveChanges()) {
-                    return Ok(rental);
-                }
-                else {
-                    return BadRequest("Aluguel não atualizado");
-                }
-            }
         }
 
 
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id) {
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> Delete(int id) {
 
-            var rental = _repo.GetRentalById(id);
-            if (rental == null) {
-                return BadRequest("Aluguel não existe");
-            }
-            else {
-                _repo.Delete(rental);
-                if (_repo.SaveChanges()) {
-                    return Ok("Aluguel Deletado com sucesso");
-                }
-                else {
-                    return BadRequest("Aluguel não excluido");
-                }
-            }
+            var result = await _rentalService.Delete(id);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
         }
     }
 }

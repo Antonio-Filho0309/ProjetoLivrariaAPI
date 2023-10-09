@@ -40,54 +40,10 @@ namespace ProjetoLivrariaAPI.Repositories {
             return await _context.Users.FirstOrDefaultAsync(u => u.Name == userName);
         }
 
-        //public void Add<T>(T entity) where T : class
-        //{
-        //    _context.Add(entity);
-        //}
+        public async Task<User> GetUserByEmail(string userEmail) {
+            return await _context.Users.FirstOrDefaultAsync(u=> u.Email == userEmail);
+        }
 
-        //public void Update<T>(T entity) where T : class
-        //{
-        //    _context.Update(entity);
-        //}
-
-        //public void Delete<T>(T entity) where T : class
-        //{
-        //    _context.Remove(entity);
-        //}
-
-        //public bool SaveChanges()
-        //{
-
-        //    return _context.SaveChanges() > 0;
-        //}
-
-        //public User[] GetAllUsers()
-        //{
-        //    IQueryable<User> query = _context.Users;
-
-        //    query = query.AsNoTracking().OrderBy(u => u.Id);
-
-        //    return query.ToArray();
-        //}
-
-        //public User GetlUserById(int userId)
-        //{
-        //    IQueryable<User> query = _context.Users;
-
-        //    query = query.AsNoTracking().OrderBy(u => u.Id)
-        //        .Where(user => user.Id == userId);
-
-        //    return query.FirstOrDefault();
-        //}
-
-        //public User GetlUserByName(string userName)
-        //{
-        //    IQueryable<User> query = _context.Users;
-
-        //    query = query.AsNoTracking().OrderBy(u => u.Id)
-        //        .Where(user => user.Name == userName);
-
-        //    return query.FirstOrDefault();
-        //}
+        
     }
 }
