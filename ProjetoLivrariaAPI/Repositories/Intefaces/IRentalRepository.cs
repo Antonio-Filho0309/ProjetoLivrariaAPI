@@ -1,16 +1,13 @@
 ﻿using ProjetoLivrariaAPI.Models;
 
-namespace ProjetoLivrariaAPI.Repositories.Intefaces
-{
-    public interface IRentalRepository
-    {
-        void Add<T>(T entity) where T : class;
-        void Update<T>(T entity) where T : class;
-        void Delete<T>(T entity) where T : class;
-        bool SaveChanges();
+namespace ProjetoLivrariaAPI.Repositories.Intefaces {
+    public interface IRentalRepository {
+        Task<Rental> Add(Rental rental);
+        Task Update(Rental rental);
+        Task Delete(Rental rental);
 
-        Rental[] GetAllRentals(bool includeUser = false, bool includeBook = false);
-        Rental GetRentalById(int rentalId, bool includeUser = false, bool includeBook = false);
+        Task<ICollection<Rental>> GetAllRentals();
+        Task<Rental> GetRentalById(int rentalId);
 
 
     }

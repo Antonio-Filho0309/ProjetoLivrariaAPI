@@ -4,70 +4,41 @@ using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using System.Net;
 
-namespace ProjetoLivrariaAPI.Repositories
-{
-    public class RentalRepository : IRentalRepository
-    {
+namespace ProjetoLivrariaAPI.Repositories {
+    public class RentalRepository : IRentalRepository {
         private readonly DataContext _context;
 
-        public RentalRepository(DataContext context)
-        {
+        public RentalRepository(DataContext context) {
             _context = context;
         }
 
-        public void Add<T>(T entity) where T : class
-        {
-            _context.Add(entity);
+        public async Task<Rental> Add(Rental rental) {
+            _context.Add(rental);
+            await _context.SaveChangesAsync();
+            return rental;
         }
 
-        public void Update<T>(T entity) where T : class
-        {
-            _context.Update(entity);
+        public async Task Update(Rental rental) {
+            _context.Update(rental);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete<T>(T entity) where T : class
-        {
-            _context.Remove(entity);
+        public async Task Delete(Rental rental) {
+            _context.Remove(rental);
+            await _context.SaveChangesAsync();
         }
 
-        public bool SaveChanges()
-        {
-            return _context.SaveChanges() > 0;
+
+
+        public async Task<ICollection<Rental>> GetAllRentals() {
+            return await _context.Rentals.Include(r => r.User)
+                .Include(r => r.Book).ToListAsync();
         }
 
-        public Rental[] GetAllRentals(bool includeUser = false, bool includeBook = false)
-        {
-            IQueryable<Rental> query = _context.Rentals;
-
-            if (includeUser && includeBook)
-            {
-
-                query = query.Include(r => r.User)
-                    .Include(r => r.Book);
-            }
-
-            query = query.AsNoTracking().OrderBy(r => r.Id);
-
-            return query.ToArray();
+        public async Task<Rental> GetRentalById(int rentalId) {
+            return await _context.Rentals.Include(r => r.Book).Include(r => r.User).FirstOrDefaultAsync(r => r.Id == rentalId);
         }
 
-        public Rental GetRentalById(int rentalId, bool includeUser = false, bool includeBook = false)
-        {
-            IQueryable<Rental> query = _context.Rentals;
-
-
-            if (includeUser && includeBook)
-            {
-
-                query = query.Include(r => r.User)
-                    .Include(r => r.Book);
-            }
-
-            query = query.AsNoTracking().OrderBy(r => r.Id)
-                .Where(rental => rental.Id == rentalId);
-
-            return query.FirstOrDefault();
-        }
 
 
     }
