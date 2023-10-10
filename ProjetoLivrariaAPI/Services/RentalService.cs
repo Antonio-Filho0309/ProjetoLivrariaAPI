@@ -37,7 +37,8 @@ namespace ProjetoLivrariaAPI.Services {
             if (!result.IsValid)
                 return ResultService.RequestError<CreateRentalDto>("Problemas de validação: ", result);
             var rental = _mapper.Map<Rental>(createRentalDto);
-            
+
+            rental.Status = "Pendente";
             await _rentalRepository.Add(rental);
             return ResultService.ok(rental);
         }
