@@ -9,22 +9,33 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(u => u.Name)
                 .NotEmpty()
                 .NotNull()
-                .WithMessage("Nome deve ser informado !");
+                .WithMessage("Nome deve ser informado !")
+                .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
+                .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
             RuleFor(u => u.Email)
                 .NotEmpty()
                 .NotNull()
-                .WithMessage("Email deve ser informado !");
+                .WithMessage("Email deve ser informado !")
+                .EmailAddress()
+                .WithMessage("Formato de email inválido !")
+                .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
+                .MaximumLength(250).WithMessage("Limite é de 250 caracteres.");
+
 
             RuleFor(u => u.City)
                 .NotEmpty()
                 .NotNull()
-                .WithMessage("Cidade deve ser informada !");
+                .WithMessage("Cidade deve ser informada !")
+                .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
+                .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
             RuleFor(u => u.Address)
                 .NotEmpty()
                 .NotNull()
-                .WithMessage("Endereço deve ser informado");
+                .WithMessage("Endereço deve ser informado")
+                .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
+                .MaximumLength(250).WithMessage("Limite é de 250 caracteres.");
         }
 
     }

@@ -15,6 +15,8 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces
         Task<Book> GetBookById(int bookId);
         Task<Book> GetBookByName(string bookName );
 
+        Task<Book> GetBookByPublisherId(int publisherId);
+
 
     }
 }

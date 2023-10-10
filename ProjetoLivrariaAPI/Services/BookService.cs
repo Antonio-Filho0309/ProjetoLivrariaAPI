@@ -10,10 +10,12 @@ using ProjetoLivrariaAPI.Services.Interfaces;
 namespace ProjetoLivrariaAPI.Services {
     public class BookService : IBookService {
         private readonly IBookRepository _bookRepository;
+        private readonly IRentalRepository _rentalRepository;
         private readonly IMapper _mapper;
 
-        public BookService(IMapper mapper, IBookRepository bookRepository) {
+        public BookService(IMapper mapper, IBookRepository bookRepository, IRentalRepository rentalRepository) {
             _bookRepository = bookRepository;
+            _rentalRepository = rentalRepository;
             _mapper = mapper;
         }
 
@@ -35,8 +37,12 @@ namespace ProjetoLivrariaAPI.Services {
             var result = new BookDtoValidator().Validate(createBookDto);
             if (!result.IsValid)
                 return ResultService.RequestError<CreateBookDto>("Problemas de validação: ", result);
-            
+
             var book = _mapper.Map<Book>(createBookDto);
+
+            var sameName = _bookRepository.GetBookByName(createBookDto.Name);
+            if (sameName != null)
+                return ResultService.Fail("Livro já cadastrado");
 
             await _bookRepository.Add(book);
             return ResultService.ok(book);
@@ -63,7 +69,12 @@ namespace ProjetoLivrariaAPI.Services {
             var book = await _bookRepository.GetBookById(id);
             if (book == null)
                 return ResultService.Fail("Livro não encontrado");
+            var RentalAssociation = await _rentalRepository.GetRentalByBookId(id);
+            if (RentalAssociation != null)
+                return ResultService.Fail<User>("Erro ao excluir livro: Possui relação com alugueis");
+
             await _bookRepository.Delete(book);
+
             return ResultService.ok("Livro Deletado com sucesso");
         }
 

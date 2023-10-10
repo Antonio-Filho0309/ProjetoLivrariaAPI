@@ -11,10 +11,12 @@ namespace ProjetoLivrariaAPI.Services {
     public class PublisherService : IPublisherService {
         private readonly IMapper _mapper;
         private readonly IPublisherRepository _publisherRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public PublisherService(IMapper mapper, IPublisherRepository publisherRepository) {
+        public PublisherService(IMapper mapper, IPublisherRepository publisherRepository , IBookRepository bookRepository) {
             _mapper = mapper;
             _publisherRepository = publisherRepository;
+            _bookRepository = bookRepository;
         }
         public async Task<ResultService<ICollection<PublisherDto>>> Get() {
             var publishers = await _publisherRepository.GetAllPublishers();
@@ -40,6 +42,10 @@ namespace ProjetoLivrariaAPI.Services {
 
             var publisher = _mapper.Map<Publisher>(createPublisherDto);
 
+            var sameName = await _publisherRepository.GetlPublisherByName(createPublisherDto.Name);
+            if (sameName != null)
+                return ResultService.Fail("Editora já cadastrada !");
+
             await _publisherRepository.Add(publisher);
             return ResultService.ok(publisher);
         }
@@ -62,6 +68,9 @@ namespace ProjetoLivrariaAPI.Services {
             var publisher = await _publisherRepository.GetlPublisherById(id);
             if (publisher == null)
                 return ResultService.Fail("Editora não encontrada");
+            var bookAssociation =  await _bookRepository.GetBookByPublisherId(id);
+            if (bookAssociation != null)
+                return ResultService.Fail("Erro ao excluir editora: Possui relação com livros");
             await _publisherRepository.Delete(publisher);
             return ResultService.ok("Editora deletada com sucesso");
         }
