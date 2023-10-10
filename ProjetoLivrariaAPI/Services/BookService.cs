@@ -40,11 +40,17 @@ namespace ProjetoLivrariaAPI.Services {
 
             var book = _mapper.Map<Book>(createBookDto);
 
-            var sameName = _bookRepository.GetBookByName(createBookDto.Name);
-            if (sameName != null)
-                return ResultService.Fail("Livro já cadastrado");
+            //aqui é para dizer se  o livro do nome é o mesmo ou não
+            var sameName = await _bookRepository.GetBookByName(createBookDto.Name);
 
-            await _bookRepository.Add(book);
+            if (sameName != null) {
+                return ResultService.Fail<BookDto>("Livro já cadastrado.");
+            }
+
+            if (createBookDto.Release > DateTime.Now.Year)
+                return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual");        
+
+        await _bookRepository.Add(book);
             return ResultService.ok(book);
         }
 

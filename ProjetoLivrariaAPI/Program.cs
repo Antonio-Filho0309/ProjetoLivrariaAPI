@@ -9,6 +9,7 @@ using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
