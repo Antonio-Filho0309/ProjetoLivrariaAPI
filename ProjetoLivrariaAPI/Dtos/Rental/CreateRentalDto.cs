@@ -5,9 +5,9 @@
 
         public int UserId { get; set; }
 
-        public string? RentalDate { get; set; }
+        public DateTime RentalDate { get; set; }
 
-        public string? PreviewDate { get; set; }
+        public DateTime PreviewDate { get; set; }
 
     }
 }

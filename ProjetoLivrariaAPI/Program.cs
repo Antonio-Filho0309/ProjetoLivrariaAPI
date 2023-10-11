@@ -13,7 +13,9 @@ using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options => {
+    options.SuppressModelStateInvalidFilter = true;
+});
 builder.Services.AddDbContext<DataContext>(
     context => context.UseSqlite(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddEndpointsApiExplorer();
