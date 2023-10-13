@@ -11,10 +11,14 @@ namespace ProjetoLivrariaAPI.Services {
     public class RentalService : IRentalService {
         private readonly IMapper _mapper;
         private readonly IRentalRepository _rentalRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IUserRepository _userRepository;
 
-        public RentalService(IMapper mapper, IRentalRepository rentalRepository) {
+        public RentalService(IMapper mapper, IRentalRepository rentalRepository, IBookRepository bookRepository, IUserRepository userRepository) {
             _mapper = mapper;
             _rentalRepository = rentalRepository;
+            _bookRepository = bookRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<ResultService<ICollection<RentalDto>>> Get() {
@@ -38,7 +42,25 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.RequestError<CreateRentalDto>("Problemas de validação: ", result);
             var rental = _mapper.Map<Rental>(createRentalDto);
 
+            if (rental.RentalDate.Date != DateTime.Now.Date)
+                return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
+
             rental.Status = "Pendente";
+
+            var sameRental = await _rentalRepository.GetByUserAndBook(createRentalDto.UserId, createRentalDto.BookId);
+            if (sameRental != null && rental.Status == "Pendente")
+                return ResultService.RequestError<CreateBookDto>(" O usuário não pode alugar o mesmo livro ! " , result);
+
+            var bookQuantity = await _bookRepository.GetBookById(createRentalDto.BookId);
+            if (bookQuantity != null) {
+                bookQuantity.Rented++;
+                bookQuantity.Quantity  --;
+            }
+
+            TimeSpan diference = rental.PreviewDate.Date - rental.RentalDate.Date;
+            if (diference.TotalDays > 30)
+                return ResultService.Fail("A data de previsão não pode ser mais de 30 dias após o aluguel !");
+
             await _rentalRepository.Add(rental);
             return ResultService.ok(rental);
         }
@@ -49,12 +71,28 @@ namespace ProjetoLivrariaAPI.Services {
             var validation = new UpdateRentalDtoValidator().Validate(updateRentalDto);
             if (!validation.IsValid)
                 return ResultService.RequestError("Problemas com validação dos campos", validation);
-            var book = await _rentalRepository.GetRentalById(updateRentalDto.Id);
-            if (book == null)
+            var rental = await _rentalRepository.GetRentalById(updateRentalDto.Id);
+            if (rental == null)
                 return ResultService.Fail("Aluguel não encontrado");
-            book = _mapper.Map(updateRentalDto, book);
-            await _rentalRepository.Update(book);
-            return ResultService.ok("Aluguel atualizado com suceso !");
+            rental = _mapper.Map(updateRentalDto, rental);
+
+            if (rental.PreviewDate.Date >= rental.ReturnDate.Date) {
+                rental.Status = "No prazo";
+            }else {
+                rental.Status = "Atrasado";
+            }
+
+            var returnBook = await _bookRepository.GetBookById(rental.BookId);
+            if (returnBook != null) {
+                returnBook.Rented--;
+                returnBook.Quantity++;
+            }
+
+            if (rental.ReturnDate.Date != DateTime.Now.Date)
+                return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
+
+            await _rentalRepository.Update(rental);
+            return ResultService.ok("Aluguel devolvido com suceso !");
         }
 
         public async Task<ResultService> Delete(int id) {

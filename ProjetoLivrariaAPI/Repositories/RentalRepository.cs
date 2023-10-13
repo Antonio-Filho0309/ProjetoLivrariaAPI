@@ -46,5 +46,9 @@ namespace ProjetoLivrariaAPI.Repositories {
         public async Task<Rental> GetRentalByBookId(int bookId) {
             return await _context.Rentals.FirstOrDefaultAsync(r => r.BookId == bookId);
         }
+
+        public async Task<Rental> GetByUserAndBook(int userId, int bookId) {
+            return await _context.Rentals.FirstOrDefaultAsync(r => r.UserId == userId && r.BookId == bookId);
+        }
     }
 }

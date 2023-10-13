@@ -13,6 +13,7 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces {
 
         Task<Rental> GetRentalByBookId(int BookId);
 
+        Task<Rental> GetByUserAndBook(int userId, int bookId);
 
     }
 }
