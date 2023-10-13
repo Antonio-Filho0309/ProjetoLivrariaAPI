@@ -10,11 +10,11 @@ namespace ProjetoLivrariaAPI.Dtos.Rental {
         public int UserId { get; set; }
         public UserRentalDto User { get; set; }
 
-        public string RentalDate { get; set; }
+        public DateTime RentalDate { get; set; }
 
-        public string PreviewDate { get; set; }
+        public DateTime PreviewDate { get; set; }
 
-        public string ReturnDate { get; set; }
+        public DateTime ReturnDate { get; set; }
 
         public string Status { get; set; }
     }

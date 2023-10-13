@@ -10,7 +10,7 @@ using ProjetoLivrariaAPI.Data;
 namespace ProjetoLivrariaAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230930164141_init")]
+    [Migration("20231011190617_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
