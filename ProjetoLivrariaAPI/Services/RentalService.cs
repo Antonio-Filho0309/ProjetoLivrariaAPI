@@ -49,13 +49,15 @@ namespace ProjetoLivrariaAPI.Services {
 
             var sameRental = await _rentalRepository.GetByUserAndBook(createRentalDto.UserId, createRentalDto.BookId);
             if (sameRental != null && rental.Status == "Pendente")
-                return ResultService.RequestError<CreateBookDto>(" O usuário não pode alugar o mesmo livro ! " , result);
+                return ResultService.RequestError<CreateRentalDto>(" O usuário não pode alugar o mesmo livro ! ", result);
 
             var bookQuantity = await _bookRepository.GetBookById(createRentalDto.BookId);
-            if (bookQuantity != null) {
-                bookQuantity.Rented++;
-                bookQuantity.Quantity  --;
+            if (bookQuantity == null || bookQuantity.Quantity == 0) {
+                return ResultService.Fail<CreateRentalDto>("Livro sem estoque !");
             }
+
+            bookQuantity.Rented++;
+            bookQuantity.Quantity--;
 
             TimeSpan diference = rental.PreviewDate.Date - rental.RentalDate.Date;
             if (diference.TotalDays > 30)
@@ -78,7 +80,8 @@ namespace ProjetoLivrariaAPI.Services {
 
             if (rental.PreviewDate.Date >= rental.ReturnDate.Date) {
                 rental.Status = "No prazo";
-            }else {
+            }
+            else {
                 rental.Status = "Atrasado";
             }
 
