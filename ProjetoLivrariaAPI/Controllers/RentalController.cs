@@ -58,14 +58,14 @@ namespace ProjetoLivrariaAPI.Controllers {
 
 
 
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(int id) {
+        //[HttpDelete]
+        //[Route("{id}")]
+        //public async Task<IActionResult> Delete(int id) {
 
-            var result = await _rentalService.Delete(id);
-            if (result.IsSucess)
-                return Ok(result);
-            return BadRequest(result);
-        }
+        //    var result = await _rentalService.Delete(id);
+        //    if (result.IsSucess)
+        //        return Ok(result);
+        //    return BadRequest(result);
+        //}
     }
 }

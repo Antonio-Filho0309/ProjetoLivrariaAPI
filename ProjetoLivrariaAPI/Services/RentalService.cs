@@ -89,20 +89,20 @@ namespace ProjetoLivrariaAPI.Services {
             }
 
             if (rental.ReturnDate.Date != DateTime.Now.Date)
-                return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
+                return ResultService.Fail("A data de devolução não pode ser diferente da data de hoje !");
 
             await _rentalRepository.Update(rental);
             return ResultService.ok("Aluguel devolvido com suceso !");
         }
 
-        public async Task<ResultService> Delete(int id) {
-            var rental = await _rentalRepository.GetRentalById(id);
-            if (rental == null)
-                return ResultService.Fail("Aluguel não encontrado");
-            await _rentalRepository.Delete(rental);
-            return ResultService.ok("Aluguel deletado com sucesso");
+        //public async Task<ResultService> Delete(int id) {
+        //    var rental = await _rentalRepository.GetRentalById(id);
+        //    if (rental == null)
+        //        return ResultService.Fail("Aluguel não encontrado");
+        //    await _rentalRepository.Delete(rental);
+        //    return ResultService.ok("Aluguel deletado com sucesso");
 
-        }
+        //}
 
 
 
