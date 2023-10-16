@@ -14,7 +14,7 @@ namespace ProjetoLivrariaAPI.Dtos.Rental {
 
         public DateTime PreviewDate { get; set; }
 
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
 
         public string Status { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -70,9 +71,9 @@ namespace ProjetoLivrariaAPI.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     BookId = table.Column<int>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false),
-                    RentalDate = table.Column<string>(type: "TEXT", nullable: true),
-                    PreviewDate = table.Column<string>(type: "TEXT", nullable: true),
-                    ReturnDate = table.Column<string>(type: "TEXT", nullable: true),
+                    RentalDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    PreviewDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "TEXT", nullable: true),
                     Status = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>

@@ -78,7 +78,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("Aluguel não encontrado");
             rental = _mapper.Map(updateRentalDto, rental);
 
-            if (rental.PreviewDate.Date >= rental.ReturnDate.Date) {
+            if (rental.PreviewDate.Date >= rental.ReturnDate.Value.Date) {
                 rental.Status = "No prazo";
             }
             else {
@@ -91,7 +91,7 @@ namespace ProjetoLivrariaAPI.Services {
                 returnBook.Quantity++;
             }
 
-            if (rental.ReturnDate.Date != DateTime.Now.Date)
+            if (rental.ReturnDate.Value.Date != DateTime.Now.Date)
                 return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
 
             await _rentalRepository.Update(rental);
