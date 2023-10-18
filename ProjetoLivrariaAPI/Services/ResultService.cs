@@ -1,40 +1,35 @@
-﻿using FluentValidation.Results;
-using System.Globalization;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
+using FluentValidation.Results;
 
-namespace ProjetoLivrariaAPI.Services {
+namespace Locadora.API.Services {
     public class ResultService {
-
         public bool IsSucess { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string Message { get; set; }
-        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)] 
-        public ICollection<ErrorValidation> Errors { get; set; }
+        public string[]? Message { get; init; }
 
-        public static ResultService RequestError(string message, ValidationResult validationResult) {
+        public static ResultService RequestError(ValidationResult validationResult) {
             return new ResultService {
                 IsSucess = false,
-                Message = message,
-                Errors = validationResult.Errors.Select(x => new ErrorValidation { Field = x.PropertyName, Menssage = x.ErrorMessage }).ToList()
+                Message = validationResult.Errors.Select(x => x.ErrorMessage).ToArray(),
             };
         }
 
-        public static ResultService<T> RequestError<T>(string message, ValidationResult validationResult) {
+        public static ResultService Fail(string message) => new() { IsSucess = false, Message = new string[] { message } };
+        public static ResultService<T> Fail<T>(string message) => new() { IsSucess = false, Message = new string[] { message } };
+
+        public static ResultService Ok(string message) => new() { IsSucess = true, Message = new string[] { message } };
+        public static ResultService<T> Ok<T>(T data) {
             return new ResultService<T> {
-                IsSucess = false,
-                Message = message,
-                Errors = validationResult.Errors.Select(x => new ErrorValidation { Field = x.PropertyName, Menssage = x.ErrorMessage }).ToList()
+                Data = data,
+                IsSucess = true
             };
         }
-
-        public static ResultService Fail(string message) => new ResultService { IsSucess = false, Message = message };
-        public static ResultService<T> Fail<T>(string message) => new ResultService<T> { IsSucess = false, Message = message };
-
-        public static ResultService ok(string message) => new ResultService { IsSucess = true, Message = message };
-        public static ResultService<T> ok<T>(T data) => new ResultService<T> { IsSucess = true, Data = data };
     }
 
     public class ResultService<T> : ResultService {
-        public T Data { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public T? Data { get; set; }
     }
+
+
 }

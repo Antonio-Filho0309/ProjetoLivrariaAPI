@@ -1,4 +1,5 @@
-﻿using ProjetoLivrariaAPI.Dtos.Book;
+﻿using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos.Book;
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IBookService {
         Task<ResultService<ICollection<BookDto>>> Get();

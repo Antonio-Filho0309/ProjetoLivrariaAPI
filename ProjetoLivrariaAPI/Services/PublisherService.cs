@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Locadora.API.Services;
 using ProjetoLivrariaAPI.Dtos.Publisher;
 using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Dtos.Validations;
@@ -20,14 +21,14 @@ namespace ProjetoLivrariaAPI.Services {
         }
         public async Task<ResultService<ICollection<PublisherDto>>> Get() {
             var publishers = await _publisherRepository.GetAllPublishers();
-            return ResultService.ok(_mapper.Map<ICollection<PublisherDto>>(publishers));
+            return ResultService.Ok(_mapper.Map<ICollection<PublisherDto>>(publishers));
         }
 
         public async Task<ResultService<PublisherDto>> GetById(int id) {
             var publisher = await _publisherRepository.GetlPublisherById(id);
             if (publisher == null)
                 return ResultService.Fail<PublisherDto>("Editora não encontrada");
-            return ResultService.ok(_mapper.Map<PublisherDto>(publisher));
+            return ResultService.Ok(_mapper.Map<PublisherDto>(publisher));
 
 
         }
@@ -38,7 +39,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             var result = new PublisherDtoValidator().Validate(createPublisherDto);
             if (!result.IsValid)
-                return ResultService.RequestError<CreatePublisherDto>("Problemas de Validação", result);
+                return ResultService.RequestError(result);
 
             var publisher = _mapper.Map<Publisher>(createPublisherDto);
 
@@ -47,7 +48,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("Editora já cadastrada !");
 
             await _publisherRepository.Add(publisher);
-            return ResultService.ok(publisher);
+            return ResultService.Ok(publisher);
         }
 
         public async Task<ResultService> Update(UpdatePublisherDto updatePublisherDto) {
@@ -55,13 +56,13 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("Editora não encontrada");
             var validation = new UpdatePublisherDtoValidator().Validate(updatePublisherDto);
             if (!validation.IsValid)
-                return ResultService.RequestError("Problemas com validação de campos", validation);
+                return ResultService.RequestError(validation);
             var publisher = await _publisherRepository.GetlPublisherById(updatePublisherDto.Id);
             if (publisher == null)
                 return ResultService.Fail("Editora não encontrada");
             publisher = _mapper.Map(updatePublisherDto, publisher);
             await _publisherRepository.Update(publisher);
-            return ResultService.ok("Editora atualizada com sucesso");
+            return ResultService.Ok("Editora atualizada com sucesso");
         }
 
         public async Task<ResultService> Delete(int id) {
@@ -72,7 +73,7 @@ namespace ProjetoLivrariaAPI.Services {
             if (bookAssociation != null)
                 return ResultService.Fail("Erro ao excluir editora: Possui relação com livros");
             await _publisherRepository.Delete(publisher);
-            return ResultService.ok("Editora deletada com sucesso");
+            return ResultService.Ok("Editora deletada com sucesso");
         }
     }
 }

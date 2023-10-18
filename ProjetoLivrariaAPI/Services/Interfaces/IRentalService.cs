@@ -1,4 +1,5 @@
-﻿using ProjetoLivrariaAPI.Dtos.Rental;
+﻿using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos.Rental;
 
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IRentalService {

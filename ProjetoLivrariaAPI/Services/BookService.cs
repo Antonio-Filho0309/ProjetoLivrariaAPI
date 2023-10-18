@@ -1,9 +1,9 @@
 ﻿
 using AutoMapper;
+using Locadora.API.Services;
 using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Dtos.Validations;
 using ProjetoLivrariaAPI.Models;
-using ProjetoLivrariaAPI.Repositories;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
@@ -21,14 +21,14 @@ namespace ProjetoLivrariaAPI.Services {
 
         public async Task<ResultService<ICollection<BookDto>>> Get() {
             var books = await _bookRepository.GetAllBooks();
-            return ResultService.ok(_mapper.Map<ICollection<BookDto>>(books));
+            return ResultService.Ok(_mapper.Map<ICollection<BookDto>>(books));
         }
 
         public async Task<ResultService<BookDto>> GetById(int id) {
             var book = await _bookRepository.GetBookById(id);
             if (book == null)
                 return ResultService.Fail<BookDto>("Livro não encontrado");
-            return ResultService.ok(_mapper.Map<BookDto>(book));
+            return ResultService.Ok(_mapper.Map<BookDto>(book));
         }
         public async Task<ResultService> Create(CreateBookDto createBookDto) {
             if (createBookDto == null)
@@ -36,7 +36,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             var result = new BookDtoValidator().Validate(createBookDto);
             if (!result.IsValid)
-                return ResultService.RequestError<CreateBookDto>("Problemas de validação: ", result);
+                return ResultService.RequestError(result);
 
             var book = _mapper.Map<Book>(createBookDto);
 
@@ -48,10 +48,10 @@ namespace ProjetoLivrariaAPI.Services {
             }
 
             if (createBookDto.Release > DateTime.Now.Year)
-                return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual");        
+                return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual");
 
-        await _bookRepository.Add(book);
-            return ResultService.ok(book);
+            await _bookRepository.Add(book);
+            return ResultService.Ok(book);
         }
 
         public async Task<ResultService> Update(UpdateBookDto updateBookDto) {
@@ -59,13 +59,13 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("Livro não encontrado");
             var validation = new UpdateBookDtoValidator().Validate(updateBookDto);
             if (!validation.IsValid)
-                return ResultService.RequestError("Problemas com validação dos campos", validation);
+                return ResultService.RequestError(validation);
             var book = await _bookRepository.GetBookById(updateBookDto.Id);
             if (book == null)
                 return ResultService.Fail("Livro não encontrado");
             book = _mapper.Map(updateBookDto, book);
             await _bookRepository.Update(book);
-            return ResultService.ok("Livro atualizado com suceso !");
+            return ResultService.Ok("Livro atualizado com suceso !");
 
         }
 
@@ -81,7 +81,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             await _bookRepository.Delete(book);
 
-            return ResultService.ok("Livro Deletado com sucesso");
+            return ResultService.Ok("Livro Deletado com sucesso");
         }
 
 

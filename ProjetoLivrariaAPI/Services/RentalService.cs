@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Locadora.API.Services;
 using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Dtos.Rental;
 using ProjetoLivrariaAPI.Dtos.Validations;
@@ -24,14 +25,14 @@ namespace ProjetoLivrariaAPI.Services {
         public async Task<ResultService<ICollection<RentalDto>>> Get() {
 
             var rentals = await _rentalRepository.GetAllRentals();
-            return ResultService.ok(_mapper.Map<ICollection<RentalDto>>(rentals));
+            return ResultService.Ok(_mapper.Map<ICollection<RentalDto>>(rentals));
         }
 
         public async Task<ResultService<RentalDto>> GetById(int id) {
             var rental = await _rentalRepository.GetRentalById(id);
             if (rental == null)
                 return ResultService.Fail<RentalDto>("Aluguel não encontrado");
-            return ResultService.ok(_mapper.Map<RentalDto>(rental));
+            return ResultService.Ok(_mapper.Map<RentalDto>(rental));
 
         }
         public async Task<ResultService> Create(CreateRentalDto createRentalDto) {
@@ -39,7 +40,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail<CreateRentalDto>("Objeto deve ser informado !");
             var result = new RentalDtoValidator().Validate(createRentalDto);
             if (!result.IsValid)
-                return ResultService.RequestError<CreateRentalDto>("Problemas de validação: ", result);
+                return ResultService.RequestError(result);
             var rental = _mapper.Map<Rental>(createRentalDto);
 
             if (rental.RentalDate.Date != DateTime.Now.Date)
@@ -49,7 +50,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             var sameRental = await _rentalRepository.GetByUserAndBook(createRentalDto.UserId, createRentalDto.BookId);
             if (sameRental != null && rental.Status == "Pendente")
-                return ResultService.RequestError<CreateRentalDto>(" O usuário não pode alugar o mesmo livro ! ", result);
+                return ResultService.RequestError(result);
 
             var bookQuantity = await _bookRepository.GetBookById(createRentalDto.BookId);
             if (bookQuantity == null || bookQuantity.Quantity == 0) {
@@ -64,7 +65,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("A data de previsão não pode ser mais de 30 dias após o aluguel !");
 
             await _rentalRepository.Add(rental);
-            return ResultService.ok(rental);
+            return ResultService.Ok(rental);
         }
 
         public async Task<ResultService> Update(UpdateRentalDto updateRentalDto) {
@@ -72,7 +73,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("Aluguel não encontrado");
             var validation = new UpdateRentalDtoValidator().Validate(updateRentalDto);
             if (!validation.IsValid)
-                return ResultService.RequestError("Problemas com validação dos campos", validation);
+                return ResultService.RequestError(validation);
             var rental = await _rentalRepository.GetRentalById(updateRentalDto.Id);
             if (rental == null)
                 return ResultService.Fail("Aluguel não encontrado");
@@ -95,7 +96,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
 
             await _rentalRepository.Update(rental);
-            return ResultService.ok("Aluguel devolvido com suceso !");
+            return ResultService.Ok("Aluguel devolvido com suceso !");
         }
 
         public async Task<ResultService> Delete(int id) {
@@ -103,7 +104,7 @@ namespace ProjetoLivrariaAPI.Services {
             if (rental == null)
                 return ResultService.Fail("Aluguel não encontrado");
             await _rentalRepository.Delete(rental);
-            return ResultService.ok("Aluguel deletado com sucesso");
+            return ResultService.Ok("Aluguel deletado com sucesso");
 
         }
 

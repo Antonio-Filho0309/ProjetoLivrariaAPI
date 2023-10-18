@@ -1,4 +1,5 @@
-﻿using ProjetoLivrariaAPI.Dtos.User;
+﻿using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos.User;
 
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IUserService  {

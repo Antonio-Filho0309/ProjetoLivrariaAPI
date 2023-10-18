@@ -1,4 +1,5 @@
-﻿using ProjetoLivrariaAPI.Dtos.Publisher;
+﻿using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos.Publisher;
 
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IPublisherService {

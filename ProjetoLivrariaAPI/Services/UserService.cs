@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Locadora.API.Services;
 using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Dtos.Validations;
 using ProjetoLivrariaAPI.Models;
@@ -19,14 +20,14 @@ namespace ProjetoLivrariaAPI.Services {
 
         public async Task<ResultService<ICollection<UserDto>>> Get() {
             var users = await _userRepository.GetAllUsers();
-            return ResultService.ok(_mapper.Map<ICollection<UserDto>>(users));
+            return ResultService.Ok(_mapper.Map<ICollection<UserDto>>(users));
         }
 
         public async  Task<ResultService<UserDto>> GetById(int id) {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
                 return ResultService.Fail<UserDto>("Usuário não encontrado !");
-            return ResultService.ok(_mapper.Map<UserDto>(user));
+            return ResultService.Ok(_mapper.Map<UserDto>(user));
         }
 
         public async Task<ResultService> Create(CreateUserDto createUserDto) {
@@ -35,7 +36,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             var result = new UserDtoValidator().Validate(createUserDto);
             if (!result.IsValid)
-                return ResultService.RequestError<CreateUserDto>("Problemas de Validação", result);
+                return ResultService.RequestError(result);
 
             var emailExist = await _userRepository.GetUserByEmail(createUserDto.Email);
             if (emailExist != null)
@@ -44,7 +45,7 @@ namespace ProjetoLivrariaAPI.Services {
             var user = _mapper.Map<User>(createUserDto);
 
             await _userRepository.Add(user);
-            return ResultService.ok(user);
+            return ResultService.Ok(user);
         }
 
         public async Task<ResultService> Update(UpdateUserDto updateUserDto) {
@@ -53,7 +54,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             var validation =   new UpdateUserDtoValidator().Validate(updateUserDto);
             if (!validation.IsValid)
-                return ResultService.RequestError("Problema com a validação dos campos" , validation);
+                return ResultService.RequestError(validation);
             var user = await _userRepository.GetUserById(updateUserDto.Id);
             if (user == null)
                 return ResultService.Fail("Pessoa não encontrada");
@@ -61,7 +62,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             await _userRepository.Update(user);
 
-            return ResultService.ok("Usuário Atualizado com sucesso");
+            return ResultService.Ok("Usuário Atualizado com sucesso");
            
         }
 
@@ -73,7 +74,7 @@ namespace ProjetoLivrariaAPI.Services {
             if (RentalAssociation != null)
                 return ResultService.Fail<User>("Erro ao excluir usuário: Possui relação com alugueis");
             await _userRepository.Delete(user);
-            return ResultService.ok("Usuário Deletado com sucesso");
+            return ResultService.Ok("Usuário Deletado com sucesso");
         }
     }
 }
