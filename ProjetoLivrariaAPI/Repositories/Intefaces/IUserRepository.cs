@@ -1,7 +1,9 @@
 ﻿using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Pagination;
 
-namespace ProjetoLivrariaAPI.Repositories.Intefaces {
+namespace ProjetoLivrariaAPI.Repositories.Intefaces
+{
     public interface IUserRepository {
         Task<User> Add(User user);
         Task Update(User user);

@@ -1,10 +1,13 @@
-﻿namespace ProjetoLivrariaAPI.Repositories {
-    public class PagedBaseRequest {
+﻿namespace ProjetoLivrariaAPI.Pagination
+{
+    public class PagedBaseRequest
+    {
         public int Page { get; set; }
         public int PageSize { get; set; }
         public string OrderByProperty { get; set; }
 
-        public PagedBaseRequest() {
+        public PagedBaseRequest()
+        {
             Page = 1;
             PageSize = 10;
             OrderByProperty = "Id";

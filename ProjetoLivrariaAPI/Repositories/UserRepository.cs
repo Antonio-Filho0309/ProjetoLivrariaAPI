@@ -2,9 +2,11 @@
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Pagination;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 
-namespace ProjetoLivrariaAPI.Repositories {
+namespace ProjetoLivrariaAPI.Repositories
+{
     public class UserRepository : IUserRepository {
         private readonly DataContext _context;
 
