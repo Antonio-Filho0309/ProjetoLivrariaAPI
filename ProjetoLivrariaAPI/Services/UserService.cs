@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Dtos.Validations;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
@@ -75,6 +77,13 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail<User>("Erro ao excluir usuário: Possui relação com alugueis");
             await _userRepository.Delete(user);
             return ResultService.Ok("Usuário Deletado com sucesso");
+        }
+
+        public async Task<ResultService<PagedBaseResponseDto<UserDto>>>GetPagedAsync(UserFilterDb userFilterDb) {
+            var user = await _userRepository.GetAllUsersPaged(userFilterDb);
+            var result = new PagedBaseResponseDto<UserDto>(user.TotalRegisters, _mapper.Map<List<UserDto>>(user.Data));
+
+            return ResultService.Ok(result);
         }
     }
 }

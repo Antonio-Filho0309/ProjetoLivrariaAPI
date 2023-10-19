@@ -1,5 +1,8 @@
 ﻿using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Dtos.User;
+using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Repositories;
 
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IUserService  {
@@ -9,6 +12,7 @@ namespace ProjetoLivrariaAPI.Services.Interfaces {
         Task<ResultService> Update(UpdateUserDto updateUserDto);
         Task<ResultService> Delete(int id);
 
+        Task<ResultService<PagedBaseResponseDto<UserDto>>> GetPagedAsync(UserFilterDb userFilterDb);
        
     }
 }

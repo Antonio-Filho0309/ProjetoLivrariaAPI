@@ -1,4 +1,5 @@
-﻿using ProjetoLivrariaAPI.Models;
+﻿using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models;
 
 namespace ProjetoLivrariaAPI.Repositories.Intefaces {
     public interface IUserRepository {
@@ -13,6 +14,8 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces {
         Task<User> GetUserByName(string userName);
 
         Task<User> GetUserByEmail(string userEmail);
+
+        Task<PagedBaseReponse<User>> GetAllUsersPaged(UserFilterDb request);
 
 
     }

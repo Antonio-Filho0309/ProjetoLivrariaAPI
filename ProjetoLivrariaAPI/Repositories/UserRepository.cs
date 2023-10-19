@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 
@@ -44,6 +45,12 @@ namespace ProjetoLivrariaAPI.Repositories {
             return await _context.Users.FirstOrDefaultAsync(u=> u.Email == userEmail);
         }
 
-        
+        public async Task<PagedBaseReponse<User>> GetAllUsersPaged(UserFilterDb request) {
+            var user = _context.Users.AsQueryable();
+            if (string.IsNullOrEmpty(request.Name)) 
+                user = user.Where(u => u.Name.Contains(request.Name));
+
+            return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<User>,User> (user, request);
+        }
     }
 }

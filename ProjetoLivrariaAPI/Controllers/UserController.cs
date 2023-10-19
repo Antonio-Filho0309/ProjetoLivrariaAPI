@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Dtos.User;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
@@ -86,6 +87,15 @@ namespace ProjetoLivrariaAPI.Controllers {
         [Route("{id}")]
         public async Task<ActionResult> Delete(int id) {
             var result = await _userService.Delete(id);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("paged")]
+        public async Task<ActionResult> GetByIdAsync([FromQuery] UserFilterDb userFilterDb) {
+            var result = await _userService.GetPagedAsync(userFilterDb);
             if (result.IsSucess)
                 return Ok(result);
             return BadRequest(result);
