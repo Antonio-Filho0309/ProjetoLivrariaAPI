@@ -45,10 +45,10 @@ namespace ProjetoLivrariaAPI.Repositories {
             return await _context.Users.FirstOrDefaultAsync(u=> u.Email == userEmail);
         }
 
-        public async Task<PagedBaseReponse<User>> GetAllUsersPaged(UserFilterDb request) {
+        public async Task<PagedBaseReponse<User>> GetAllUsersPaged(Filter request) {
             var user = _context.Users.AsQueryable();
-            if (string.IsNullOrEmpty(request.Name)) 
-                user = user.Where(u => u.Name.Contains(request.Name));
+            if (!string.IsNullOrEmpty(request.Value)) 
+                user = user.Where(u => u.Name.Contains(request.Value) || u.Id.ToString().Contains(request.Value) || u.Address.Contains(request.Value) || u.City.Contains(request.Value) || u.Email.Contains(request.Value));
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<User>,User> (user, request);
         }

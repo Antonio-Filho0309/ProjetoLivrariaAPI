@@ -60,7 +60,7 @@ namespace ProjetoLivrariaAPI.Controllers {
         public async Task<ActionResult> Post([FromBody] CreateUserDto createUserDto) {
             var result = await _userService.Create(createUserDto);
             if (result.IsSucess)
-                return Ok(result);
+                return Created("",result);
             return BadRequest(result);
         }
 
@@ -94,7 +94,7 @@ namespace ProjetoLivrariaAPI.Controllers {
 
         [HttpGet]
         [Route("paged")]
-        public async Task<ActionResult> GetByIdAsync([FromQuery] UserFilterDb userFilterDb) {
+        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter userFilterDb) {
             var result = await _userService.GetPagedAsync(userFilterDb);
             if (result.IsSucess)
                 return Ok(result);

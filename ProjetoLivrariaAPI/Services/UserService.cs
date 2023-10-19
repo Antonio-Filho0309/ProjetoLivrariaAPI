@@ -79,11 +79,15 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.Ok("Usuário Deletado com sucesso");
         }
 
-        public async Task<ResultService<PagedBaseResponseDto<UserDto>>>GetPagedAsync(UserFilterDb userFilterDb) {
-            var user = await _userRepository.GetAllUsersPaged(userFilterDb);
+        public async Task<ResultService<List<UserDto>>>GetPagedAsync(Filter filter) {
+            var user = await _userRepository.GetAllUsersPaged(filter);
             var result = new PagedBaseResponseDto<UserDto>(user.TotalRegisters, _mapper.Map<List<UserDto>>(user.Data));
 
-            return ResultService.Ok(result);
+            if(result.Data.Count == 0)
+                return ResultService.Fail<List<UserDto>>("Nenhum Registro Encontrado");
+
+            return  ResultService.OkPaged(result.Data, result.TotalRegisters);
         }
     }
 }
+
