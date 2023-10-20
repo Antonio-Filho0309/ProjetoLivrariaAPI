@@ -28,6 +28,7 @@ namespace ProjetoLivrariaAPI.Helpers
             CreateMap<Book , UpdateBookDto>().ReverseMap();
             CreateMap<Book, BookRentalDto>().ReverseMap();
             CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<Book ,RentedDashDto>().ReverseMap();
 
             //Aluguel
             CreateMap<Rental, CreateRentalDto>().ReverseMap();

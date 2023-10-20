@@ -14,5 +14,7 @@ namespace ProjetoLivrariaAPI.Services.Interfaces {
         Task<ResultService<ICollection<BookRentalDto>>> GetSelect();
 
         Task<ResultService<List<BookDto>>> GetPagedAsync(Filter bookFilter);
+
+        Task<ResultService<List<RentedDashDto>>> GetRentedDash();
     }
 }

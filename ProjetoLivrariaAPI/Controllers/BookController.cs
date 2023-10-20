@@ -69,6 +69,15 @@ namespace ProjetoLivrariaAPI.Controllers {
             return BadRequest(result);
         }
 
+        [HttpGet]
+        [Route("Dash")]
+        public async Task<ActionResult> GetRented() {
+            var result = await _bookService.GetRentedDash();
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
         /// <summary>
         /// Método para criar e gerar o livro
         /// </summary>
