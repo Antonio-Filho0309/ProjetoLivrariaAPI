@@ -25,13 +25,6 @@ namespace ProjetoLivrariaAPI.Repositories {
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(Rental rental) {
-            _context.Remove(rental);
-            await _context.SaveChangesAsync();
-        }
-
-
-
         public async Task<ICollection<Rental>> GetAllRentals() {
             return await _context.Rentals.Include(r => r.User)
                 .Include(r => r.Book).ToListAsync();
@@ -59,11 +52,12 @@ namespace ProjetoLivrariaAPI.Repositories {
                 rental = rental.Where(r => r.Id.ToString().Contains(rentalFilter.Value) ||
                 r.UserId.ToString().Contains(rentalFilter.Value) ||
                 r.BookId.ToString().Contains(rentalFilter.Value) ||
-                r.User.ToString().Contains(rentalFilter.Value) ||
-                r.Book.ToString().Contains(rentalFilter.Value) ||
+                r.User.Name.Contains(rentalFilter.Value) ||
+                r.Book.Name.Contains(rentalFilter.Value) ||
                 r.ReturnDate.ToString().Contains(rentalFilter.Value) ||
                 r.RentalDate.ToString().Contains(rentalFilter.Value) ||
-                r.PreviewDate.ToString().Contains(rentalFilter.Value));
+                r.PreviewDate.ToString().Contains(rentalFilter.Value) ||
+                r.Status.Contains(rentalFilter.Value));
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Rental>, Rental>(rental, rentalFilter);
         }

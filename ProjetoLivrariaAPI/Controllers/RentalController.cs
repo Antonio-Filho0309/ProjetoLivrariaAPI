@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Dtos.Rental;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
+using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 using static System.Reflection.Metadata.BlobBuilder;
 
@@ -36,6 +38,16 @@ namespace ProjetoLivrariaAPI.Controllers {
             return BadRequest(result);
         }
 
+        
+        [HttpGet]
+        [Route("Paged")]
+        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter rentalFilter) {
+            var result = await _rentalService.GetPagedAsync(rentalFilter);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateRentalDto createRentalDto) {
@@ -54,18 +66,6 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return Ok(result);
             return BadRequest(result);
 
-        }
-
-
-
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<IActionResult> Delete(int id) {
-
-            var result = await _rentalService.Delete(id);
-            if (result.IsSucess)
-                return Ok(result);
-            return BadRequest(result);
         }
     }
 }

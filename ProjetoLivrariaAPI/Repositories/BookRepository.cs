@@ -55,7 +55,7 @@ namespace ProjetoLivrariaAPI.Repositories {
                 b.Id.ToString().Contains(bookFilter.Value) ||
                 b.Author.Contains(bookFilter.Value) ||
                 b.PublisherId.ToString().Contains(bookFilter.Value) ||
-                b.Publisher.ToString().Contains(bookFilter.Value) ||
+                b.Publisher.Name.Contains(bookFilter.Value) ||
                 b.Quantity.ToString().Contains(bookFilter.Value) ||
                 b.Release.ToString().Contains(bookFilter.Value));
 

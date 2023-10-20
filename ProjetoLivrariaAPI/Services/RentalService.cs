@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Dtos.Book;
 using ProjetoLivrariaAPI.Dtos.Rental;
+using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Dtos.Validations;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
@@ -98,18 +101,14 @@ namespace ProjetoLivrariaAPI.Services {
             await _rentalRepository.Update(rental);
             return ResultService.Ok("Aluguel devolvido com suceso !");
         }
+        public async Task<ResultService<List<RentalDto>>> GetPagedAsync(Filter rentalFilter) {
+            var rental = await _rentalRepository.GetAllRentalPaged(rentalFilter);
+            var result = new PagedBaseResponseDto<RentalDto>(rental.TotalRegisters, _mapper.Map<List<RentalDto>>(rental.Data));
 
-        public async Task<ResultService> Delete(int id) {
-            var rental = await _rentalRepository.GetRentalById(id);
-            if (rental == null)
-                return ResultService.Fail("Aluguel não encontrado");
-            await _rentalRepository.Delete(rental);
-            return ResultService.Ok("Aluguel deletado com sucesso");
+            if (result.Data.Count == 0)
+                return ResultService.Fail<List<RentalDto>>("Nenhum Registro Encontrado");
 
+            return ResultService.OkPaged(result.Data, result.TotalRegisters);
         }
-
-
-
-
     }
 }
