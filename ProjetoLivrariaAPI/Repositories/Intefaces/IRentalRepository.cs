@@ -1,4 +1,6 @@
-﻿using ProjetoLivrariaAPI.Models;
+﻿using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Pagination;
 
 namespace ProjetoLivrariaAPI.Repositories.Intefaces {
     public interface IRentalRepository {
@@ -14,6 +16,8 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces {
         Task<Rental> GetRentalByBookId(int BookId);
 
         Task<Rental> GetByUserAndBook(int userId, int bookId);
+
+        Task<PagedBaseReponse<Rental>> GetAllRentalPaged(Filter rentalFilter);
 
     }
 }
