@@ -84,6 +84,9 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.Ok("Livro Deletado com sucesso");
         }
 
-
+        public async Task<ResultService<ICollection<BookRentalDto>>> GetSelect() {
+           var book = await _bookRepository.GetAllBooks();
+            return ResultService.Ok(_mapper.Map<ICollection<BookRentalDto>>(book)); 
+        }
     }
 }

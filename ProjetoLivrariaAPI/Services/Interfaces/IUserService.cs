@@ -12,7 +12,9 @@ namespace ProjetoLivrariaAPI.Services.Interfaces {
         Task<ResultService> Update(UpdateUserDto updateUserDto);
         Task<ResultService> Delete(int id);
 
-        Task<ResultService<List<UserDto>>> GetPagedAsync(Filter userFilterDb);
+        Task<ResultService<ICollection<UserRentalDto>>> GetSelect();
+
+        Task<ResultService<List<UserDto>>> GetPagedAsync(Filter userFilter);
        
     }
 }

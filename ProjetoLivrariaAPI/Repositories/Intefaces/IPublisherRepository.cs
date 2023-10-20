@@ -1,4 +1,6 @@
-﻿using ProjetoLivrariaAPI.Models;
+﻿using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Pagination;
 
 namespace ProjetoLivrariaAPI.Repositories.Intefaces
 {
@@ -15,6 +17,7 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces
 
         Task<Publisher> GetlPublisherByName(string publisherName);
 
+        Task<PagedBaseReponse<Publisher>> GetAllPublisherPaged(Filter publisherFilter);
 
     }
 }

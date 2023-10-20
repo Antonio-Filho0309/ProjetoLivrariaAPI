@@ -1,34 +1,33 @@
-﻿ using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Pagination;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 
-namespace ProjetoLivrariaAPI.Repositories
-{
-    public class PublisherRepository : IPublisherRepository
-    {
+namespace ProjetoLivrariaAPI.Repositories {
+    public class PublisherRepository : IPublisherRepository {
         private readonly DataContext _context;
 
-        public PublisherRepository(DataContext context)
-        {
+        public PublisherRepository(DataContext context) {
             _context = context;
         }
 
         public async Task<Publisher> Add(Publisher publisher) {
             _context.Add(publisher);
-           await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return publisher;
         }
 
 
         public async Task Update(Publisher publisher) {
-           _context.Update(publisher);
+            _context.Update(publisher);
             await _context.SaveChangesAsync();
-           
+
         }
 
         public async Task Delete(Publisher publisher) {
-           _context.Remove(publisher);
+            _context.Remove(publisher);
             await _context.SaveChangesAsync();
         }
 
@@ -43,6 +42,16 @@ namespace ProjetoLivrariaAPI.Repositories
 
         public async Task<Publisher> GetlPublisherByName(string publisherName) {
             return await _context.Publishers.FirstOrDefaultAsync(p => p.Name == publisherName);
+        }
+
+        public async Task<PagedBaseReponse<Publisher>> GetAllPublisherPaged(Filter publisherFilter) {
+            var publisher = _context.Publishers.AsQueryable();
+            if (!string.IsNullOrEmpty(publisherFilter.Value))
+                publisher = publisher.Where(p => 
+                p.Name.Contains(publisherFilter.Value) ||
+                p.Id.ToString().Contains(publisherFilter.Value) || 
+                p.City.Contains(publisherFilter.Value));
+            return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Publisher>, Publisher> (publisher, publisherFilter);
         }
 
 

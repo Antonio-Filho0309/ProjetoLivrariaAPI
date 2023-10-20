@@ -7,5 +7,7 @@ namespace ProjetoLivrariaAPI.Services.Interfaces {
         Task<ResultService> Create(CreateBookDto createBookDto);
         Task<ResultService> Update(UpdateBookDto updateBookDto);
         Task<ResultService> Delete(int id);
+
+        Task<ResultService<ICollection<BookRentalDto>>> GetSelect();
     }
 }

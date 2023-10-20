@@ -17,7 +17,7 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces
 
         Task<User> GetUserByEmail(string userEmail);
 
-        Task<PagedBaseReponse<User>> GetAllUsersPaged(Filter request);
+        Task<PagedBaseReponse<User>> GetAllUsersPaged(Filter userFilter);
 
 
     }

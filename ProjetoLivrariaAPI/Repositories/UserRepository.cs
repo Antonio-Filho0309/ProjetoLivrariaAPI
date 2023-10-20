@@ -47,12 +47,12 @@ namespace ProjetoLivrariaAPI.Repositories
             return await _context.Users.FirstOrDefaultAsync(u=> u.Email == userEmail);
         }
 
-        public async Task<PagedBaseReponse<User>> GetAllUsersPaged(Filter request) {
+        public async Task<PagedBaseReponse<User>> GetAllUsersPaged(Filter userFilter) {
             var user = _context.Users.AsQueryable();
-            if (!string.IsNullOrEmpty(request.Value)) 
-                user = user.Where(u => u.Name.Contains(request.Value) || u.Id.ToString().Contains(request.Value) || u.Address.Contains(request.Value) || u.City.Contains(request.Value) || u.Email.Contains(request.Value));
+            if (!string.IsNullOrEmpty(userFilter.Value)) 
+                user = user.Where(u => u.Name.Contains(userFilter.Value) || u.Id.ToString().Contains(userFilter.Value) || u.Address.Contains(userFilter.Value) || u.City.Contains(userFilter.Value) || u.Email.Contains(userFilter.Value));
 
-            return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<User>,User> (user, request);
+            return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<User>,User> (user, userFilter);
         }
     }
 }

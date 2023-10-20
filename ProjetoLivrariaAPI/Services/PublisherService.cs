@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Dtos.Publisher;
-using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Dtos.Validations;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
-using ProjetoLivrariaAPI.Repositories;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
@@ -75,5 +75,21 @@ namespace ProjetoLivrariaAPI.Services {
             await _publisherRepository.Delete(publisher);
             return ResultService.Ok("Editora deletada com sucesso");
         }
+
+        public async Task<ResultService<List<PublisherDto>>> GetPagedAsync(Filter publisherFilter) {
+            var user = await _publisherRepository.GetAllPublisherPaged(publisherFilter);
+            var result = new PagedBaseResponseDto<PublisherDto>(user.TotalRegisters, _mapper.Map<List<PublisherDto>>(user.Data));
+
+            if (result.Data.Count == 0)
+                return ResultService.Fail<List<PublisherDto>>("Nenhum Registro Encontrado");
+
+            return ResultService.OkPaged(result.Data, result.TotalRegisters);
+        }
+
+        public async Task<ResultService<ICollection<PublisherBookDto>>> GetSelect() {
+            var publisher = await _publisherRepository.GetAllPublishers();
+            return ResultService.Ok(_mapper.Map<ICollection<PublisherBookDto>>(publisher));
+        }
+
     }
 }

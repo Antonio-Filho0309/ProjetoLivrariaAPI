@@ -41,6 +41,17 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return Ok(result);
             return BadRequest(result);
         }
+        /// <summary>
+        /// Método para retornar somente o id e o nome do livro
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetSelect")]
+        public async Task<ActionResult> GetSelect() {
+            var result = await _bookService.GetSelect();
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
 
         /// <summary>
         /// Método para criar e gerar o livro

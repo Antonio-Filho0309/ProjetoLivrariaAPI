@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Dtos.Publisher;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
+using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
 namespace ProjetoLivrariaAPI.Controllers
@@ -48,13 +50,34 @@ namespace ProjetoLivrariaAPI.Controllers
                 return Ok(result);
             return BadRequest(result);
         }
-
         /// <summary>
-        /// Método parar criar uma editora
+        /// Método para retornar somente id e nome da editora
         /// </summary>
-        /// <param name="createPublisherDto"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
+        [Route("GetSelect")]
+        public async Task<ActionResult> GetSelect() {
+            var result = await _publisherService.GetSelect();
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        [Route("Paged")]
+        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter publisherFilter) {
+            var result = await _publisherService.GetPagedAsync(publisherFilter);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+            /// <summary>
+            /// Método parar criar uma editora
+            /// </summary>
+            /// <param name="createPublisherDto"></param>
+            /// <returns></returns>
+            [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreatePublisherDto createPublisherDto) {
             var result = await _publisherService.Create(createPublisherDto);
             if (result.IsSucess) 

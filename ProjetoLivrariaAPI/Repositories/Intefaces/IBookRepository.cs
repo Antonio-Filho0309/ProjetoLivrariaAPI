@@ -1,6 +1,7 @@
 ﻿
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
-using static System.Reflection.Metadata.BlobBuilder;
+using ProjetoLivrariaAPI.Pagination;
 
 namespace ProjetoLivrariaAPI.Repositories.Intefaces
 {

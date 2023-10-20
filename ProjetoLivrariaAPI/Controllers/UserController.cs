@@ -50,6 +50,20 @@ namespace ProjetoLivrariaAPI.Controllers {
                 return Ok(result);
             return BadRequest(result);
         }
+        /// <summary>
+        /// Método para retornar apenas o nome e o id do usuário
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetSelect")]
+        public async Task<ActionResult> GetSelect() {
+            var result = await _userService.GetSelect();
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+
 
         /// <summary>
         /// Método para criar e gerar usuário
@@ -92,10 +106,15 @@ namespace ProjetoLivrariaAPI.Controllers {
             return BadRequest(result);
         }
 
+        /// <summary>
+        /// Método para paginação 
+        /// </summary>
+        /// <param name="userFilter"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("paged")]
-        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter userFilterDb) {
-            var result = await _userService.GetPagedAsync(userFilterDb);
+        [Route("Paged")]
+        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter userFilter) {
+            var result = await _userService.GetPagedAsync(userFilter);
             if (result.IsSucess)
                 return Ok(result);
             return BadRequest(result);
