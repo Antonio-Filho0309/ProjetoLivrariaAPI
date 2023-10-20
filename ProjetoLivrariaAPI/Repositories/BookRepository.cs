@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
 using ProjetoLivrariaAPI.Dtos.Book;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Pagination;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using System.Net;
 
@@ -43,6 +45,22 @@ namespace ProjetoLivrariaAPI.Repositories {
 
         public async Task<Book> GetBookByPublisherId(int publisherId) {
             return await _context.Books.Include(b => b.Publisher).FirstOrDefaultAsync(b => b.PublisherId == publisherId);
+        }
+
+        public async Task<PagedBaseReponse<Book>> GetAllBookPaged(Filter bookFilter) {
+
+            var book = _context.Books.Include(b => b.Publisher).AsQueryable();
+            if (!string.IsNullOrEmpty(bookFilter.Value))
+                book = book.Where(b => b.Name.Contains(bookFilter.Value) ||
+                b.Id.ToString().Contains(bookFilter.Value) ||
+                b.Author.Contains(bookFilter.Value) ||
+                b.PublisherId.ToString().Contains(bookFilter.Value) ||
+                b.Publisher.ToString().Contains(bookFilter.Value) ||
+                b.Quantity.ToString().Contains(bookFilter.Value) ||
+                b.Release.ToString().Contains(bookFilter.Value));
+
+            return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Book>, Book>(book, bookFilter);
+
         }
     }
 }

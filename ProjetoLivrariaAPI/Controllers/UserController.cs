@@ -63,6 +63,20 @@ namespace ProjetoLivrariaAPI.Controllers {
             return BadRequest(result);
         }
 
+        /// <summary>
+        /// Método para paginação 
+        /// </summary>
+        /// <param name="userFilter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Paged")]
+        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter userFilter) {
+            var result = await _userService.GetPagedAsync(userFilter);
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
 
 
         /// <summary>
@@ -106,19 +120,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             return BadRequest(result);
         }
 
-        /// <summary>
-        /// Método para paginação 
-        /// </summary>
-        /// <param name="userFilter"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Route("Paged")]
-        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter userFilter) {
-            var result = await _userService.GetPagedAsync(userFilter);
-            if (result.IsSucess)
-                return Ok(result);
-            return BadRequest(result);
-        }
+       
 
 
     }

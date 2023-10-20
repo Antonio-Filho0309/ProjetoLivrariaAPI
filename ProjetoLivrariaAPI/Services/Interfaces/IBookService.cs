@@ -1,5 +1,8 @@
 ﻿using Locadora.API.Services;
 using ProjetoLivrariaAPI.Dtos.Book;
+using ProjetoLivrariaAPI.Dtos.User;
+using ProjetoLivrariaAPI.FiltersDb;
+
 namespace ProjetoLivrariaAPI.Services.Interfaces {
     public interface IBookService {
         Task<ResultService<ICollection<BookDto>>> Get();
@@ -9,5 +12,7 @@ namespace ProjetoLivrariaAPI.Services.Interfaces {
         Task<ResultService> Delete(int id);
 
         Task<ResultService<ICollection<BookRentalDto>>> GetSelect();
+
+        Task<ResultService<List<BookDto>>> GetPagedAsync(Filter bookFilter);
     }
 }

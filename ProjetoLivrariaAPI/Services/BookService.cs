@@ -1,9 +1,13 @@
 ﻿
 using AutoMapper;
 using Locadora.API.Services;
+using ProjetoLivrariaAPI.Dtos;
 using ProjetoLivrariaAPI.Dtos.Book;
+using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Dtos.Validations;
+using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Repositories;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
@@ -86,7 +90,17 @@ namespace ProjetoLivrariaAPI.Services {
 
         public async Task<ResultService<ICollection<BookRentalDto>>> GetSelect() {
            var book = await _bookRepository.GetAllBooks();
-            return ResultService.Ok(_mapper.Map<ICollection<BookRentalDto>>(book)); 
+            return ResultService.Ok(_mapper.Map<ICollection<BookRentalDto>>(book));
+        }
+
+        public async Task<ResultService<List<BookDto>>> GetPagedAsync(Filter bookFilter) {
+            var book = await _bookRepository.GetAllBookPaged(bookFilter);
+            var result = new PagedBaseResponseDto<BookDto>(book.TotalRegisters, _mapper.Map<List<BookDto>>(book.Data));
+
+            if (result.Data.Count == 0)
+                return ResultService.Fail<List<BookDto>>("Nenhum Registro Encontrado");
+
+            return ResultService.OkPaged(result.Data, result.TotalRegisters);
         }
     }
 }

@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoLivrariaAPI.Dtos.Book;
+using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
 namespace ProjetoLivrariaAPI.Controllers {
@@ -48,6 +50,20 @@ namespace ProjetoLivrariaAPI.Controllers {
         [HttpGet("GetSelect")]
         public async Task<ActionResult> GetSelect() {
             var result = await _bookService.GetSelect();
+            if (result.IsSucess)
+                return Ok(result);
+            return BadRequest(result);
+        }
+
+        /// <summary>
+        /// Método para paginação 
+        /// </summary>
+        /// <param name="bookFilter"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("Paged")]
+        public async Task<ActionResult> GetByIdAsync([FromQuery] Filter bookFilter) {
+            var result = await _bookService.GetPagedAsync(bookFilter);
             if (result.IsSucess)
                 return Ok(result);
             return BadRequest(result);
