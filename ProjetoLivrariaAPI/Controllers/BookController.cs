@@ -27,7 +27,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _bookService.Get();
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
         
         /// <summary>
@@ -41,7 +41,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _bookService.GetById(id);
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
         /// <summary>
         /// Método para retornar somente o id e o nome do livro
@@ -52,7 +52,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _bookService.GetSelect();
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _bookService.GetPagedAsync(bookFilter);
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         [HttpGet]
@@ -75,7 +75,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _bookService.GetRentedDash();
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace ProjetoLivrariaAPI.Controllers {
         public async Task<ActionResult> Post([FromBody] CreateBookDto createBookDto) {
             var result = await _bookService.Create(createBookDto);
             if (result.IsSucess)
-                return Ok(result);
+                return StatusCode(201,result);
             return BadRequest(result);
         }
 

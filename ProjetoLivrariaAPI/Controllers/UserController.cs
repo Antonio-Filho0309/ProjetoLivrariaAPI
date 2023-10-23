@@ -33,7 +33,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _userService.Get();
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
 
         }
 
@@ -48,7 +48,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _userService.GetById(id);
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
         /// <summary>
         /// Método para retornar apenas o nome e o id do usuário
@@ -60,7 +60,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _userService.GetSelect();
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _userService.GetPagedAsync(userFilter);
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
 
@@ -88,7 +88,7 @@ namespace ProjetoLivrariaAPI.Controllers {
         public async Task<ActionResult> Post([FromBody] CreateUserDto createUserDto) {
             var result = await _userService.Create(createUserDto);
             if (result.IsSucess)
-                return Created("",result);
+                return StatusCode(201,result);
             return BadRequest(result);
         }
 

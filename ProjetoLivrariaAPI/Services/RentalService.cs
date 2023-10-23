@@ -56,7 +56,11 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.RequestError(result);
 
             var bookQuantity = await _bookRepository.GetBookById(createRentalDto.BookId);
-            if (bookQuantity == null || bookQuantity.Quantity == 0) {
+
+            if (bookQuantity == null) {
+                return ResultService.Fail<CreateRentalDto>("Livro não existe");
+            }
+            if (bookQuantity.Quantity == 0) {
                 return ResultService.Fail<CreateRentalDto>("Livro sem estoque !");
             }
 

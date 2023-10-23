@@ -25,7 +25,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _rentalService.Get();
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         [HttpGet]
@@ -35,7 +35,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _rentalService.GetById(id);
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
         
@@ -45,7 +45,7 @@ namespace ProjetoLivrariaAPI.Controllers {
             var result = await _rentalService.GetPagedAsync(rentalFilter);
             if (result.IsSucess)
                 return Ok(result);
-            return BadRequest(result);
+            return NotFound(result);
         }
 
 
@@ -53,7 +53,7 @@ namespace ProjetoLivrariaAPI.Controllers {
         public async Task<IActionResult> Post([FromBody] CreateRentalDto createRentalDto) {
             var result = await _rentalService.Create(createRentalDto);
             if (result.IsSucess)
-                return Ok(result);
+                return StatusCode(201, result);
             return BadRequest(result);
 
         }
