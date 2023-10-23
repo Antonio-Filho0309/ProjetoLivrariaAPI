@@ -24,10 +24,12 @@ namespace Locadora.API.Services {
                 IsSucess = true
             };
         }
-        public static ResultService<T> OkPaged<T>(T data, int totalRegisters) {
+        public static ResultService<T> OkPaged<T>(T data, int totalRegisters , int totalPages , int page) {
             return new ResultService<T> {
                 Data = data,
                 TotalRegisters = totalRegisters,
+                TotalPages = totalPages ,
+                Page = page,
                 IsSucess = true
             };
         }
@@ -40,6 +42,8 @@ namespace Locadora.API.Services {
         public int? TotalRegisters { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? TotalPages { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        public int?Page { get; set; }
     }
 
 }

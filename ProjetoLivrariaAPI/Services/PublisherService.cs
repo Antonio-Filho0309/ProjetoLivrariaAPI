@@ -77,13 +77,13 @@ namespace ProjetoLivrariaAPI.Services {
         }
 
         public async Task<ResultService<List<PublisherDto>>> GetPagedAsync(Filter publisherFilter) {
-            var user = await _publisherRepository.GetAllPublisherPaged(publisherFilter);
-            var result = new PagedBaseResponseDto<PublisherDto>(user.TotalRegisters, _mapper.Map<List<PublisherDto>>(user.Data));
+            var publisher = await _publisherRepository.GetAllPublisherPaged(publisherFilter);
+            var result = new PagedBaseResponseDto<PublisherDto>(publisher.TotalRegisters, publisher.TotalPages, publisher.Page, _mapper.Map<List<PublisherDto>>(publisher.Data));
 
             if (result.Data.Count == 0)
                 return ResultService.Fail<List<PublisherDto>>("Nenhum Registro Encontrado");
 
-            return ResultService.OkPaged(result.Data, result.TotalRegisters);
+            return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.Page);
         }
 
         public async Task<ResultService<ICollection<PublisherBookDto>>> GetSelect() {

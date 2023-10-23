@@ -14,7 +14,7 @@ namespace ProjetoLivrariaAPI.Services {
         private readonly IRentalRepository _rentalRepository;
         private readonly IMapper _mapper;
 
-        public UserService(IMapper mapper, IUserRepository userRepository , IRentalRepository rentalRepository) {
+        public UserService(IMapper mapper, IUserRepository userRepository, IRentalRepository rentalRepository) {
             _mapper = mapper;
             _userRepository = userRepository;
             _rentalRepository = rentalRepository;
@@ -25,7 +25,7 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.Ok(_mapper.Map<ICollection<UserDto>>(users));
         }
 
-        public async  Task<ResultService<UserDto>> GetById(int id) {
+        public async Task<ResultService<UserDto>> GetById(int id) {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
                 return ResultService.Fail<UserDto>("Usuário não encontrado !");
@@ -54,7 +54,7 @@ namespace ProjetoLivrariaAPI.Services {
             if (updateUserDto == null)
                 return ResultService.Fail("Usuário deve ser informado");
 
-            var validation =   new UpdateUserDtoValidator().Validate(updateUserDto);
+            var validation = new UpdateUserDtoValidator().Validate(updateUserDto);
             if (!validation.IsValid)
                 return ResultService.RequestError(validation);
             var user = await _userRepository.GetUserById(updateUserDto.Id);
@@ -65,7 +65,7 @@ namespace ProjetoLivrariaAPI.Services {
             await _userRepository.Update(user);
 
             return ResultService.Ok("Usuário Atualizado com sucesso");
-           
+
         }
 
         public async Task<ResultService> Delete(int id) {
@@ -79,14 +79,14 @@ namespace ProjetoLivrariaAPI.Services {
             return ResultService.Ok("Usuário Deletado com sucesso");
         }
 
-        public async Task<ResultService<List<UserDto>>>GetPagedAsync(Filter userFilter) {
+        public async Task<ResultService<List<UserDto>>> GetPagedAsync(Filter userFilter) {
             var user = await _userRepository.GetAllUsersPaged(userFilter);
-            var result = new PagedBaseResponseDto<UserDto>(user.TotalRegisters, _mapper.Map<List<UserDto>>(user.Data));
+            var result = new PagedBaseResponseDto<UserDto>(user.TotalRegisters,user.Page,user.TotalPages, _mapper.Map<List<UserDto>>(user.Data));
 
-            if(result.Data.Count == 0)
+            if (result.Data.Count == 0)
                 return ResultService.Fail<List<UserDto>>("Nenhum Registro Encontrado");
 
-            return  ResultService.OkPaged(result.Data, result.TotalRegisters);
+            return ResultService.OkPaged(result.Data, result.TotalRegisters , result.TotalPages , result.Page);
         }
 
         public async Task<ResultService<ICollection<UserRentalDto>>> GetSelect() {
