@@ -59,6 +59,15 @@ builder.Services.AddSwaggerGen(options => {
     options.IncludeXmlComments(xmlCommentsFullPath);
 });
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowLocalhost8080",
+        builder => {
+            builder.WithOrigins("http://localhost:8080")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -68,7 +77,7 @@ if (app.Environment.IsDevelopment()) {
 }
 
 app.UseAuthorization();
-
+app.UseCors("AllowLocalhost8080");
 app.MapControllers();
 
 app.Run();
