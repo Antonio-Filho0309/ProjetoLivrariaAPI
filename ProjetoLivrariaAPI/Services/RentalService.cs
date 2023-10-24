@@ -40,14 +40,14 @@ namespace ProjetoLivrariaAPI.Services {
         }
         public async Task<ResultService> Create(CreateRentalDto createRentalDto) {
             if (createRentalDto == null)
-                return ResultService.Fail<CreateRentalDto>("Objeto deve ser informado !");
+                return ResultService.Fail<CreateRentalDto>("Objeto deve ser informado");
             var result = new RentalDtoValidator().Validate(createRentalDto);
             if (!result.IsValid)
                 return ResultService.RequestError(result);
             var rental = _mapper.Map<Rental>(createRentalDto);
 
             if (rental.RentalDate.Date != DateTime.Now.Date)
-                return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
+                return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje ");
 
             rental.Status = "Pendente";
 
@@ -61,7 +61,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail<CreateRentalDto>("Livro não existe");
             }
             if (bookQuantity.Quantity == 0) {
-                return ResultService.Fail<CreateRentalDto>("Livro sem estoque !");
+                return ResultService.Fail<CreateRentalDto>("Livro sem estoque ");
             }
 
             bookQuantity.Rented++;
@@ -69,7 +69,7 @@ namespace ProjetoLivrariaAPI.Services {
 
             TimeSpan diference = rental.PreviewDate.Date - rental.RentalDate.Date;
             if (diference.TotalDays > 30)
-                return ResultService.Fail("A data de previsão não pode ser mais de 30 dias após o aluguel !");
+                return ResultService.Fail("A data de previsão não pode ser mais de 30 dias após o aluguel");
 
             await _rentalRepository.Add(rental);
             return ResultService.Ok(rental);

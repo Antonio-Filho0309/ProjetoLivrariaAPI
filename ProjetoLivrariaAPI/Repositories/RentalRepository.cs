@@ -48,16 +48,16 @@ namespace ProjetoLivrariaAPI.Repositories {
 
         public async Task<PagedBaseReponse<Rental>> GetAllRentalPaged(Filter rentalFilter) {
             var rental = _context.Rentals.Include(r => r.User).Include(r => r.Book).AsQueryable();
-            if (!string.IsNullOrEmpty(rentalFilter.Value))
-                rental = rental.Where(r => r.Id.ToString().Contains(rentalFilter.Value) ||
-                r.UserId.ToString().Contains(rentalFilter.Value) ||
-                r.BookId.ToString().Contains(rentalFilter.Value) ||
-                r.User.Name.Contains(rentalFilter.Value) ||
-                r.Book.Name.Contains(rentalFilter.Value) ||
-                r.ReturnDate.ToString().Contains(rentalFilter.Value) ||
-                r.RentalDate.ToString().Contains(rentalFilter.Value) ||
-                r.PreviewDate.ToString().Contains(rentalFilter.Value) ||
-                r.Status.Contains(rentalFilter.Value));
+            if (!string.IsNullOrEmpty(rentalFilter.Search))
+                rental = rental.Where(r => r.Id.ToString().Contains(rentalFilter.Search) ||
+                r.UserId.ToString().Contains(rentalFilter.Search) ||
+                r.BookId.ToString().Contains(rentalFilter.Search) ||
+                r.User.Name.Contains(rentalFilter.Search) ||
+                r.Book.Name.Contains(rentalFilter.Search) ||
+                r.ReturnDate.ToString().Contains(rentalFilter.Search) ||
+                r.RentalDate.ToString().Contains(rentalFilter.Search) ||
+                r.PreviewDate.ToString().Contains(rentalFilter.Search) ||
+                r.Status.Contains(rentalFilter.Search));
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Rental>, Rental>(rental, rentalFilter);
         }

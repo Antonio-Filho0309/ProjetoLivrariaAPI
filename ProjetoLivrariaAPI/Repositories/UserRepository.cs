@@ -49,8 +49,8 @@ namespace ProjetoLivrariaAPI.Repositories
 
         public async Task<PagedBaseReponse<User>> GetAllUsersPaged(Filter userFilter) {
             var user = _context.Users.AsQueryable();
-            if (!string.IsNullOrEmpty(userFilter.Value)) 
-                user = user.Where(u => u.Name.Contains(userFilter.Value) || u.Id.ToString().Contains(userFilter.Value) || u.Address.Contains(userFilter.Value) || u.City.Contains(userFilter.Value) || u.Email.Contains(userFilter.Value));
+            if (!string.IsNullOrEmpty(userFilter.Search)) 
+                user = user.Where(u => u.Name.Contains(userFilter.Search) || u.Id.ToString().Contains(userFilter.Search) || u.Address.Contains(userFilter.Search) || u.City.Contains(userFilter.Search) || u.Email.Contains(userFilter.Search));
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<User>,User> (user, userFilter);
         }

@@ -36,7 +36,7 @@ namespace ProjetoLivrariaAPI.Services {
         }
         public async Task<ResultService> Create(CreateBookDto createBookDto) {
             if (createBookDto == null)
-                return ResultService.Fail<CreateBookDto>("Objeto deve ser informado !");
+                return ResultService.Fail<CreateBookDto>("Objeto deve ser informado .");
 
             var result = new BookDtoValidator().Validate(createBookDto);
             if (!result.IsValid)
@@ -52,7 +52,7 @@ namespace ProjetoLivrariaAPI.Services {
             }
 
             if (createBookDto.Release > DateTime.Now.Year)
-                return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual");
+                return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual.");
 
             await _bookRepository.Add(book);
             return ResultService.Ok(book);
@@ -69,7 +69,7 @@ namespace ProjetoLivrariaAPI.Services {
                 return ResultService.Fail("Livro não encontrado");
             book = _mapper.Map(updateBookDto, book);
             await _bookRepository.Update(book);
-            return ResultService.Ok("Livro atualizado com suceso !");
+            return ResultService.Ok("Livro atualizado com suceso .");
 
         }
 

@@ -50,14 +50,14 @@ namespace ProjetoLivrariaAPI.Repositories {
         public async Task<PagedBaseReponse<Book>> GetAllBookPaged(Filter bookFilter) {
 
             var book = _context.Books.Include(b => b.Publisher).AsQueryable();
-            if (!string.IsNullOrEmpty(bookFilter.Value))
-                book = book.Where(b => b.Name.Contains(bookFilter.Value) ||
-                b.Id.ToString().Contains(bookFilter.Value) ||
-                b.Author.Contains(bookFilter.Value) ||
-                b.PublisherId.ToString().Contains(bookFilter.Value) ||
-                b.Publisher.Name.Contains(bookFilter.Value) ||
-                b.Quantity.ToString().Contains(bookFilter.Value) ||
-                b.Release.ToString().Contains(bookFilter.Value));
+            if (!string.IsNullOrEmpty(bookFilter.Search))
+                book = book.Where(b => b.Name.Contains(bookFilter.Search) ||
+                b.Id.ToString().Contains(bookFilter.Search) ||
+                b.Author.Contains(bookFilter.Search) ||
+                b.PublisherId.ToString().Contains(bookFilter.Search) ||
+                b.Publisher.Name.Contains(bookFilter.Search) ||
+                b.Quantity.ToString().Contains(bookFilter.Search) ||
+                b.Release.ToString().Contains(bookFilter.Search));
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Book>, Book>(book, bookFilter);
 

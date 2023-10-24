@@ -46,11 +46,11 @@ namespace ProjetoLivrariaAPI.Repositories {
 
         public async Task<PagedBaseReponse<Publisher>> GetAllPublisherPaged(Filter publisherFilter) {
             var publisher = _context.Publishers.AsQueryable();
-            if (!string.IsNullOrEmpty(publisherFilter.Value))
+            if (!string.IsNullOrEmpty(publisherFilter.Search))
                 publisher = publisher.Where(p => 
-                p.Name.Contains(publisherFilter.Value) ||
-                p.Id.ToString().Contains(publisherFilter.Value) || 
-                p.City.Contains(publisherFilter.Value));
+                p.Name.Contains(publisherFilter.Search) ||
+                p.Id.ToString().Contains(publisherFilter.Search) || 
+                p.City.Contains(publisherFilter.Search));
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Publisher>, Publisher> (publisher, publisherFilter);
         }
 

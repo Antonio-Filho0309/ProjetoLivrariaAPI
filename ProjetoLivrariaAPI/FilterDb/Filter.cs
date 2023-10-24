@@ -3,6 +3,6 @@
 namespace ProjetoLivrariaAPI.FiltersDb
 {
     public class Filter : PagedBaseRequest {
-        public string Value { get; set; }
+        public string Search { get; set; }
     }
 }

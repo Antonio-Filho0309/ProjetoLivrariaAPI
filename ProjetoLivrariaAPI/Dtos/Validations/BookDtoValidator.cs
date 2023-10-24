@@ -7,7 +7,7 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(b => b.Name)
                 .NotEmpty()
                 
-                .WithMessage("Nome deve ser informado !")
+                .WithMessage("Nome deve ser informado .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
@@ -15,24 +15,23 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(b => b.Author)
                 .NotEmpty()
                 
-                .WithMessage("Autor deve ser informado !")
+                .WithMessage("Autor deve ser informado .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
             RuleFor(b => b.PublisherId)
                 .NotEmpty()
                 
-                .WithMessage("Editora deve ser informada !");
+                .WithMessage("Editora deve ser informada .");
 
             RuleFor(b => b.Release)
                 .NotEmpty()
                 
-                .WithMessage("Ano de lançamento deve ser informado !");
+                .WithMessage("Ano de lançamento deve ser informado .");
 
             RuleFor(b => b.Quantity)
               .NotEmpty()
-              .NotNull()
-              .WithMessage("Quantidade deve ser informada !");
+              .WithMessage("Quantidade não informada ou igual a 0");
         }
     }
 
@@ -41,7 +40,7 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(b => b.Name)
                 .NotEmpty()
                 
-                .WithMessage("Nome deve ser informado !")
+                .WithMessage("Nome deve ser informado .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
@@ -49,7 +48,7 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(b => b.Author)
                 .NotEmpty()
                 
-                .WithMessage("Autor deve ser informado !")
+                .WithMessage("Autor deve ser informado .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
@@ -57,7 +56,7 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(b => b.PublisherId)
                 .NotEmpty()
                 
-                .WithMessage("Editora deve ser informada !");
+                .WithMessage("Editora deve ser informada .");
 
             RuleFor(b => b.Release)
                 .NotEmpty()
@@ -66,8 +65,7 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
 
             RuleFor(b => b.Quantity)
              .NotEmpty()
-             .NotNull()
-             .WithMessage("Quantidade deve ser informada !");
+             .WithMessage("Quantidade não informada ou igual a 0.");
         }
     }
 }
