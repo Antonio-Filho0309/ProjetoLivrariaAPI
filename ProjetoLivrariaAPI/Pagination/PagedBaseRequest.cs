@@ -10,7 +10,7 @@
         public PagedBaseRequest()
         {
             Page = 1;
-            PageSize = 10;
+            PageSize = 5;
             OrderByProperty = "Id";
             Desc = false;
         }
