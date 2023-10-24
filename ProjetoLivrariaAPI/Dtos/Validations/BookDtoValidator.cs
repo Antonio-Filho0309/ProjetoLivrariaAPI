@@ -27,12 +27,12 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
             RuleFor(b => b.Release)
                 .NotEmpty()
                 
-                .WithMessage("Data de lançamento deve ser informada !");
+                .WithMessage("Ano de lançamento deve ser informado !");
 
             RuleFor(b => b.Quantity)
               .NotEmpty()
-              
-              .WithMessage("Data de lançamento deve ser informada !");
+              .NotNull()
+              .WithMessage("Quantidade deve ser informada !");
         }
     }
 
@@ -65,9 +65,9 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
                 .WithMessage("Data de lançamento deve ser informada !");
 
             RuleFor(b => b.Quantity)
-              .NotEmpty()
-              
-              .WithMessage("Data de lançamento deve ser informada !");
+             .NotEmpty()
+             .NotNull()
+             .WithMessage("Quantidade deve ser informada !");
         }
     }
 }
