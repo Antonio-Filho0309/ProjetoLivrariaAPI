@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
-using ProjetoLivrariaAPI.Dtos.Book;
-using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models.Dtos.Book;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Pagination;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using System.Net;
 
-namespace ProjetoLivrariaAPI.Repositories {
+namespace ProjetoLivrariaAPI.Repositories
+{
     public class BookRepository : IBookRepository {
         private readonly DataContext _context;
 

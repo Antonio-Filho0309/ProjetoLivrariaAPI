@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using ProjetoLivrariaAPI.Dtos.Book;
-using ProjetoLivrariaAPI.Dtos.Publisher;
-using ProjetoLivrariaAPI.Dtos.Rental;
-using ProjetoLivrariaAPI.Dtos.User;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.Dtos.Book;
+using ProjetoLivrariaAPI.Models.Dtos.Publisher;
+using ProjetoLivrariaAPI.Models.Dtos.Rental;
+using ProjetoLivrariaAPI.Models.Dtos.User;
 
 namespace ProjetoLivrariaAPI.Helpers
 {

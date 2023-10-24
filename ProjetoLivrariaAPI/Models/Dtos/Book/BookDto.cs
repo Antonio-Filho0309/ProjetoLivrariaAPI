@@ -1,7 +1,9 @@
-﻿using ProjetoLivrariaAPI.Dtos.Publisher;
+﻿using ProjetoLivrariaAPI.Models.Dtos.Publisher;
 
-namespace ProjetoLivrariaAPI.Dtos.Book {
-    public class BookDto {
+namespace ProjetoLivrariaAPI.Models.Dtos.Book
+{
+    public class BookDto
+    {
         public int Id { get; set; }
         public string Name { get; set; }
 

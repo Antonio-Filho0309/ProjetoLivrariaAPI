@@ -1,5 +1,5 @@
-﻿using ProjetoLivrariaAPI.FiltersDb;
-using ProjetoLivrariaAPI.Models;
+﻿using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Pagination;
 
 namespace ProjetoLivrariaAPI.Repositories.Intefaces

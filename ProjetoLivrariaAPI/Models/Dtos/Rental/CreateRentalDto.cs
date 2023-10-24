@@ -1,5 +1,7 @@
-﻿namespace ProjetoLivrariaAPI.Dtos.Rental {
-    public class CreateRentalDto {
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.Rental
+{
+    public class CreateRentalDto
+    {
 
         public int BookId { get; set; }
 

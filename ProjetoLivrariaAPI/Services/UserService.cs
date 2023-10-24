@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using Locadora.API.Services;
-using ProjetoLivrariaAPI.Dtos;
-using ProjetoLivrariaAPI.Dtos.User;
-using ProjetoLivrariaAPI.Dtos.Validations;
-using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models.Dtos;
+using ProjetoLivrariaAPI.Models.Dtos.Validations;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.Dtos.User;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
-namespace ProjetoLivrariaAPI.Services {
+namespace ProjetoLivrariaAPI.Services
+{
     public class UserService : IUserService {
         private readonly IUserRepository _userRepository;
         private readonly IRentalRepository _rentalRepository;

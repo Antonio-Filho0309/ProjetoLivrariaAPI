@@ -1,4 +1,4 @@
-﻿namespace ProjetoLivrariaAPI.Dtos.Book
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.Book
 {
     public class RentedDashDto
     {

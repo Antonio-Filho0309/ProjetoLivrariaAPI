@@ -1,5 +1,7 @@
-﻿namespace ProjetoLivrariaAPI.Dtos.Publisher {
-    public class PublisherDto {
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.Publisher
+{
+    public class UpdatePublisherDto
+    {
         public int Id { get; set; }
         public string Name { get; set; }
 

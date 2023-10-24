@@ -1,9 +1,12 @@
 ﻿using FluentValidation;
-using ProjetoLivrariaAPI.Dtos.Rental;
+using ProjetoLivrariaAPI.Models.Dtos.Rental;
 
-namespace ProjetoLivrariaAPI.Dtos.Validations {
-    public class RentalDtoValidator : AbstractValidator<CreateRentalDto> {
-        public RentalDtoValidator() {
+namespace ProjetoLivrariaAPI.Models.Dtos.Validations
+{
+    public class RentalDtoValidator : AbstractValidator<CreateRentalDto>
+    {
+        public RentalDtoValidator()
+        {
             RuleFor(r => r.BookId)
                .NotEmpty()
 
@@ -26,8 +29,10 @@ namespace ProjetoLivrariaAPI.Dtos.Validations {
         }
     }
 
-    public class UpdateRentalDtoValidator : AbstractValidator<UpdateRentalDto> {
-        public UpdateRentalDtoValidator() {
+    public class UpdateRentalDtoValidator : AbstractValidator<UpdateRentalDto>
+    {
+        public UpdateRentalDtoValidator()
+        {
             RuleFor(r => r.Id)
                 .NotEmpty()
 

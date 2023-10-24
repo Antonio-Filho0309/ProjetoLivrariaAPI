@@ -1,14 +1,15 @@
 ﻿using AutoMapper;
 using Locadora.API.Services;
-using ProjetoLivrariaAPI.Dtos;
-using ProjetoLivrariaAPI.Dtos.Publisher;
-using ProjetoLivrariaAPI.Dtos.Validations;
-using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models.Dtos;
+using ProjetoLivrariaAPI.Models.Dtos.Validations;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.Dtos.Publisher;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
-namespace ProjetoLivrariaAPI.Services {
+namespace ProjetoLivrariaAPI.Services
+{
     public class PublisherService : IPublisherService {
         private readonly IMapper _mapper;
         private readonly IPublisherRepository _publisherRepository;

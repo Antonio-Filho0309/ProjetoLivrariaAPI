@@ -1,9 +1,10 @@
 ﻿using Locadora.API.Services;
-using ProjetoLivrariaAPI.Dtos.Book;
-using ProjetoLivrariaAPI.Dtos.User;
-using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models.Dtos.User;
+using ProjetoLivrariaAPI.Models.Dtos.Book;
+using ProjetoLivrariaAPI.Models.FilterDb;
 
-namespace ProjetoLivrariaAPI.Services.Interfaces {
+namespace ProjetoLivrariaAPI.Services.Interfaces
+{
     public interface IBookService {
         Task<ResultService<ICollection<BookDto>>> Get();
         Task<ResultService<BookDto>> GetById(int id);

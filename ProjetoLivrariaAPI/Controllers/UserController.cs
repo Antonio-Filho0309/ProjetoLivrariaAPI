@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
-using ProjetoLivrariaAPI.Dtos.User;
-using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.Dtos.User;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
-namespace ProjetoLivrariaAPI.Controllers {
+namespace ProjetoLivrariaAPI.Controllers
+{
     [Route("api/[controller]")]
     [ApiController]
 

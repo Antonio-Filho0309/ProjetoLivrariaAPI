@@ -1,6 +1,7 @@
-﻿namespace ProjetoLivrariaAPI.Dtos.User {
-    public class UpdateUserDto {
-        public int Id { get; set; }
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.User
+{
+    public class CreateUserDto
+    {
         public string Name { get; set; }
         public string City { get; set; }
 

@@ -1,9 +1,10 @@
 ﻿using Locadora.API.Services;
-using ProjetoLivrariaAPI.Dtos.Rental;
-using ProjetoLivrariaAPI.Dtos.User;
-using ProjetoLivrariaAPI.FiltersDb;
+using ProjetoLivrariaAPI.Models.Dtos.User;
+using ProjetoLivrariaAPI.Models.Dtos.Rental;
+using ProjetoLivrariaAPI.Models.FilterDb;
 
-namespace ProjetoLivrariaAPI.Services.Interfaces {
+namespace ProjetoLivrariaAPI.Services.Interfaces
+{
     public interface IRentalService {
         Task<ResultService<ICollection<RentalDto>>> Get();
         Task<ResultService<RentalDto>> GetById(int id);

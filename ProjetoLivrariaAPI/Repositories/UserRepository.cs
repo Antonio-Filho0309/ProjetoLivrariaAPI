@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoLivrariaAPI.Data;
-using ProjetoLivrariaAPI.FiltersDb;
 using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Pagination;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 

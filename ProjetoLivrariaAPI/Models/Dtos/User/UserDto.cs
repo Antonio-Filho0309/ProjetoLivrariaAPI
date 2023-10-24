@@ -1,4 +1,4 @@
-﻿namespace ProjetoLivrariaAPI.Dtos.User
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.User
 {
     public class UserDto
     {

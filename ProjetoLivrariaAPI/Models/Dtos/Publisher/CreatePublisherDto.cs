@@ -1,4 +1,4 @@
-﻿namespace ProjetoLivrariaAPI.Dtos.Publisher
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.Publisher
 {
     public class CreatePublisherDto
     {

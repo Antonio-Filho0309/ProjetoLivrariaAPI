@@ -1,8 +1,9 @@
 ﻿using ProjetoLivrariaAPI.Pagination;
 
-namespace ProjetoLivrariaAPI.FiltersDb
+namespace ProjetoLivrariaAPI.Models.FilterDb
 {
-    public class Filter : PagedBaseRequest {
+    public class Filter : PagedBaseRequest
+    {
         public string Search { get; set; }
     }
 }

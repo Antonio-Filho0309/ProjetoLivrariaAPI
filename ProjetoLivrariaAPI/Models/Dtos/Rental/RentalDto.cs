@@ -1,8 +1,10 @@
-﻿using ProjetoLivrariaAPI.Dtos.Book;
-using ProjetoLivrariaAPI.Dtos.User;
+﻿using ProjetoLivrariaAPI.Models.Dtos.Book;
+using ProjetoLivrariaAPI.Models.Dtos.User;
 
-namespace ProjetoLivrariaAPI.Dtos.Rental {
-    public class RentalDto {
+namespace ProjetoLivrariaAPI.Models.Dtos.Rental
+{
+    public class RentalDto
+    {
         public int Id { get; set; }
         public int BookId { get; set; }
         public BookRentalDto Book { get; set; }

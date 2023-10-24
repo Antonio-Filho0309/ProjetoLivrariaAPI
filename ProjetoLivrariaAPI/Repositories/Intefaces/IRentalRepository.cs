@@ -1,8 +1,9 @@
-﻿using ProjetoLivrariaAPI.FiltersDb;
-using ProjetoLivrariaAPI.Models;
+﻿using ProjetoLivrariaAPI.Models;
+using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Pagination;
 
-namespace ProjetoLivrariaAPI.Repositories.Intefaces {
+namespace ProjetoLivrariaAPI.Repositories.Intefaces
+{
     public interface IRentalRepository {
         Task<Rental> Add(Rental rental);
         Task Update(Rental rental);

@@ -1,7 +1,9 @@
-﻿
+﻿namespace ProjetoLivrariaAPI.Models.Dtos.Book
+{
+    public class UpdateBookDto
+    {
 
-namespace ProjetoLivrariaAPI.Dtos.Book {
-    public class CreateBookDto {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Author { get; set; }
@@ -11,6 +13,7 @@ namespace ProjetoLivrariaAPI.Dtos.Book {
         public int Release { get; set; }
 
         public int Quantity { get; set; }
+
 
     }
 }
