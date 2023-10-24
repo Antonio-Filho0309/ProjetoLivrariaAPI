@@ -65,6 +65,7 @@ namespace ProjetoLivrariaAPI.Services
             var validation = new UpdateBookDtoValidator().Validate(updateBookDto);
             if (!validation.IsValid)
                 return ResultService.RequestError(validation);
+
             var book = await _bookRepository.GetBookById(updateBookDto.Id);
             if (book == null)
                 return ResultService.Fail("Livro não encontrado");
