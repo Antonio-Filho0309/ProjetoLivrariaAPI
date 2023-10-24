@@ -34,7 +34,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
 
             RuleFor(b => b.Quantity)
               .NotEmpty()
-              .WithMessage("Quantidade não informada ou igual a 0");
+              .WithMessage("Quantidade não informada");
         }
     }
 
