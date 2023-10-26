@@ -18,7 +18,19 @@ namespace ProjetoLivrariaAPI.Controllers
 
             _bookService = bookService;
         }
-  
+
+        /// <summary>
+        /// Método para buscar os livros
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult> Get() {
+            var result = await _bookService.Get();
+            if (result.IsSucess)
+                return Ok(result);
+            return NotFound(result);
+        }
+        
         /// <summary>
         /// Método para buscar o livro por id
         /// </summary>
