@@ -56,7 +56,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual.");
 
             await _bookRepository.Add(book);
-            return ResultService.Ok(book);
+            return ResultService.Ok("Livro Criado com Sucesso");
         }
 
         public async Task<ResultService> Update(UpdateBookDto updateBookDto) {

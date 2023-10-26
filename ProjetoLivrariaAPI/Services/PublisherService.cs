@@ -49,7 +49,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.Fail("Editora já cadastrada !");
 
             await _publisherRepository.Add(publisher);
-            return ResultService.Ok(publisher);
+            return ResultService.Ok("Editora Cadastrada com Sucesso");
         }
 
         public async Task<ResultService> Update(UpdatePublisherDto updatePublisherDto) {
