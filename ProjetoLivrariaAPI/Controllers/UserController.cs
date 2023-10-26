@@ -25,18 +25,6 @@ namespace ProjetoLivrariaAPI.Controllers
         public UserController(IUserService userService) {
             _userService = userService;
         }
-        /// <summary>
-        /// Método para listar e mostrar usuários
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Get() {
-            var result = await _userService.Get();
-            if (result.IsSucess)
-                return Ok(result);
-            return NotFound(result);
-
-        }
 
         /// <summary>
         /// Método para encontrar um usuário por id

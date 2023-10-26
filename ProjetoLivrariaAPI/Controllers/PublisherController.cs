@@ -25,17 +25,6 @@ namespace ProjetoLivrariaAPI.Controllers
             _publisherService = publisherService;
            
         }
-        /// <summary>
-        /// Método para retornar as editoras
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<ActionResult> Get() {
-            var result = await _publisherService.Get();
-            if (result.IsSucess)
-                return Ok(result);
-            return NotFound(result);
-        }
 
         /// <summary>
         /// Método para retornar uma editora 

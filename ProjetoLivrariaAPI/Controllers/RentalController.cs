@@ -22,14 +22,6 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> Get() {
-            var result = await _rentalService.Get();
-            if (result.IsSucess)
-                return Ok(result);
-            return NotFound(result);
-        }
-
-        [HttpGet]
         [Route("{id}")]
 
         public async Task<IActionResult> Get(int id) {
