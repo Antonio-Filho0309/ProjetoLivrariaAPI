@@ -73,7 +73,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.Fail<CreateRentalDto>("A data de previsão não pode ser mais de 30 dias após o aluguel");
 
             await _rentalRepository.Add(rental);
-            return ResultService.Ok(rental);
+            return ResultService.Ok("Aluguel Realizado com Sucesso");
         }
 
         public async Task<ResultService> Update(UpdateRentalDto updateRentalDto) {
