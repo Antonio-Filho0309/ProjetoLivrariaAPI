@@ -48,13 +48,13 @@ namespace ProjetoLivrariaAPI.Services
             var rental = _mapper.Map<Rental>(createRentalDto);
 
             if (rental.RentalDate.Date != DateTime.Now.Date)
-                return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje ");
+                return ResultService.Fail<CreateRentalDto>("A data de aluguel não pode ser diferente da data de hoje ");
 
             rental.Status = "Pendente";
 
             var sameRental = await _rentalRepository.GetByUserAndBook(createRentalDto.UserId, createRentalDto.BookId);
             if (sameRental != null && rental.Status == "Pendente")
-                return ResultService.RequestError(result);
+                return ResultService.Fail<CreateRentalDto>("Usuário não pode alugar o mesmo livro");
 
             var bookQuantity = await _bookRepository.GetBookById(createRentalDto.BookId);
 
@@ -70,7 +70,7 @@ namespace ProjetoLivrariaAPI.Services
 
             TimeSpan diference = rental.PreviewDate.Date - rental.RentalDate.Date;
             if (diference.TotalDays > 30)
-                return ResultService.Fail("A data de previsão não pode ser mais de 30 dias após o aluguel");
+                return ResultService.Fail<CreateRentalDto>("A data de previsão não pode ser mais de 30 dias após o aluguel");
 
             await _rentalRepository.Add(rental);
             return ResultService.Ok("Aluguel Realizado com Sucesso");
