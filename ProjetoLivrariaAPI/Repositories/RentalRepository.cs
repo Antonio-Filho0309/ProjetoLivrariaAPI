@@ -44,7 +44,7 @@ namespace ProjetoLivrariaAPI.Repositories
         }
 
         public async Task<Rental> GetByUserAndBook(int userId, int bookId) {
-            return await _context.Rentals.FirstOrDefaultAsync(r => r.UserId == userId && r.BookId == bookId);
+            return await _context.Rentals.FirstOrDefaultAsync(r => r.UserId == userId && r.BookId == bookId && r.Status == "Pendente");
         }
 
         public async Task<PagedBaseReponse<Rental>> GetAllRentalPaged(Filter rentalFilter) {

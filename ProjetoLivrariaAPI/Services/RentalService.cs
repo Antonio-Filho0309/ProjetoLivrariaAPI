@@ -53,7 +53,7 @@ namespace ProjetoLivrariaAPI.Services
             rental.Status = "Pendente";
 
             var sameRental = await _rentalRepository.GetByUserAndBook(createRentalDto.UserId, createRentalDto.BookId);
-            if (sameRental != null && rental.Status == "Pendente")
+            if (sameRental != null)
                 return ResultService.Fail<CreateRentalDto>("Usuário não pode alugar o mesmo livro");
 
             var bookQuantity = await _bookRepository.GetBookById(createRentalDto.BookId);

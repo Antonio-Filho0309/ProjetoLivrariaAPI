@@ -61,7 +61,15 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.RequestError(validation);
             var publisher = await _publisherRepository.GetlPublisherById(updatePublisherDto.Id);
             if (publisher == null)
+
                 return ResultService.Fail("Editora não encontrada");
+
+            if(updatePublisherDto.Name != publisher.Name)
+            {
+                var sameName = await _publisherRepository.GetlPublisherByName(updatePublisherDto.Name);
+                if (sameName != null)
+                    return ResultService.Fail("Editora já cadastrada !");
+            }
             publisher = _mapper.Map(updatePublisherDto, publisher);
             await _publisherRepository.Update(publisher);
             return ResultService.Ok("Editora atualizada com sucesso");
@@ -73,7 +81,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.Fail("Editora não encontrada");
             var bookAssociation =  await _bookRepository.GetBookByPublisherId(id);
             if (bookAssociation != null)
-                return ResultService.Fail("Erro ao excluir editora: Possui relação com livros");
+                return ResultService.Fail("Possui associação com livros");
             await _publisherRepository.Delete(publisher);
             return ResultService.Ok("Editora deletada com sucesso");
         }

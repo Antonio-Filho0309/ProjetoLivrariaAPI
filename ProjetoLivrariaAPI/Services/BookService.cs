@@ -69,9 +69,20 @@ namespace ProjetoLivrariaAPI.Services
             var book = await _bookRepository.GetBookById(updateBookDto.Id);
             if (book == null)
                 return ResultService.Fail("Livro não encontrado");
+
+            if(updateBookDto.Name != book.Name)
+            {
+                var sameName = await _bookRepository.GetBookByName(updateBookDto.Name);
+
+                if (sameName != null)
+                {
+                    return ResultService.Fail<BookDto>("Livro já cadastrado.");
+                }
+            }
+
             book = _mapper.Map(updateBookDto, book);
             await _bookRepository.Update(book);
-            return ResultService.Ok("Livro atualizado com suceso .");
+            return ResultService.Ok("Livro atualizado com sucesso .");
 
         }
 
@@ -83,7 +94,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.Fail("Livro não encontrado");
             var RentalAssociation = await _rentalRepository.GetRentalByBookId(id);
             if (RentalAssociation != null)
-                return ResultService.Fail<User>("Erro ao excluir livro: Possui relação com alugueis");
+                return ResultService.Fail<User>("Possui associação com alugueis");
 
             await _bookRepository.Delete(book);
 
@@ -91,7 +102,7 @@ namespace ProjetoLivrariaAPI.Services
         }
 
         public async Task<ResultService<ICollection<BookRentalDto>>> GetSelect() {
-           var book = await _bookRepository.GetAllBooks();
+           var book = await _bookRepository.GetSelect();
             return ResultService.Ok(_mapper.Map<ICollection<BookRentalDto>>(book));
         }
 

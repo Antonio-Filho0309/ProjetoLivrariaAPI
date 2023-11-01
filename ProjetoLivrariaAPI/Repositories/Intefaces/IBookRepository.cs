@@ -19,5 +19,7 @@ namespace ProjetoLivrariaAPI.Repositories.Intefaces
 
         Task<PagedBaseReponse<Book>> GetAllBookPaged(Filter bookFilter);
 
+        Task<List<Book>> GetSelect();
+
     }
 }

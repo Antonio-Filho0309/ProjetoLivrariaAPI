@@ -63,5 +63,10 @@ namespace ProjetoLivrariaAPI.Repositories
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Book>, Book>(book, bookFilter);
 
         }
+
+        public async  Task<List<Book>> GetSelect()
+        {
+            return await _context.Books.Where(b => b.Quantity > 0).ToListAsync();
+        }
     }
 }
