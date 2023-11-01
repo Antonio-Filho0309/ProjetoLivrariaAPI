@@ -16,12 +16,13 @@ namespace ProjetoLivrariaAPI.Helpers
             CreateMap<User, CreateUserDto>().ReverseMap();
             CreateMap<User, UpdateUserDto>().ReverseMap();
             CreateMap<User, UserRentalDto>().ReverseMap();
-
+            CreateMap<User, UserDashDto>().ReverseMap();
             //Editora
             CreateMap<Publisher, PublisherDto>().ReverseMap();
             CreateMap<Publisher, CreatePublisherDto>().ReverseMap();
             CreateMap<Publisher , UpdatePublisherDto>().ReverseMap();
             CreateMap<Publisher, PublisherBookDto>().ReverseMap();
+            CreateMap<Publisher, PublisherDashDto>().ReverseMap();   
 
             //Livro
             CreateMap<Book , CreateBookDto>().ReverseMap();
@@ -34,6 +35,7 @@ namespace ProjetoLivrariaAPI.Helpers
             CreateMap<Rental, CreateRentalDto>().ReverseMap();
             CreateMap<Rental , RentalDto>().ReverseMap();
             CreateMap<Rental, UpdateRentalDto>().ReverseMap();
+            CreateMap<Rental, RentalDashDto>().ReverseMap();
             
         }
     }
