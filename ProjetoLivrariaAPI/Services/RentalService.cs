@@ -115,5 +115,11 @@ namespace ProjetoLivrariaAPI.Services
 
             return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.Page);
         }
+
+        public async Task<ResultService<List<RentalDashDto>>> GetDash()
+        {
+            var rentals = await _rentalRepository.GetAllRentals();
+            return ResultService.Ok(_mapper.Map<List<RentalDashDto>>(rentals));
+        }
     }
 }

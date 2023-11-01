@@ -7,6 +7,7 @@ using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
+using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 
 namespace ProjetoLivrariaAPI.Controllers
@@ -66,7 +67,15 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
-
+        [HttpGet]
+        [Route("Dash")]
+        public async Task<ActionResult> GetDash()
+        {
+            var result = await _userService.GetDash();
+            if (result.IsSucess)
+                return Ok(result);
+            return NotFound(result);
+        }
 
         /// <summary>
         /// Método para criar e gerar usuário

@@ -1,8 +1,6 @@
 ﻿using Locadora.API.Services;
-using ProjetoLivrariaAPI.Models.Dtos;
 using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.FilterDb;
-using ProjetoLivrariaAPI.Repositories;
 
 namespace ProjetoLivrariaAPI.Services.Interfaces
 {
@@ -16,6 +14,8 @@ namespace ProjetoLivrariaAPI.Services.Interfaces
         Task<ResultService<ICollection<UserRentalDto>>> GetSelect();
 
         Task<ResultService<List<UserDto>>> GetPagedAsync(Filter userFilter);
-       
+
+        Task<ResultService<List<UserDashDto>>> GetDash();
+
     }
 }

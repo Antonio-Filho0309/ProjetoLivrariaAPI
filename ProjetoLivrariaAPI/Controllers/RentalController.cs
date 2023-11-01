@@ -41,6 +41,16 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
+        [HttpGet]
+        [Route("Dash")]
+        public async Task<ActionResult> GetDash()
+        {
+            var result = await _rentalService.GetDash();
+            if (result.IsSucess)
+                return Ok(result);
+            return NotFound(result);
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateRentalDto createRentalDto) {

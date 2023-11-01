@@ -7,6 +7,8 @@ using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
+using ProjetoLivrariaAPI.Models.Dtos.Book;
+using ProjetoLivrariaAPI.Repositories;
 
 namespace ProjetoLivrariaAPI.Services
 {
@@ -93,6 +95,12 @@ namespace ProjetoLivrariaAPI.Services
         public async Task<ResultService<ICollection<UserRentalDto>>> GetSelect() {
             var user = await _userRepository.GetAllUsers();
             return ResultService.Ok(_mapper.Map<ICollection<UserRentalDto>>(user));
+        }
+
+        public async Task<ResultService<List<UserDashDto>>> GetDash()
+        {
+            var users = await _userRepository.GetAllUsers();
+            return ResultService.Ok(_mapper.Map<List<UserDashDto>>(users));
         }
     }
 }

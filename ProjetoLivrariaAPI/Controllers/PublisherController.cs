@@ -61,12 +61,22 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
-            /// <summary>
-            /// Método parar criar uma editora
-            /// </summary>
-            /// <param name="createPublisherDto"></param>
-            /// <returns></returns>
-            [HttpPost]
+        [HttpGet]
+        [Route("Dash")]
+        public async Task<ActionResult> GetDash()
+        {
+            var result = await _publisherService.GetDash();
+            if (result.IsSucess)
+                return Ok(result);
+            return NotFound(result);
+        }
+
+        /// <summary>
+        /// Método parar criar uma editora
+        /// </summary>
+        /// <param name="createPublisherDto"></param>
+        /// <returns></returns>
+        [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreatePublisherDto createPublisherDto) {
             var result = await _publisherService.Create(createPublisherDto);
             if (result.IsSucess) 

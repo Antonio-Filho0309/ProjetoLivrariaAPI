@@ -7,6 +7,7 @@ using ProjetoLivrariaAPI.Models.Dtos.Publisher;
 using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
+using ProjetoLivrariaAPI.Models.Dtos.Book;
 
 namespace ProjetoLivrariaAPI.Services
 {
@@ -92,5 +93,10 @@ namespace ProjetoLivrariaAPI.Services
             return ResultService.Ok(_mapper.Map<ICollection<PublisherBookDto>>(publisher));
         }
 
+        public async  Task<ResultService<List<PublisherDashDto>>> GetDash()
+        {
+                var publishers  = await _publisherRepository.GetAllPublishers();
+                return ResultService.Ok(_mapper.Map<List<PublisherDashDto>>(publishers)); 
+        }
     }
 }

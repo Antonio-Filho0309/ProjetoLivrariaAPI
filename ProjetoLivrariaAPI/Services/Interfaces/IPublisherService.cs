@@ -1,5 +1,4 @@
 ﻿using Locadora.API.Services;
-using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.Dtos.Publisher;
 using ProjetoLivrariaAPI.Models.FilterDb;
 
@@ -16,5 +15,7 @@ namespace ProjetoLivrariaAPI.Services.Interfaces
         Task <ResultService> Delete(int id);
 
         Task<ResultService<List<PublisherDto>>> GetPagedAsync(Filter publisherFilter);
+
+        Task<ResultService<List<PublisherDashDto>>> GetDash();
     }
 }
