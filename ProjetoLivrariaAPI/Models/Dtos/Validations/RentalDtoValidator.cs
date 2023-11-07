@@ -10,17 +10,17 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
             RuleFor(r => r.BookId)
                .NotEmpty()
 
-               .WithMessage("Livro deve ser informado !");
+               .WithMessage("Livro deve ser informado .");
 
             RuleFor(r => r.UserId)
                 .NotEmpty()
 
-                .WithMessage("Usuário deve ser informado !");
+                .WithMessage("Usuário deve ser informado .");
 
             RuleFor(r => r.RentalDate)
                 .NotEmpty()
 
-                .WithMessage("Data de aluguel deve ser informada !");
+                .WithMessage("Data de aluguel deve ser informada .");
 
             RuleFor(r => r.PreviewDate)
                 .NotEmpty()
