@@ -104,7 +104,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.Fail("A data de aluguel não pode ser diferente da data de hoje !");
 
             await _rentalRepository.Update(rental);
-            return ResultService.Ok("Aluguel devolvido com suceso !");
+            return ResultService.Ok("Aluguel devolvido com Sucesso !");
         }
         public async Task<ResultService<List<RentalDto>>> GetPagedAsync(Filter rentalFilter) {
             var rental = await _rentalRepository.GetAllRentalPaged(rentalFilter);
