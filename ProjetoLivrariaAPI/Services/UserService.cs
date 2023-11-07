@@ -35,7 +35,7 @@ namespace ProjetoLivrariaAPI.Services
         {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
-                return ResultService.Fail<UserDto>("Usuário não encontrado !");
+                return ResultService.Fail<UserDto>("Usuário não encontrado .");
             return ResultService.Ok(_mapper.Map<UserDto>(user));
         }
 
@@ -83,7 +83,7 @@ namespace ProjetoLivrariaAPI.Services
 
             await _userRepository.Update(user);
 
-            return ResultService.Ok("Usuário Atualizado com sucesso");
+            return ResultService.Ok("Usuário Atualizado com Sucesso");
 
         }
 
@@ -96,7 +96,7 @@ namespace ProjetoLivrariaAPI.Services
             if (RentalAssociation != null)
                 return ResultService.Fail<User>("Possui relação com alugueis");
             await _userRepository.Delete(user);
-            return ResultService.Ok("Usuário Deletado com sucesso");
+            return ResultService.Ok("Usuário Deletado com Sucesso");
         }
 
         public async Task<ResultService<List<UserDto>>> GetPagedAsync(Filter userFilter)

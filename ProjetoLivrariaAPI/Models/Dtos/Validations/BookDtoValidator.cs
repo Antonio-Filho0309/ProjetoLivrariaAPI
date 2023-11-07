@@ -34,7 +34,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
 
             RuleFor(b => b.Quantity)
               .NotEmpty()
-              .WithMessage("Quantidade não informada");
+              .WithMessage("Quantidade deve ser informada");
         }
     }
 
@@ -66,11 +66,11 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
             RuleFor(b => b.Release)
                 .NotEmpty()
 
-                .WithMessage("Data de lançamento deve ser informada !");
+                .WithMessage("Data de lançamento deve ser informada .");
 
             RuleFor(b => b.Quantity)
              .NotEmpty()
-             .WithMessage("Quantidade não informada ou igual a 0.");
+             .WithMessage("Quantidade deve ser informada .");
         }
     }
 }

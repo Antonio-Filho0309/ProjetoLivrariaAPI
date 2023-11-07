@@ -98,7 +98,7 @@ namespace ProjetoLivrariaAPI.Services
 
             await _bookRepository.Delete(book);
 
-            return ResultService.Ok("Livro Deletado com sucesso");
+            return ResultService.Ok("Livro Deletado com Sucesso");
         }
 
         public async Task<ResultService<ICollection<BookRentalDto>>> GetSelect() {

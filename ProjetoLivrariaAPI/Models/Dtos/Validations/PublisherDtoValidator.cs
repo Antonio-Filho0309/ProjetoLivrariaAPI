@@ -11,7 +11,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
             RuleFor(u => u.Name)
                 .NotEmpty()
 
-                .WithMessage("Nome deve ser informado !")
+                .WithMessage("Nome deve ser informado .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
@@ -20,7 +20,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
             RuleFor(u => u.City)
                 .NotEmpty()
 
-                .WithMessage("Cidade deve ser informada !")
+                .WithMessage("Cidade deve ser informada .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
@@ -36,7 +36,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
             RuleFor(u => u.Name)
                     .NotEmpty()
 
-                    .WithMessage("Nome deve ser informado !")
+                    .WithMessage("Nome deve ser informado .")
                     .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                     .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 
@@ -45,7 +45,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos.Validations
             RuleFor(u => u.City)
                 .NotEmpty()
 
-                .WithMessage("Cidade deve ser informada !")
+                .WithMessage("Cidade deve ser informada .")
                 .MinimumLength(3).WithMessage("Necessário pelo menos 3 caracteres.")
                 .MaximumLength(50).WithMessage("Limite é de 50 caracteres.");
 

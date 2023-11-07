@@ -47,7 +47,7 @@ namespace ProjetoLivrariaAPI.Services
 
             var sameName = await _publisherRepository.GetlPublisherByName(createPublisherDto.Name);
             if (sameName != null)
-                return ResultService.Fail("Editora já cadastrada !");
+                return ResultService.Fail("Editora já cadastrada .");
 
             await _publisherRepository.Add(publisher);
             return ResultService.Ok("Editora Cadastrada com Sucesso");
@@ -68,11 +68,11 @@ namespace ProjetoLivrariaAPI.Services
             {
                 var sameName = await _publisherRepository.GetlPublisherByName(updatePublisherDto.Name);
                 if (sameName != null)
-                    return ResultService.Fail("Editora já cadastrada !");
+                    return ResultService.Fail("Editora já cadastrada .");
             }
             publisher = _mapper.Map(updatePublisherDto, publisher);
             await _publisherRepository.Update(publisher);
-            return ResultService.Ok("Editora atualizada com sucesso");
+            return ResultService.Ok("Editora atualizada com Sucesso");
         }
 
         public async Task<ResultService> Delete(int id) {
@@ -83,7 +83,7 @@ namespace ProjetoLivrariaAPI.Services
             if (bookAssociation != null)
                 return ResultService.Fail("Possui associação com livros");
             await _publisherRepository.Delete(publisher);
-            return ResultService.Ok("Editora deletada com sucesso");
+            return ResultService.Ok("Editora deletada com Sucesso");
         }
 
         public async Task<ResultService<List<PublisherDto>>> GetPagedAsync(Filter publisherFilter) {
