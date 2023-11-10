@@ -9,6 +9,7 @@ using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 using static System.Reflection.Metadata.BlobBuilder;
+using System.Net;
 
 namespace ProjetoLivrariaAPI.Controllers
 {
@@ -26,7 +27,7 @@ namespace ProjetoLivrariaAPI.Controllers
 
         public async Task<IActionResult> Get(int id) {
             var result = await _rentalService.GetById(id);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return NotFound(result);
         }
@@ -36,7 +37,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("Paged")]
         public async Task<ActionResult> GetByIdAsync([FromQuery] Filter rentalFilter) {
             var result = await _rentalService.GetPagedAsync(rentalFilter);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK) 
                 return Ok(result);
             return NotFound(result);
         }
@@ -46,7 +47,7 @@ namespace ProjetoLivrariaAPI.Controllers
         public async Task<ActionResult> GetDash()
         {
             var result = await _rentalService.GetDash();
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return NotFound(result);
         }
@@ -55,7 +56,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateRentalDto createRentalDto) {
             var result = await _rentalService.Create(createRentalDto);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return StatusCode(201, result);
             return BadRequest(result);
 
@@ -65,7 +66,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Put([FromBody] UpdateRentalDto updateRentalDto) {
             var result = await _rentalService.Update(updateRentalDto);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return BadRequest(result);
 

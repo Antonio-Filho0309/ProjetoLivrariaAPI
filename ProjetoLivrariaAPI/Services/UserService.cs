@@ -35,22 +35,22 @@ namespace ProjetoLivrariaAPI.Services
         {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
-                return ResultService.Fail<UserDto>("Usuário não encontrado .");
+                return ResultService.NotFound<UserDto>("Usuário não encontrado .");
             return ResultService.Ok(_mapper.Map<UserDto>(user));
         }
 
         public async Task<ResultService> Create(CreateUserDto createUserDto)
         {
             if (createUserDto == null)
-                return ResultService.Fail<CreateUserDto>("Objeto deve ser informado");
+                return ResultService.BadRequest("Objeto deve ser informado");
 
             var result = new UserDtoValidator().Validate(createUserDto);
             if (!result.IsValid)
-                return ResultService.RequestError(result);
+                return ResultService.BadRequest(result);
 
             var emailExist = await _userRepository.GetUserByEmail(createUserDto.Email);
             if (emailExist != null)
-                return ResultService.Fail<User>("Email já cadastrado");
+                return ResultService.NotFound<User>("Email já cadastrado");
 
             var user = _mapper.Map<User>(createUserDto);
 
@@ -61,22 +61,22 @@ namespace ProjetoLivrariaAPI.Services
         public async Task<ResultService> Update(UpdateUserDto updateUserDto)
         {
             if (updateUserDto == null)
-                return ResultService.Fail("Usuário deve ser informado");
+                return ResultService.BadRequest("Usuário deve ser informado");
 
             var validation = new UpdateUserDtoValidator().Validate(updateUserDto);
             if (!validation.IsValid)
-                return ResultService.RequestError(validation);
+                return ResultService.BadRequest(validation);
 
             var user = await _userRepository.GetUserById(updateUserDto.Id);
             if (user == null)
 
 
-                return ResultService.Fail("Pessoa não encontrada");
+                return ResultService.NotFound("Pessoa não encontrada");
             if (updateUserDto.Email != user.Email)
             {
                 var emailExist = await _userRepository.GetUserByEmail(updateUserDto.Email);
                 if (emailExist != null)
-                    return ResultService.Fail<User>("Email já cadastrado");
+                    return ResultService.BadRequest("Email já cadastrado");
             }
 
             user = _mapper.Map(updateUserDto, user);
@@ -91,10 +91,10 @@ namespace ProjetoLivrariaAPI.Services
         {
             var user = await _userRepository.GetUserById(id);
             if (user == null)
-                return ResultService.Fail("Usuário não encontrado");
+                return ResultService.NotFound("Usuário não encontrado");
             var RentalAssociation = await _rentalRepository.GetRentalByUserId(id);
             if (RentalAssociation != null)
-                return ResultService.Fail<User>("Possui relação com alugueis");
+                return ResultService.BadRequest("Possui relação com alugueis");
             await _userRepository.Delete(user);
             return ResultService.Ok("Usuário Deletado com Sucesso");
         }
@@ -105,7 +105,7 @@ namespace ProjetoLivrariaAPI.Services
             var result = new PagedBaseResponseDto<UserDto>(user.TotalRegisters, user.Page, user.TotalPages, _mapper.Map<List<UserDto>>(user.Data));
 
             if (result.Data.Count == 0)
-                return ResultService.Fail<List<UserDto>>("Nenhum Registro Encontrado");
+                return ResultService.NotFound<List<UserDto>>("Nenhum Registro Encontrado");
 
             return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.Page);
         }

@@ -9,6 +9,7 @@ using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
+using System.Net;
 
 namespace ProjetoLivrariaAPI.Controllers
 {
@@ -36,7 +37,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Get(int id) {
             var result = await _userService.GetById(id);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return NotFound(result);
         }
@@ -48,7 +49,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("GetSelect")]
         public async Task<ActionResult> GetSelect() {
             var result = await _userService.GetSelect();
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return NotFound(result);
         }
@@ -62,7 +63,7 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("Paged")]
         public async Task<ActionResult> GetByIdAsync([FromQuery] Filter userFilter) {
             var result = await _userService.GetPagedAsync(userFilter);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return NotFound(result);
         }
@@ -72,7 +73,7 @@ namespace ProjetoLivrariaAPI.Controllers
         public async Task<ActionResult> GetDash()
         {
             var result = await _userService.GetDash();
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
             return NotFound(result);
         }
@@ -85,8 +86,12 @@ namespace ProjetoLivrariaAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CreateUserDto createUserDto) {
             var result = await _userService.Create(createUserDto);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return StatusCode(201,result);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+                return NotFound(result);
+
             return BadRequest(result);
         }
 
@@ -99,8 +104,12 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Put([FromBody] UpdateUserDto updateUserDto) {
             var result = await _userService.Update(updateUserDto);
-            if(result.IsSucess)
+            if(result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+                return NotFound(result);
+
             return BadRequest(result);
         }
 
@@ -113,8 +122,12 @@ namespace ProjetoLivrariaAPI.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Delete(int id) {
             var result = await _userService.Delete(id);
-            if (result.IsSucess)
+            if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+                return NotFound(result);
+
             return BadRequest(result);
         }
 

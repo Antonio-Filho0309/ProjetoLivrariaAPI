@@ -29,7 +29,7 @@ namespace ProjetoLivrariaAPI.Services
         public async Task<ResultService<PublisherDto>> GetById(int id) {
             var publisher = await _publisherRepository.GetlPublisherById(id);
             if (publisher == null)
-                return ResultService.Fail<PublisherDto>("Editora não encontrada");
+                return ResultService.NotFound<PublisherDto>("Editora não encontrada");
             return ResultService.Ok(_mapper.Map<PublisherDto>(publisher));
 
 
@@ -37,17 +37,17 @@ namespace ProjetoLivrariaAPI.Services
 
         public async Task<ResultService> Create(CreatePublisherDto createPublisherDto) {
             if (createPublisherDto == null)
-                return ResultService.Fail<CreatePublisherDto>("Objeto deve ser informado");
+                return ResultService.BadRequest("Objeto deve ser informado");
 
             var result = new PublisherDtoValidator().Validate(createPublisherDto);
             if (!result.IsValid)
-                return ResultService.RequestError(result);
+                return ResultService.BadRequest(result);
 
             var publisher = _mapper.Map<Publisher>(createPublisherDto);
 
             var sameName = await _publisherRepository.GetlPublisherByName(createPublisherDto.Name);
             if (sameName != null)
-                return ResultService.Fail("Editora já cadastrada .");
+                return ResultService.BadRequest("Editora já cadastrada .");
 
             await _publisherRepository.Add(publisher);
             return ResultService.Ok("Editora Cadastrada com Sucesso");
@@ -55,20 +55,20 @@ namespace ProjetoLivrariaAPI.Services
 
         public async Task<ResultService> Update(UpdatePublisherDto updatePublisherDto) {
             if (updatePublisherDto == null)
-                return ResultService.Fail("Editora não encontrada");
+                return ResultService.NotFound("Editora não encontrada");
             var validation = new UpdatePublisherDtoValidator().Validate(updatePublisherDto);
             if (!validation.IsValid)
-                return ResultService.RequestError(validation);
+                return ResultService.BadRequest(validation);
             var publisher = await _publisherRepository.GetlPublisherById(updatePublisherDto.Id);
             if (publisher == null)
 
-                return ResultService.Fail("Editora não encontrada");
+                return ResultService.NotFound("Editora não encontrada");
 
             if(updatePublisherDto.Name != publisher.Name)
             {
                 var sameName = await _publisherRepository.GetlPublisherByName(updatePublisherDto.Name);
                 if (sameName != null)
-                    return ResultService.Fail("Editora já cadastrada .");
+                    return ResultService.BadRequest("Editora já cadastrada .");
             }
             publisher = _mapper.Map(updatePublisherDto, publisher);
             await _publisherRepository.Update(publisher);
@@ -78,10 +78,10 @@ namespace ProjetoLivrariaAPI.Services
         public async Task<ResultService> Delete(int id) {
             var publisher = await _publisherRepository.GetlPublisherById(id);
             if (publisher == null)
-                return ResultService.Fail("Editora não encontrada");
+                return ResultService.NotFound("Editora não encontrada");
             var bookAssociation =  await _bookRepository.GetBookByPublisherId(id);
             if (bookAssociation != null)
-                return ResultService.Fail("Possui associação com livros");
+                return ResultService.BadRequest("Possui associação com livros");
             await _publisherRepository.Delete(publisher);
             return ResultService.Ok("Editora deletada com Sucesso");
         }
@@ -91,7 +91,7 @@ namespace ProjetoLivrariaAPI.Services
             var result = new PagedBaseResponseDto<PublisherDto>(publisher.TotalRegisters, publisher.TotalPages, publisher.Page, _mapper.Map<List<PublisherDto>>(publisher.Data));
 
             if (result.Data.Count == 0)
-                return ResultService.Fail<List<PublisherDto>>("Nenhum Registro Encontrado");
+                return ResultService.NotFound<List<PublisherDto>>("Nenhum Registro Encontrado");
 
             return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.Page);
         }

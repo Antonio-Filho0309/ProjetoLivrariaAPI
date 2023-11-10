@@ -32,16 +32,16 @@ namespace ProjetoLivrariaAPI.Services
         public async Task<ResultService<BookDto>> GetById(int id) {
             var book = await _bookRepository.GetBookById(id);
             if (book == null)
-                return ResultService.Fail<BookDto>("Livro não encontrado");
+                return ResultService.NotFound<BookDto>("Livro não encontrado");
             return ResultService.Ok(_mapper.Map<BookDto>(book));
         }
         public async Task<ResultService> Create(CreateBookDto createBookDto) {
             if (createBookDto == null)
-                return ResultService.Fail<CreateBookDto>("Objeto deve ser informado .");
+                return ResultService.NotFound<CreateBookDto>("Objeto deve ser informado .");
 
             var result = new BookDtoValidator().Validate(createBookDto);
             if (!result.IsValid)
-                return ResultService.RequestError(result);
+                return ResultService.BadRequest(result);
 
             var book = _mapper.Map<Book>(createBookDto);
 
@@ -49,11 +49,11 @@ namespace ProjetoLivrariaAPI.Services
             var sameName = await _bookRepository.GetBookByName(createBookDto.Name);
 
             if (sameName != null) {
-                return ResultService.Fail<BookDto>("Livro já cadastrado.");
+                return ResultService.NotFound<BookDto>("Livro já cadastrado.");
             }
 
             if (createBookDto.Release > DateTime.Now.Year)
-                return ResultService.Fail<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual.");
+                return ResultService.NotFound<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual.");
 
             await _bookRepository.Add(book);
             return ResultService.Ok("Livro Criado com Sucesso");
@@ -61,14 +61,14 @@ namespace ProjetoLivrariaAPI.Services
 
         public async Task<ResultService> Update(UpdateBookDto updateBookDto) {
             if (updateBookDto == null)
-                return ResultService.Fail("Livro não encontrado");
+                return ResultService.NotFound("Livro não encontrado");
             var validation = new UpdateBookDtoValidator().Validate(updateBookDto);
             if (!validation.IsValid)
-                return ResultService.RequestError(validation);
+                return ResultService.BadRequest(validation);
 
             var book = await _bookRepository.GetBookById(updateBookDto.Id);
             if (book == null)
-                return ResultService.Fail("Livro não encontrado");
+                return ResultService.NotFound("Livro não encontrado");
 
             if(updateBookDto.Name != book.Name)
             {
@@ -76,7 +76,7 @@ namespace ProjetoLivrariaAPI.Services
 
                 if (sameName != null)
                 {
-                    return ResultService.Fail<BookDto>("Livro já cadastrado.");
+                    return ResultService.NotFound<BookDto>("Livro já cadastrado.");
                 }
             }
 
@@ -91,10 +91,10 @@ namespace ProjetoLivrariaAPI.Services
         public async Task<ResultService> Delete(int id) {
             var book = await _bookRepository.GetBookById(id);
             if (book == null)
-                return ResultService.Fail("Livro não encontrado");
+                return ResultService.NotFound("Livro não encontrado");
             var RentalAssociation = await _rentalRepository.GetRentalByBookId(id);
             if (RentalAssociation != null)
-                return ResultService.Fail<User>("Possui associação com alugueis");
+                return ResultService.NotFound<User>("Possui associação com alugueis");
 
             await _bookRepository.Delete(book);
 
@@ -111,7 +111,7 @@ namespace ProjetoLivrariaAPI.Services
             var result = new PagedBaseResponseDto<BookDto>(book.TotalRegisters,book.TotalPages,book.Page, _mapper.Map<List<BookDto>>(book.Data));
 
             if (result.Data.Count == 0)
-                return ResultService.Fail<List<BookDto>>("Nenhum Registro Encontrado");
+                return ResultService.NotFound<List<BookDto>>("Nenhum Registro Encontrado");
 
             return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.Page);
         }
