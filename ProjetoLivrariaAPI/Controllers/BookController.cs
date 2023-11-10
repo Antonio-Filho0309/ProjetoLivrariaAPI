@@ -90,6 +90,10 @@ namespace ProjetoLivrariaAPI.Controllers
             var result = await _bookService.Create(createBookDto);
             if (result.StatusCode == HttpStatusCode.OK)
                 return StatusCode(201,result);
+
+            if (result.StatusCode == HttpStatusCode.NotFound)
+                return NotFound(result);
+
             return BadRequest(result);
         }
 
@@ -104,6 +108,9 @@ namespace ProjetoLivrariaAPI.Controllers
             var result = await _bookService.Update(updateBookDto);
             if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
+            if(result.StatusCode == HttpStatusCode.NotFound)
+                return NotFound(result);
+
             return BadRequest(result);
         }
 
@@ -118,6 +125,9 @@ namespace ProjetoLivrariaAPI.Controllers
             var result = await _bookService.Delete(id);
             if (result.StatusCode == HttpStatusCode.OK)
                 return Ok(result);
+            if (result.StatusCode == HttpStatusCode.NotFound)
+                return NotFound(result);
+
             return BadRequest(result);
         }
 
