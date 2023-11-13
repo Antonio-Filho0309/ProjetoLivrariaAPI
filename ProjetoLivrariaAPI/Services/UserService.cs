@@ -50,7 +50,7 @@ namespace ProjetoLivrariaAPI.Services
 
             var emailExist = await _userRepository.GetUserByEmail(createUserDto.Email);
             if (emailExist != null)
-                return ResultService.NotFound<User>("Email já cadastrado");
+                return ResultService.BadRequest("Email já cadastrado");
 
             var user = _mapper.Map<User>(createUserDto);
 

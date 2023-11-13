@@ -49,11 +49,11 @@ namespace ProjetoLivrariaAPI.Services
             var sameName = await _bookRepository.GetBookByName(createBookDto.Name);
 
             if (sameName != null) {
-                return ResultService.NotFound<BookDto>("Livro já cadastrado.");
+                return ResultService.BadRequest("Livro já cadastrado.");
             }
 
             if (createBookDto.Release > DateTime.Now.Year)
-                return ResultService.NotFound<CreateBookDto>("Ano de lançamento não pode ser maior que o ano atual.");
+                return ResultService.BadRequest("Ano de lançamento não pode ser maior que o ano atual.");
 
             await _bookRepository.Add(book);
             return ResultService.Ok("Livro Criado com Sucesso");
@@ -76,7 +76,7 @@ namespace ProjetoLivrariaAPI.Services
 
                 if (sameName != null)
                 {
-                    return ResultService.NotFound<BookDto>("Livro já cadastrado.");
+                    return ResultService.BadRequest("Livro já cadastrado.");
                 }
             }
 
