@@ -94,7 +94,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.NotFound("Livro não encontrado");
             var RentalAssociation = await _rentalRepository.GetRentalByBookId(id);
             if (RentalAssociation != null)
-                return ResultService.NotFound<User>("Possui associação com alugueis");
+                return ResultService.BadRequest("Possui associação com alugueis");
 
             await _bookRepository.Delete(book);
 

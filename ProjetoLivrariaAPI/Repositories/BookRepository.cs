@@ -52,13 +52,15 @@ namespace ProjetoLivrariaAPI.Repositories
 
             var book = _context.Books.Include(b => b.Publisher).AsQueryable();
             if (!string.IsNullOrEmpty(bookFilter.Search))
-                book = book.Where(b => b.Name.Contains(bookFilter.Search) ||
+                {
+                var filter = bookFilter.Search.ToLower();
+                book = book.Where(b => b.Name.ToLower().Contains(filter) ||
                 b.Id.ToString().Contains(bookFilter.Search) ||
-                b.Author.Contains(bookFilter.Search) ||
+                b.Author.ToLower().Contains(filter) ||
                 b.PublisherId.ToString().Contains(bookFilter.Search) ||
-                b.Publisher.Name.Contains(bookFilter.Search) ||
+                b.Publisher.Name.ToLower().Contains(filter) ||
                 b.Quantity.ToString().Contains(bookFilter.Search) ||
-                b.Release.ToString().Contains(bookFilter.Search));
+                b.Release.ToString().Contains(bookFilter.Search)); }
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Book>, Book>(book, bookFilter);
 

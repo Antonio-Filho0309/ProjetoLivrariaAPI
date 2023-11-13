@@ -50,15 +50,19 @@ namespace ProjetoLivrariaAPI.Repositories
         public async Task<PagedBaseReponse<Rental>> GetAllRentalPaged(Filter rentalFilter) {
             var rental = _context.Rentals.Include(r => r.User).Include(r => r.Book).AsQueryable();
             if (!string.IsNullOrEmpty(rentalFilter.Search))
+            {
+                var filter = rentalFilter.Search.ToLower();
+
                 rental = rental.Where(r => r.Id.ToString().Contains(rentalFilter.Search) ||
                 r.UserId.ToString().Contains(rentalFilter.Search) ||
                 r.BookId.ToString().Contains(rentalFilter.Search) ||
-                r.User.Name.Contains(rentalFilter.Search) ||
-                r.Book.Name.Contains(rentalFilter.Search) ||
+                r.User.Name.ToLower().Contains(filter) ||
+                r.Book.Name.ToLower().Contains(filter) ||
                 r.ReturnDate.ToString().Contains(rentalFilter.Search) ||
                 r.RentalDate.ToString().Contains(rentalFilter.Search) ||
                 r.PreviewDate.ToString().Contains(rentalFilter.Search) ||
-                r.Status.Contains(rentalFilter.Search));
+                r.Status.ToLower().Contains(filter));
+            }
 
             return await PagedBaseResponseHelper.GetResponseAsync<PagedBaseReponse<Rental>, Rental>(rental, rentalFilter);
         }
