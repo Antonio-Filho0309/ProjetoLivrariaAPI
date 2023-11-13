@@ -108,12 +108,12 @@ namespace ProjetoLivrariaAPI.Services
         }
         public async Task<ResultService<List<RentalDto>>> GetPagedAsync(Filter rentalFilter) {
             var rental = await _rentalRepository.GetAllRentalPaged(rentalFilter);
-            var result = new PagedBaseResponseDto<RentalDto>(rental.TotalRegisters, rental.TotalPages, rental.Page, _mapper.Map<List<RentalDto>>(rental.Data));
+            var result = new PagedBaseResponseDto<RentalDto>(rental.TotalRegisters, rental.TotalPages, rental.PageNumber, _mapper.Map<List<RentalDto>>(rental.Data));
 
             if (result.Data.Count == 0)
                 return ResultService.NotFound<List<RentalDto>>("Nenhum Registro Encontrado");
 
-            return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.Page);
+            return ResultService.OkPaged(result.Data, result.TotalRegisters, result.TotalPages, result.PageNumber);
         }
 
         public async Task<ResultService<List<RentalDashDto>>> GetDash()

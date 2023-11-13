@@ -8,14 +8,14 @@ namespace ProjetoLivrariaAPI.Pagination {
             var count = await query.CountAsync();
             response.TotalPages = (int)Math.Abs((double)count / request.PageSize);
             response.TotalRegisters = count;
-            response.Page = request.Page;
+            response.PageNumber = request.PageNumber;
 
 
             if (string.IsNullOrEmpty(request.OrderByProperty) && !request.Desc)
                 response.Data = await query.ToListAsync();
             else
                 response.Data = query.OrderByDynamic(request.OrderByProperty, request.Desc)
-                   .Skip((request.Page - 1) * request.PageSize)
+                   .Skip((request.PageNumber - 1) * request.PageSize)
                     .Take(request.PageSize)
                     .ToList();
 

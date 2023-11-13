@@ -27,12 +27,12 @@ namespace Locadora.API.Services {
                 StatusCode = HttpStatusCode.OK
             };
         }
-        public static ResultService<T> OkPaged<T>(T data, int totalRegisters , int totalPages , int page) {
+        public static ResultService<T> OkPaged<T>(T data, int totalRegisters , int totalPages , int pageNumber) {
             return new ResultService<T> {
                 Data = data,
                 TotalRegisters = totalRegisters,
                 TotalPages = totalPages ,
-                Page = page,
+                PageNumber = pageNumber,
                 StatusCode = HttpStatusCode.OK
             };
         }
@@ -46,7 +46,7 @@ namespace Locadora.API.Services {
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? TotalPages { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public int?Page { get; set; }
+        public int?PageNumber { get; set; }
     }
 
 }

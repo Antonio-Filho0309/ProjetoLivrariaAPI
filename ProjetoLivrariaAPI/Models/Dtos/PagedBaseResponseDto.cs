@@ -9,7 +9,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos
         public PagedBaseResponseDto(int totalRegisters, int page, int totalPages, List<T> data)
         {
             TotalRegisters = totalRegisters;
-            Page = page;
+            PageNumber = page;
             TotalPages = totalPages;
             Data = data;
 
@@ -17,7 +17,7 @@ namespace ProjetoLivrariaAPI.Models.Dtos
 
         public int TotalRegisters { get; private set; }
         public int TotalPages { get; private set; }
-        public int Page { get; private set; }
+        public int PageNumber { get; private set; }
         public List<T> Data { get; private set; }
 
     }
