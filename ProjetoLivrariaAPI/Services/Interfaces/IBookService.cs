@@ -1,5 +1,4 @@
 ﻿using Locadora.API.Services;
-using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.Dtos.Book;
 using ProjetoLivrariaAPI.Models.FilterDb;
 

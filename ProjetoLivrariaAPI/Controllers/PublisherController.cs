@@ -1,14 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-
-using Microsoft.EntityFrameworkCore;
-using ProjetoLivrariaAPI.Data;
-using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Models.Dtos.Publisher;
 using ProjetoLivrariaAPI.Models.FilterDb;
-using ProjetoLivrariaAPI.Repositories.Intefaces;
-using ProjetoLivrariaAPI.Services;
 using ProjetoLivrariaAPI.Services.Interfaces;
 using System.Net;
 
@@ -28,7 +21,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método para listar uma editora 
+        /// Método para buscar a editora por id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

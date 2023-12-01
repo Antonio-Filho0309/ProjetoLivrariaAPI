@@ -2,12 +2,10 @@
 using AutoMapper;
 using Locadora.API.Services;
 using ProjetoLivrariaAPI.Models.Dtos;
-using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.Dtos.Validations;
 using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Models.Dtos.Book;
 using ProjetoLivrariaAPI.Models.FilterDb;
-using ProjetoLivrariaAPI.Repositories;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
 

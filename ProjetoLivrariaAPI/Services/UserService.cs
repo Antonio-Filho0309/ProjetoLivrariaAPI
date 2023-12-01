@@ -7,8 +7,6 @@ using ProjetoLivrariaAPI.Models.Dtos.User;
 using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
 using ProjetoLivrariaAPI.Services.Interfaces;
-using ProjetoLivrariaAPI.Models.Dtos.Book;
-using ProjetoLivrariaAPI.Repositories;
 
 namespace ProjetoLivrariaAPI.Services
 {
