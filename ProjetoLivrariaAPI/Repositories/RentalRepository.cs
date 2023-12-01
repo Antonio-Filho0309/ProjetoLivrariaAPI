@@ -4,7 +4,6 @@ using ProjetoLivrariaAPI.Models;
 using ProjetoLivrariaAPI.Models.FilterDb;
 using ProjetoLivrariaAPI.Pagination;
 using ProjetoLivrariaAPI.Repositories.Intefaces;
-using System.Net;
 
 namespace ProjetoLivrariaAPI.Repositories
 {
