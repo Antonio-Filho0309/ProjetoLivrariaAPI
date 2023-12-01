@@ -22,6 +22,11 @@ namespace ProjetoLivrariaAPI.Controllers
             _rentalService = rentalService;
         }
 
+        /// <summary>
+        ///  Método para buscar o aluguel por id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}")]
 
@@ -32,7 +37,11 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
-        
+        /// <summary>
+        /// método para paginação
+        /// </summary>
+        /// <param name="rentalFilter"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Paged")]
         public async Task<ActionResult> GetByIdAsync([FromQuery] Filter rentalFilter) {
@@ -42,6 +51,10 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
+        /// <summary>
+        /// método para colocas os alugueis na dashboard
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("Dash")]
         public async Task<ActionResult> GetDash()
@@ -52,7 +65,11 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
-
+        /// <summary>
+        /// metodo para criar e gerar um aluguel
+        /// </summary>
+        /// <param name="createRentalDto"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateRentalDto createRentalDto) {
             var result = await _rentalService.Create(createRentalDto);
@@ -62,6 +79,11 @@ namespace ProjetoLivrariaAPI.Controllers
 
         }
 
+        /// <summary>
+        /// método para atualizar um aluguel
+        /// </summary>
+        /// <param name="updateRentalDto"></param>
+        /// <returns></returns>
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> Put([FromBody] UpdateRentalDto updateRentalDto) {

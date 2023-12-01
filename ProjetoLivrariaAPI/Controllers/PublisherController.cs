@@ -28,7 +28,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método para retornar uma editora 
+        /// Método para listar uma editora 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -53,6 +53,11 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
+        /// <summary>
+        /// método para paginação
+        /// </summary>
+        /// <param name="publisherFilter"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("Paged")]
         public async Task<ActionResult> GetByIdAsync([FromQuery] Filter publisherFilter) {
@@ -62,6 +67,10 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
+        /// <summary>
+        /// método colocar as editoras para dashboard
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("Dash")]
         public async Task<ActionResult> GetDash()
@@ -73,7 +82,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método parar criar uma editora
+        /// Método parar criar  e gerar uma editora
         /// </summary>
         /// <param name="createPublisherDto"></param>
         /// <returns></returns>
@@ -89,7 +98,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método para editar e atualizar os dados de uma editora 
+        /// Método para atualizar a  editora 
         /// </summary>
         /// <param name="updatePublisherDto"></param>
         /// <returns></returns>
@@ -106,7 +115,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método para deletar a editora
+        /// Método para excluir a editora
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

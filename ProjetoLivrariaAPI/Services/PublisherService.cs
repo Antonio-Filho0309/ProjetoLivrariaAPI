@@ -50,7 +50,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.BadRequest("Editora já cadastrada .");
 
             await _publisherRepository.Add(publisher);
-            return ResultService.Ok("Editora Cadastrada com Sucesso");
+            return ResultService.Ok("Editora Criada com Sucesso");
         }
 
         public async Task<ResultService> Update(UpdatePublisherDto updatePublisherDto) {

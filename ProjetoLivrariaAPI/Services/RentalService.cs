@@ -25,7 +25,7 @@ namespace ProjetoLivrariaAPI.Services
             _bookRepository = bookRepository;
             _userRepository = userRepository;
         }
-
+         
         public async Task<ResultService<ICollection<RentalDto>>> Get() {
 
             var rentals = await _rentalRepository.GetAllRentals();
@@ -73,7 +73,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.BadRequest("A data de previsão não pode ser mais de 30 dias após o aluguel");
 
             await _rentalRepository.Add(rental);
-            return ResultService.Ok("Aluguel Realizado com Sucesso");
+            return ResultService.Ok("Aluguel Criado com Sucesso");
         }
 
         public async Task<ResultService> Update(UpdateRentalDto updateRentalDto) {
@@ -104,7 +104,7 @@ namespace ProjetoLivrariaAPI.Services
                 return ResultService.BadRequest("A data de aluguel não pode ser diferente da data de hoje .");
 
             await _rentalRepository.Update(rental);
-            return ResultService.Ok("Aluguel devolvido com Sucesso .");
+            return ResultService.Ok("Aluguel devolvido com Sucesso");
         }
         public async Task<ResultService<List<RentalDto>>> GetPagedAsync(Filter rentalFilter) {
             var rental = await _rentalRepository.GetAllRentalPaged(rentalFilter);

@@ -55,7 +55,7 @@ namespace ProjetoLivrariaAPI.Services
             var user = _mapper.Map<User>(createUserDto);
 
             await _userRepository.Add(user);
-            return ResultService.Ok("Usuário Cadastrado com Sucesso");
+            return ResultService.Ok("Usuário Criado com Sucesso");
         }
 
         public async Task<ResultService> Update(UpdateUserDto updateUserDto)

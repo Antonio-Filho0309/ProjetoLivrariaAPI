@@ -21,7 +21,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método para buscar os livros
+        /// Método para listar os livros
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -70,7 +70,10 @@ namespace ProjetoLivrariaAPI.Controllers
                 return Ok(result);
             return NotFound(result);
         }
-
+        /// <summary>
+        /// método colocar os livros para dashboard
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("Dash")]
         public async Task<ActionResult> GetRented() {

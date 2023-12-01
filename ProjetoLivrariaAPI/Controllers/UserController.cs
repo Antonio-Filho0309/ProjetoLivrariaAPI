@@ -68,6 +68,10 @@ namespace ProjetoLivrariaAPI.Controllers
             return NotFound(result);
         }
 
+        /// <summary>
+        /// método para colocas os usuários na dashboard
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("Dash")]
         public async Task<ActionResult> GetDash()
@@ -114,7 +118,7 @@ namespace ProjetoLivrariaAPI.Controllers
         }
 
         /// <summary>
-        /// Método para Deletar o usuário
+        /// Método para excluir o usuário
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
